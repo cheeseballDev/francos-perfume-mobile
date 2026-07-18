@@ -1,0 +1,19 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.FrancosPerfumeMobile" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+
+    <!-- for the fonts. have to manually do this 面倒くさい-->
+    <style name="MontserratTextViewStyle" parent="android:Widget.TextView">
+        <item name="fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="MontserratEditTextStyle" parent="android:Widget.EditText">
+        <item name="fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="Theme.FrancosPerfumeMobile" parent="Base.Theme.FrancosPerfumeMobile" />
+</resources>

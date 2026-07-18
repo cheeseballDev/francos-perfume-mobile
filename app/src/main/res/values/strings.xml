@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FrancosPerfumeMobile</string>
+    <string name="title">OneFrancoScentHub</string>
+    <string name="hint_enter_your_email">Enter your email</string>
+    <string name="hint_enter_your_password">Enter your password</string>
+    <string name="text_application_logo">Application Logo</string>
+    <string name="text_login">Login</string>
+</resources>
