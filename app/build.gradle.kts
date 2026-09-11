@@ -37,7 +37,6 @@ dependencies {
     implementation(libs.activity.ktx)
     implementation(libs.appcompat)
     implementation(libs.constraintlayout)
-    implementation(libs.fragment)
     implementation(libs.material)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
