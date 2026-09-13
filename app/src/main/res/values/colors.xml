@@ -5,4 +5,5 @@
     <color name="red">#7E102C</color>
     <color name="yellow_primary">#E1D4C1</color>
     <color name="light_yellow_primary">#FFEDE6</color>
+    <color name="transparent">#AARRGGBB</color>
 </resources>
