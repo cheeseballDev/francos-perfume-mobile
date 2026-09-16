@@ -4,7 +4,6 @@ public class LoginDTO {
     private String Email;
     private String Password;
     private String NewPassword;
-
     public String getEmail() {
         return Email;
     }

@@ -5,5 +5,18 @@
     <color name="red">#7E102C</color>
     <color name="yellow_primary">#E1D4C1</color>
     <color name="light_yellow_primary">#FFEDE6</color>
-    <color name="transparent">#AARRGGBB</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="invisible">#00000000</color>
+    <color name="green">#509C54</color>
+    <color name="yellow_secondary">#FFBC2B</color>
+    <color name="blue">#424E9E</color>
+
+    <!-- UI COMPONENTS -->
+    <color name="bg_app">#F6F5FF</color>
+    <color name="bg_card">#FFFFFF</color>
+    <color name="text_primary">#1C1C1C</color>
+    <color name="text_secondary">#555555</color>
+    <color name="status_warning">#7E102C</color>
+    <color name="border_stroke">#E1D4C1</color>
+    <color name="nav_background">#1C1C1C</color>
 </resources>

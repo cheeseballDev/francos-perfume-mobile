@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- UI COMPONENTS -->
+
+    <color name="bg_app">#121212</color>
+    <color name="bg_card">#1E1E1E</color>
+    <color name="text_primary">#F6F5FF</color>
+    <color name="text_secondary">#B0B0B0</color>
+    <color name="status_warning">#FF6B81</color> <!-- Lighter red for high contrast on dark surfaces -->
+    <color name="border_stroke">#333333</color>
+    <color name="nav_background">#000000</color>
+</resources>

@@ -2,6 +2,7 @@ package com.example.francosperfumemobile.activities;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,8 @@ import com.example.francosperfumemobile.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button login, forgotPassword;
+    private Button loginButton, forgotPasswordButton;
+    private EditText emailTextField, passwordTextField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,23 +28,25 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
 
-        setInterface();
+        initializeUI();
 
-
+        //TODO: LOGIN LOGIC HERE
     }
-    private void setInterface() {
-        login = findViewById(R.id.button_login);
-        forgotPassword = findViewById(R.id.button_forgot_password);
+    private void initializeUI() {
+        loginButton = findViewById(R.id.button_login);
+        forgotPasswordButton = findViewById(R.id.button_forgot_password);
+        emailTextField = findViewById(R.id.textfield_email);
+        passwordTextField = findViewById(R.id.textfield_password);
 
         setListeners();
     }
 
     private void setListeners() {
-        forgotPassword.setOnClickListener(v -> {
+        forgotPasswordButton.setOnClickListener(v -> {
 
         });
 
-        login.setOnClickListener(v -> {
+        loginButton.setOnClickListener(v -> {
 
         });
     }

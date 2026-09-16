@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DashboardCardView">
+        <attr name="dashboardCardIcon" format="reference"/>
+        <attr name="dashboardCardTitle" format="string"/>
+        <attr name="dashboardCardValue" format="string"/>
+        <attr name="dashboardCardWarning" format="string"/>
+    </declare-styleable>
+</resources>

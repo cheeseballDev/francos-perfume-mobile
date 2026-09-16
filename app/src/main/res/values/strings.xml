@@ -54,4 +54,8 @@
     <string name="inventory_text">Inventory</string>
     <string name="request_text">Request</string>
     <string name="delivery_text">Delivery</string>
+    <string name="dashboard_title_text">Dashboard Title</string>
+    <string name="warning_text">Warning</string>
+    <string name="sample_number">0000</string>
+    <string name="hint_search_inventory">Search perfume name or id...</string>
 </resources>

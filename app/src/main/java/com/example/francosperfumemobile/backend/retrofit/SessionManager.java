@@ -31,13 +31,11 @@ public class SessionManager {
         editor.putString(KEY_ACCESS_TOKEN, newToken);
         editor.apply();
     }
-
     public void clearSession() {
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.clear();
         editor.apply();
     }
-
 
     public String getAccessToken() {
         return sharedPrefs.getString(KEY_ACCESS_TOKEN, null);
