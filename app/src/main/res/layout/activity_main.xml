@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,8 +15,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/topNavigationBar"
+            android:id="@+id/top_navigation_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/black"
@@ -24,23 +25,37 @@
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--TODO: ADD IMAGEVIEW INSTEAD OF MENU, ADD BUTTONS FOR EACH IMAGEVIEW (MENU & BELL) -->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView"
-            android:name="com.example.francosperfumemobile.InventoryFragment"
+            android:id="@+id/fragment_container_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationBar"
+
+            app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/topNavigationBar" />
+            app:layout_constraintTop_toBottomOf="@+id/top_navigation_bar" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationBar"
+            android:id="@+id/bottom_navigation_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/black"
+
+            app:itemIconTint="@color/nav_item_color"
+            app:itemTextColor="@color/nav_item_color"
+            app:menu="@menu/bottom_nav_menu"
+            app:labelVisibilityMode="labeled"
+            app:itemActiveIndicatorStyle="@color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

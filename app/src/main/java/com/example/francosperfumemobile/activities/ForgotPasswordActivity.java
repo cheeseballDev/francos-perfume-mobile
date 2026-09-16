@@ -1,7 +1,6 @@
 package com.example.francosperfumemobile.activities;
 
 import android.os.Bundle;
-import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,39 +10,17 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.francosperfumemobile.R;
 
-public class LoginActivity extends AppCompatActivity {
-
-    private Button login, forgotPassword;
+public class ForgotPasswordActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_forgot_password);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-        });
-
-        setInterface();
-
-
-    }
-    private void setInterface() {
-        login = findViewById(R.id.button_login);
-        forgotPassword = findViewById(R.id.button_forgot_password);
-
-        setListeners();
-    }
-
-    private void setListeners() {
-        forgotPassword.setOnClickListener(v -> {
-
-        });
-
-        login.setOnClickListener(v -> {
-
         });
     }
 }
