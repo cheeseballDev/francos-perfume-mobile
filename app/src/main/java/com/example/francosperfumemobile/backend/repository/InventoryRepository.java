@@ -1,5 +1,7 @@
 package com.example.francosperfumemobile.backend.repository;
 
+import android.content.Context;
+
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.AddInventoryDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryBatchDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.EditBatchDTO;
@@ -17,8 +19,8 @@ public class InventoryRepository {
 
     private final InventoryAPIEndpoints inventoryApi;
 
-    public InventoryRepository() {
-        this.inventoryApi = RetrofitClient.getInstance().create(InventoryAPIEndpoints.class);
+    public InventoryRepository(Context context) {
+        this.inventoryApi = RetrofitClient.getInstance(context).create(InventoryAPIEndpoints.class);
     }
 
     public Call<InventoryResponse> displayInventory(ProductFilterDTO filter) {

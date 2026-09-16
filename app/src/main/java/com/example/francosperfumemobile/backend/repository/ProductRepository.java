@@ -1,5 +1,7 @@
 package com.example.francosperfumemobile.backend.repository;
 
+import android.content.Context;
+
 import com.example.francosperfumemobile.backend.endpoints.ProductAPIEndpoints;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.ProductResponse;
 import com.example.francosperfumemobile.backend.retrofit.RetrofitClient;
@@ -10,8 +12,8 @@ public class ProductRepository {
 
     private final ProductAPIEndpoints productApi;
 
-    public ProductRepository() {
-        this.productApi = RetrofitClient.getInstance().create(ProductAPIEndpoints.class);
+    public ProductRepository(Context context) {
+        this.productApi = RetrofitClient.getInstance(context).create(ProductAPIEndpoints.class);
     }
     public Call<ProductResponse> getProducts() {
         return productApi.getProducts();

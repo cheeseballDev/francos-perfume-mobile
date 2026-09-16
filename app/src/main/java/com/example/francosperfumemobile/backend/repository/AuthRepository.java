@@ -1,5 +1,7 @@
 package com.example.francosperfumemobile.backend.repository;
 
+import android.content.Context;
+
 import com.example.francosperfumemobile.backend.dtos.logindtos.LoginDTO;
 import com.example.francosperfumemobile.backend.dtos.logindtos.OTPDTO;
 import com.example.francosperfumemobile.backend.endpoints.AuthAPIEndpoints;
@@ -10,8 +12,8 @@ import retrofit2.Call;
 
 public class AuthRepository {
     private final AuthAPIEndpoints authApi;
-    public AuthRepository (){
-        this.authApi = RetrofitClient.getInstance().create(AuthAPIEndpoints.class);
+    public AuthRepository (Context context){
+        this.authApi = RetrofitClient.getInstance(context).create(AuthAPIEndpoints.class);
     }
 
     public Call<LoginResponse> login(LoginDTO dto) {
