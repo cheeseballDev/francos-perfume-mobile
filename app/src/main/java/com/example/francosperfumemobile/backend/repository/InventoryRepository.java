@@ -8,7 +8,7 @@ import com.example.francosperfumemobile.backend.dtos.inventorydtos.EditBatchDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.ProductFilterDTO;
 import com.example.francosperfumemobile.backend.endpoints.InventoryAPIEndpoints;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.BatchResponse;
-import com.example.francosperfumemobile.backend.responses.inventoryresponses.FilterResponse;
+import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryFilterResponse;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryResponse;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
 import com.example.francosperfumemobile.backend.retrofit.RetrofitClient;
@@ -17,14 +17,14 @@ import retrofit2.Call;
 
 public class InventoryRepository {
 
-    private final InventoryAPIEndpoints inventoryApi;
+    private final InventoryAPIEndpoints api;
 
     public InventoryRepository(Context context) {
-        this.inventoryApi = RetrofitClient.getInstance(context).create(InventoryAPIEndpoints.class);
+        this.api = RetrofitClient.getInstance(context).create(InventoryAPIEndpoints.class);
     }
 
     public Call<InventoryResponse> displayInventory(ProductFilterDTO filter) {
-        return inventoryApi.getInventory(
+        return api.getInventory(
                 filter.getSearch(),
                 filter.getProductType(),
                 filter.getProductGender(),
@@ -37,25 +37,25 @@ public class InventoryRepository {
     }
 
     public Call<DisplayInventoryDTO> getInventoryItemDetails(int productId) {
-        return inventoryApi.getInventoryItemDetails(productId);
+        return api.getInventoryItemDetails(productId);
     }
 
     public Call<BatchResponse> getInventoryBatches(DisplayInventoryBatchDTO dto) {
-        return inventoryApi.getInventoryBatches(
+        return api.getInventoryBatches(
                 dto.getProductId(),
                 dto.getBranchId()
         );
     }
 
     public Call<Void> updateInventoryBatch(int batchId, EditBatchDTO dto) {
-        return inventoryApi.updateInventoryBatch(batchId, dto);
+        return api.updateInventoryBatch(batchId, dto);
     }
 
     public Call<Void> addNewInventory(AddInventoryDTO dto) {
-        return inventoryApi.addNewInventory(dto);
+        return api.addNewInventory(dto);
     }
 
-    public Call<FilterResponse> getInventoryFilters() {
-        return inventoryApi.getInventoryFilters();
+    public Call<InventoryFilterResponse> getInventoryFilters() {
+        return api.getInventoryFilters();
     }
 }

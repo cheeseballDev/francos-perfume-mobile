@@ -5,7 +5,7 @@ import com.example.francosperfumemobile.backend.responses.inventoryresponses.Inv
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.BatchResponse;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.EditBatchDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.AddInventoryDTO;
-import com.example.francosperfumemobile.backend.responses.inventoryresponses.FilterResponse;
+import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryFilterResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -47,5 +47,5 @@ public interface InventoryAPIEndpoints {
     Call<Void> addNewInventory(@Body AddInventoryDTO dto);
 
     @GET("api/Inventory/filters")
-    Call<FilterResponse> getInventoryFilters();
+    Call<InventoryFilterResponse> getInventoryFilters();
 }

@@ -106,6 +106,66 @@ public class Inventory {
         return ProductImageUrl;
     }
 
+    public void setProductId(int productId) {
+        ProductId = productId;
+    }
+
+    public void setBranchId(int branchId) {
+        BranchId = branchId;
+    }
+
+    public void setBranchDisplayId(String branchDisplayId) {
+        BranchDisplayId = branchDisplayId;
+    }
+
+    public void setBranchName(String branchName) {
+        BranchName = branchName;
+    }
+
+    public void setProductQuantity(int productQuantity) {
+        ProductQuantity = productQuantity;
+    }
+
+    public void setProductBatchCount(int productBatchCount) {
+        ProductBatchCount = productBatchCount;
+    }
+
+    public void setProductDisplayId(String productDisplayId) {
+        ProductDisplayId = productDisplayId;
+    }
+
+    public void setProductName(String productName) {
+        ProductName = productName;
+    }
+
+    public void setProductType(String productType) {
+        ProductType = productType;
+    }
+
+    public void setProductGender(String productGender) {
+        ProductGender = productGender;
+    }
+
+    public void setProductBarcode(String productBarcode) {
+        ProductBarcode = productBarcode;
+    }
+
+    public void setProductStatus(String productStatus) {
+        ProductStatus = productStatus;
+    }
+
+    public void setProductPrice(double productPrice) {
+        ProductPrice = productPrice;
+    }
+
+    public void setProductImageUrl(String productImageUrl) {
+        ProductImageUrl = productImageUrl;
+    }
+
+    public void setProductDateCreated(String productDateCreated) {
+        ProductDateCreated = productDateCreated;
+    }
+
     public String getProductDateCreated() {
         return ProductDateCreated;
     }

@@ -11,7 +11,17 @@ import retrofit2.http.*;
 public interface RequestAPIEndpoints {
 
     @GET("")
-    Call<RequestListResponse> getRequests(@QueryMap Map<String, String> filter);
+    Call<RequestListResponse> getRequests(
+            @Query("PageCount") int pageCount,
+            @Query("PageSize") int pageSize,
+            @Query("Search") String search,
+            @Query("FromBranchId") Integer fromBranchId,
+            @Query("ToBranchId") Integer toBranchId,
+            @Query("RequestStatus") String requestStatus,
+            @Query("Direction") String direction,
+            @Query("FromDate") String fromDate,
+            @Query("ToDate") String toDate
+    );
 
     @GET("{id}")
     Call<RequestDetailResponse> getRequestDetails(@Path("id") int requestId);

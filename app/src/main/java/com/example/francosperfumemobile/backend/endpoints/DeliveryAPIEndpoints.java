@@ -11,10 +11,17 @@ import retrofit2.http.*;
 public interface DeliveryAPIEndpoints {
 
     @GET("")
-    Call<DeliveryListResponse> getDeliveries(@QueryMap Map<String, String> filter);
+    Call<DeliveryListResponse> getDeliveries(
+            @Query("PageNumber") int pageNumber,
+            @Query("PageSize") int pageSize,
+            @Query("Search") String search,
+            @Query("FromBranchId") Integer fromBranchId,
+            @Query("ToBranchId") Integer toBranchId,
+            @Query("DeliveryStatus") String deliveryStatus,
+            @Query("FromDate") String fromDate,
+            @Query("ToDate") String toDate
+    );
 
-    @POST("{requestId}")
-    Call<CreateDeliveryResponse> createDeliveryFromRequest(@Path("requestId") int requestId);
 
     @POST("{deliveryId}/dispatch")
     Call<DispatchDeliveryResponse> dispatchDelivery(@Path("deliveryId") int deliveryId);
@@ -23,9 +30,6 @@ public interface DeliveryAPIEndpoints {
     Call<ReceiveDeliveryResponse> receiveDelivery(
             @Path("deliveryId") int deliveryId,
             @Body ReceiveDeliveryDTO dto);
-
-    @PATCH("{requestId}/close")
-    Call<CloseRequestResponse> closeRequest(@Path("requestId") int requestId);
 
     @GET("{deliveryId}")
     Call<DeliveryDetailResponse> getDeliveryDetails(@Path("deliveryId") int deliveryId);

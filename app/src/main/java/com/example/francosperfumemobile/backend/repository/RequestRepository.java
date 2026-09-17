@@ -16,8 +16,18 @@ public class RequestRepository {
         this.api = RetrofitClient.getInstance(context).create(RequestAPIEndpoints.class);
     }
 
-    public Call<RequestListResponse> getRequests(Map<String, String> filter) {
-        return api.getRequests(filter);
+    public Call<RequestListResponse> displayRequests(RequestFilterDTO filter) {
+        return api.getRequests(
+                filter.getPageCount(),
+                filter.getPageSize(),
+                filter.getSearch(),
+                filter.getFromBranchId(),
+                filter.getToBranchId(),
+                filter.getRequestStatus(),
+                filter.getDirection(),
+                filter.getFromDate(),
+                filter.getToDate()
+        );
     }
 
     public Call<RequestDetailResponse> getRequestDetails(int requestId) {
@@ -28,8 +38,7 @@ public class RequestRepository {
         return api.createRequest(dto);
     }
 
-    public Call<ApprovalResponse> approveRequest(int requestId,
-                                                 java.util.List<ApproveRequestDTO> approvals) {
+    public Call<ApprovalResponse> approveRequest(int requestId, java.util.List<ApproveRequestDTO> approvals) {
         return api.approveRequest(requestId, approvals);
     }
 

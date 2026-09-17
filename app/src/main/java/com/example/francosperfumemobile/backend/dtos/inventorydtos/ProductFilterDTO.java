@@ -9,7 +9,6 @@ public class ProductFilterDTO {
     private String ProductType;
     private String ProductGender;
     private Integer Branch;
-
     public int getPageCount() {
         return PageCount;
     }

@@ -1,21 +1,21 @@
 package com.example.francosperfumemobile.backend.dtos.deliverydtos;
 
 public class DeliveryFilterDTO {
-    private int PageNumber;
-    private int PageSize;
+    private int PageCount = 1;
+    private int PageSize = 20;
     private String Search;
     private Integer FromBranchId;
     private Integer ToBranchId;
     private String DeliveryStatus;
-    private java.util.Date FromDate;
-    private java.util.Date ToDate;
+    private String FromDate;
+    private String ToDate;
 
-    public int getPageNumber() {
-        return PageNumber;
+    public int getPageCount() {
+        return PageCount;
     }
 
-    public void setPageNumber(int pageNumber) {
-        PageNumber = pageNumber;
+    public void setPageCount(int pageCount) {
+        PageCount = pageCount;
     }
 
     public int getPageSize() {
@@ -58,19 +58,19 @@ public class DeliveryFilterDTO {
         DeliveryStatus = deliveryStatus;
     }
 
-    public java.util.Date getFromDate() {
+    public String getFromDate() {
         return FromDate;
     }
 
-    public void setFromDate(java.util.Date fromDate) {
+    public void setFromDate(String fromDate) {
         FromDate = fromDate;
     }
 
-    public java.util.Date getToDate() {
+    public String getToDate() {
         return ToDate;
     }
 
-    public void setToDate(java.util.Date toDate) {
+    public void setToDate(String toDate) {
         ToDate = toDate;
     }
 }

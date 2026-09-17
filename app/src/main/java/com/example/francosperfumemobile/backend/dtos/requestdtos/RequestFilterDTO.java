@@ -1,21 +1,21 @@
 package com.example.francosperfumemobile.backend.dtos.requestdtos;
 
 public class RequestFilterDTO {
-    private int PageNumber;
-    private int PageSize;
-    private String SearchTerm;
+    private int PageCount = 1;
+    private int PageSize = 20;
+    private String Search;
     private Integer FromBranchId;
     private Integer ToBranchId;
     private String RequestStatus;
-    private java.util.Date StartDate;
-    private java.util.Date EndDate;
-
-    public int getPageNumber() {
-        return PageNumber;
+    private String Direction;
+    private String FromDate;
+    private String ToDate;
+    public int getPageCount() {
+        return PageCount;
     }
 
-    public void setPageNumber(int pageNumber) {
-        PageNumber = pageNumber;
+    public void setPageCount(int pageCount) {
+        PageCount = pageCount;
     }
 
     public int getPageSize() {
@@ -26,12 +26,12 @@ public class RequestFilterDTO {
         PageSize = pageSize;
     }
 
-    public String getSearchTerm() {
-        return SearchTerm;
+    public String getSearch() {
+        return Search;
     }
 
-    public void setSearchTerm(String searchTerm) {
-        SearchTerm = searchTerm;
+    public void setSearch(String search) {
+        Search = search;
     }
 
     public Integer getFromBranchId() {
@@ -57,20 +57,22 @@ public class RequestFilterDTO {
     public void setRequestStatus(String requestStatus) {
         RequestStatus = requestStatus;
     }
+    public String getDirection(){return Direction;}
+    public void setDirection(String direction){Direction = direction;}
 
-    public java.util.Date getStartDate() {
-        return StartDate;
+    public String getFromDate() {
+        return FromDate;
     }
 
-    public void setStartDate(java.util.Date startDate) {
-        StartDate = startDate;
+    public void setFromDate(String fromDate) {
+        FromDate = fromDate;
     }
 
-    public java.util.Date getEndDate() {
-        return EndDate;
+    public String getToDate() {
+        return ToDate;
     }
 
-    public void setEndDate(java.util.Date endDate) {
-        EndDate = endDate;
+    public void setToDate(String toDate) {
+        ToDate = toDate;
     }
 }

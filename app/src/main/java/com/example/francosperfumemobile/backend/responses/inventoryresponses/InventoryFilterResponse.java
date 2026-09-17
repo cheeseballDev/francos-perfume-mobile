@@ -2,7 +2,7 @@ package com.example.francosperfumemobile.backend.responses.inventoryresponses;
 
 import java.util.List;
 
-public class FilterResponse {
+public class InventoryFilterResponse {
     private List<String> ProductTypes;
     private List<String> ProductGenders;
     private List<Integer> Branches;
