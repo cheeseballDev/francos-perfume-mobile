@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    app:cardBackgroundColor="@color/bg_card"
+    app:cardCornerRadius="16dp"
+    app:strokeColor="@color/border_stroke"
+    app:strokeWidth="1dp"
+    android:layout_marginTop="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:id="@+id/card_request_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/sample_request_id"
+            android:textSize="@dimen/font_l"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/card_request_unit_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/inventory_sample_unit_count"
+            android:textSize="@dimen/font_m"
+            app:layout_constraintBottom_toBottomOf="@+id/card_request_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/card_request_batch_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inventory_sample_batch_count"
+            android:textSize="@dimen/font_m"
+            app:layout_constraintEnd_toEndOf="@+id/card_request_unit_count"
+            app:layout_constraintTop_toBottomOf="@id/card_request_unit_count" />
+
+        <TextView
+            android:id="@+id/card_delivery_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sample_delivery_id"
+            android:textSize="@dimen/font_m"
+            app:layout_constraintStart_toStartOf="@+id/card_request_id"
+            app:layout_constraintTop_toBottomOf="@+id/card_request_id" />
+
+        <TextView
+            android:id="@+id/card_request_direction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/request_sample_direction"
+            app:layout_constraintStart_toStartOf="@+id/card_delivery_id"
+            app:layout_constraintTop_toBottomOf="@+id/card_delivery_id" />
+
+        <TextView
+            android:id="@+id/card_request_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/badge_design"
+            android:backgroundTint="@color/darker_blue"
+            android:padding="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+
+            android:text="@string/request_sample_status"
+            android:textColor="@color/blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_delivery_id" />
+
+        <TextView
+            android:id="@+id/card_request_stage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/badge_design"
+            android:backgroundTint="@color/darker_magenta"
+            android:padding="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/request_sample_stage"
+
+            android:textColor="@color/magenta"
+            app:layout_constraintBottom_toBottomOf="@+id/card_request_status"
+            app:layout_constraintStart_toEndOf="@+id/card_request_status"
+            app:layout_constraintTop_toTopOf="@+id/card_request_status" />
+
+        <ImageButton
+            android:id="@+id/card_request_view_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:padding="8dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/icon_chevron_right" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

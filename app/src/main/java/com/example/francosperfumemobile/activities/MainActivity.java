@@ -1,15 +1,14 @@
 package com.example.francosperfumemobile.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.francosperfumemobile.R;
@@ -19,7 +18,6 @@ import com.example.francosperfumemobile.fragments.DeliveryFragment;
 import com.example.francosperfumemobile.fragments.InventoryFragment;
 import com.example.francosperfumemobile.fragments.RequestFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.card.MaterialCardView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        //TODO: Ask opinion how the hiding of systemUI would look like
         //hideSystemUI();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -41,36 +40,40 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        /*
-        if (!checkIfLoggedIn()) {
-            startActivity(new Intent(this, LoginActivity.class));
-            this.onDestroy();
-        }
-        */
-
-
         if (savedInstanceState == null) {
-            loadFragment(new DashboardFragment());
+            if (getIntent() != null && getIntent().hasExtra("PREVIOUS_ACTIVE_FRAGMENT")) {
+                handlePreviousActiveFragment(getIntent());
+            } else {
+                loadFragment(new DashboardFragment());
+            }
         }
 
         initializeUI();
 
-        // add logic if top and bottom nav bar are pressed
 
     }
 
-    //TODO: OPTIONAL: CREATE BOOLEAN SHAREDPREFS TO CHECK IF USER HAS EXISTING ACCESSTOKEN
-    /*
-    protected boolean checkIfLoggedIn() {
-
-        SessionManager sessionManager = new SessionManager(this);
-
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-
-        return sessionManager.getAccessToken().equals(sharedPreferences.getString(KEY_ACCESS_TOKEN, null));
+    @Override
+    protected void onNewIntent(@NonNull Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        handlePreviousActiveFragment(intent);
     }
 
-    */
+    private void handlePreviousActiveFragment(Intent intent) {
+        if (intent != null && intent.hasExtra("PREVIOUS_ACTIVE_FRAGMENT")) {
+            String target = intent.getStringExtra("PREVIOUS_ACTIVE_FRAGMENT");
+            if ("INVENTORY".equals(target)) {
+                loadFragment(new InventoryFragment());
+            } else if ("REQUEST".equals(target)) {
+                loadFragment(new RequestFragment());
+            } else if ("DELIVERY".equals(target)) {
+                loadFragment(new DeliveryFragment());
+            } else {
+                loadFragment(new DashboardFragment());
+            }
+        }
+    }
 
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null) {

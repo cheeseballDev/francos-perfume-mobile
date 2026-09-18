@@ -14,9 +14,7 @@ import com.example.francosperfumemobile.R;
 
 public class DashboardCardView extends FrameLayout {
 
-    private TextView textTitle;
-    private TextView textValue;
-    private TextView textWarning;
+    private TextView textTitle, textValue, textWarning;
 
     private ImageView image;
 

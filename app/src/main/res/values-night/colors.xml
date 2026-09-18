@@ -9,4 +9,5 @@
     <color name="status_warning">#FF6B81</color> <!-- Lighter red for high contrast on dark surfaces -->
     <color name="border_stroke">#333333</color>
     <color name="nav_background">#000000</color>
+    <color name="inactive">#F6F5FF</color>
 </resources>

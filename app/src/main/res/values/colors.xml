@@ -8,8 +8,14 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="invisible">#00000000</color>
     <color name="green">#509C54</color>
+    <color name="darker_green">#70509C54</color>
     <color name="yellow_secondary">#FFBC2B</color>
     <color name="blue">#424E9E</color>
+    <color name="darker_blue">#70424E9E</color>
+    <color name="magenta">#AA59BE</color>
+    <color name="darker_magenta">#70AA59BE</color>
+    <color name="gray">#9D9D9D</color>
+    <color name="darker_yellow_primary">#B8AD9E</color>
 
     <!-- UI COMPONENTS -->
     <color name="bg_app">#F6F5FF</color>
@@ -17,6 +23,7 @@
     <color name="text_primary">#1C1C1C</color>
     <color name="text_secondary">#555555</color>
     <color name="status_warning">#7E102C</color>
-    <color name="border_stroke">#E1D4C1</color>
+    <color name="border_stroke">#1c1c1c</color>
     <color name="nav_background">#1C1C1C</color>
+    <color name="inactive">#F6F5FF</color>
 </resources>
