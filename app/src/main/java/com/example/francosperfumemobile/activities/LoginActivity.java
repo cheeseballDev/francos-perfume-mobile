@@ -41,14 +41,12 @@ public class LoginActivity extends AppCompatActivity {
         SessionManager sm = new SessionManager(this);
 
         if (sm.isLoggedIn()) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-            return;
-        }
-
-        if (sm.getRequiresPwChange()) {
-            Toast.makeText(this, "Change your password", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, ForgotPasswordActivity.class));
+            if (sm.getRequiresPwChange()) {
+                Toast.makeText(this, "Change your password", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, ForgotPasswordActivity.class));
+            } else {
+                startActivity(new Intent(this, MainActivity.class));
+            }
             finish();
             return;
         }

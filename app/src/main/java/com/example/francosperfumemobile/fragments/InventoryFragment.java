@@ -18,14 +18,11 @@ import android.widget.Toast;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.adapters.InventoryAdapter;
-import com.example.francosperfumemobile.backend.dtos.inventorydtos.BranchDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.InventorySearchFilterDTO;
 import com.example.francosperfumemobile.backend.repository.InventoryRepository;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryFilterResponse;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryResponse;
-import com.example.francosperfumemobile.backend.retrofit.SessionManager;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,19 +146,13 @@ public class InventoryFragment extends Fragment {
                         gender.setAdapter(genderAdapter);
                     }
 
-                    List<BranchDTO> branches = filterResponse.getBranches();
+                    List<String> branches = filterResponse.getBranches();
                     if(branches != null){
-                        List<Integer> branchNames = new ArrayList<>();
-
-                        for (BranchDTO branch : branches) {
-                            branchNames.add(branch.getBranchId());
-                        }
-
-                        ArrayAdapter<Integer> branchAdapter =
+                        ArrayAdapter<String> branchAdapter =
                                 new ArrayAdapter<>(
                                         requireContext(),
                                         android.R.layout.simple_spinner_item,
-                                        branchNames
+                                        branches
                                 );
 
                         branchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -1,6 +1,5 @@
 package com.example.francosperfumemobile.backend.responses.inventoryresponses;
 
-import com.example.francosperfumemobile.backend.dtos.inventorydtos.BranchDTO;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
@@ -10,7 +9,7 @@ public class InventoryFilterResponse {
     @SerializedName("productGenders")
     private List<String> productGenders;
     @SerializedName("branches")
-    private List<BranchDTO> branches;
+    private List<String> branches;
 
     public List<String> getProductTypes() {
         return productTypes;
@@ -28,11 +27,11 @@ public class InventoryFilterResponse {
         this.productGenders = productGenders;
     }
 
-    public List<BranchDTO> getBranches() {
+    public List<String> getBranches() {
         return branches;
     }
 
-    public void setBranches(List<BranchDTO> branches) {
+    public void setBranches(List<String> branches) {
         this.branches = branches;
     }
 }
