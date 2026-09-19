@@ -10,7 +10,7 @@ import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestD
 
 public class RequestViewHolder extends RecyclerView.ViewHolder {
     TextView cardRequestId, cardRequestUnitCount, cardRequestBatchCount, cardDeliveryId,
-            cardRequestDirection, cardRequestStatus, cardRequestStage;
+            cardRequestFromBranch, cardRequestToBranch, cardRequestStatus, cardRequestStage;
 
     public RequestViewHolder(View view) {
         super(view);
@@ -18,7 +18,8 @@ public class RequestViewHolder extends RecyclerView.ViewHolder {
         cardRequestUnitCount = view.findViewById(R.id.text_view_request_unit_count);
         cardRequestBatchCount = view.findViewById(R.id.text_view_request_batch_count);
         cardDeliveryId = view.findViewById(R.id.text_view_request_delivery_id);
-        cardRequestDirection = view.findViewById(R.id.text_view_request_from_branch);
+        cardRequestFromBranch = view.findViewById(R.id.text_view_request_from_branch);
+        cardRequestToBranch = view.findViewById(R.id.text_view_to_branch);
         cardRequestStatus = view.findViewById(R.id.text_view_request_status);
         cardRequestStage = view.findViewById(R.id.text_view_request_stage);
     }
@@ -28,8 +29,8 @@ public class RequestViewHolder extends RecyclerView.ViewHolder {
         // cardRequestUnitCount.setText("0"); // Not in DTO
         cardRequestBatchCount.setText(String.valueOf(item.getItemCount()));
         // cardDeliveryId.setText("N/A"); // Not in DTO
-        String direction = item.getRequestedFrom() + " -> " + item.getDeliveredTo();
-        cardRequestDirection.setText(direction);
+        cardRequestFromBranch.setText(item.getRequestedFrom());
+        cardRequestToBranch.setText(item.getDeliveredTo());
         cardRequestStatus.setText(item.getRequestStatus());
         cardRequestStage.setText(item.getRequestStage());
     }

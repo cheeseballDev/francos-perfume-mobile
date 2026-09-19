@@ -160,7 +160,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     /*
+
+    TODO: TIGNAN MUNA KUNG NEED
+
     private void hideSystemUI() {
         // Tell the window to layout content edge-to-edge behind the bars
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
