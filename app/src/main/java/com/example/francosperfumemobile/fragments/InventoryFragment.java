@@ -1,5 +1,6 @@
 package com.example.francosperfumemobile.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.francosperfumemobile.R;
+import com.example.francosperfumemobile.activities.InventoryBatchListActivity;
 import com.example.francosperfumemobile.adapters.InventoryAdapter;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.InventorySearchFilterDTO;
@@ -71,7 +73,12 @@ public class InventoryFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_inventory);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        InventoryAdapter adapter = new InventoryAdapter(inventoryList);
+
+
+        InventoryAdapter adapter = new InventoryAdapter(inventoryList, selectedProduct -> {
+            Intent intent = InventoryBatchListActivity.newIntent(requireContext(), selectedProduct.getProductId());
+            startActivity(intent);
+        });
         recyclerView.setAdapter(adapter);
 
         InventoryRepository inventoryRepository = new InventoryRepository(requireContext());

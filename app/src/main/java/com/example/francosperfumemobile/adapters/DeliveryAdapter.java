@@ -9,14 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DisplayDeliveryDTO;
+import com.example.francosperfumemobile.components.DeliveryViewHolder;
 
 import java.util.List;
 
 public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryViewHolder> {
-    private List<DisplayDeliveryDTO> localData;
+    private List<DisplayDeliveryDTO> deliveryList;
 
     public DeliveryAdapter(List<DisplayDeliveryDTO> data) {
-        this.localData = data;
+        this.deliveryList = data;
     }
 
     @NonNull
@@ -28,17 +29,17 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DeliveryViewHolder holder, int position) {
-        DisplayDeliveryDTO item = localData.get(position);
+        DisplayDeliveryDTO item = deliveryList.get(position);
         holder.bind(item);
     }
 
     @Override
     public int getItemCount() {
-        return localData != null ? localData.size() : 0;
+        return deliveryList != null ? deliveryList.size() : 0;
     }
 
     public void updateData(List<DisplayDeliveryDTO> newData) {
-        this.localData = newData;
+        this.deliveryList = newData;
         notifyDataSetChanged();
     }
 }

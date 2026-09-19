@@ -1,6 +1,10 @@
 package com.example.francosperfumemobile.backend.dtos.inventorydtos;
 
-public class DisplayBatchDTO {
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public abstract class DisplayBatchDTO implements Parcelable {
     private int BatchId;
     private String BatchDisplayId;
     private int BatchItemId;

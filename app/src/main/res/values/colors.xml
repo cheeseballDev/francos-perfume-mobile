@@ -14,8 +14,10 @@
     <color name="darker_blue">#70424E9E</color>
     <color name="magenta">#AA59BE</color>
     <color name="darker_magenta">#70AA59BE</color>
-    <color name="gray">#9D9D9D</color>
+    <color name="gray">#878787</color>
+    <color name="muted">#EFEFEF</color>
     <color name="darker_yellow_primary">#B8AD9E</color>
+
 
     <!-- UI COMPONENTS -->
     <color name="bg_app">#F6F5FF</color>

@@ -16,7 +16,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/card_batch_id"
+            android:id="@+id/text_view_batch_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -28,34 +28,34 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/card_delivery_unit_count"
+            android:id="@+id/text_view_delivery_unit_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:text="@string/inventory_sample_unit_count"
             android:textSize="@dimen/font_m"
-            app:layout_constraintBottom_toBottomOf="@+id/card_batch_id"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_batch_id"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/card_batch_date_received"
+            android:id="@+id/edit_text_batch_date_received"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/sample_date_received"
-            app:layout_constraintStart_toStartOf="@+id/card_batch_id"
-            app:layout_constraintTop_toBottomOf="@+id/card_batch_id" />
+            app:layout_constraintStart_toStartOf="@+id/text_view_batch_id"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_batch_id" />
 
         <TextView
-            android:id="@+id/card_batch_target_date"
+            android:id="@+id/text_view_batch_target_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/sample_date_received"
-            app:layout_constraintStart_toStartOf="@+id/card_batch_date_received"
-            app:layout_constraintTop_toBottomOf="@+id/card_batch_date_received" />
+            app:layout_constraintStart_toStartOf="@+id/edit_text_batch_date_received"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_batch_date_received" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_edit_batch"
@@ -68,7 +68,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_batch_target_date" />
+            app:layout_constraintTop_toBottomOf="@+id/text_view_batch_target_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

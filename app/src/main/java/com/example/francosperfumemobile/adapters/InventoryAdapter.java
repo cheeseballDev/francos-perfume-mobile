@@ -3,22 +3,32 @@ package com.example.francosperfumemobile.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
+import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryBatchDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
+import com.example.francosperfumemobile.components.InventoryViewHolder;
 
 import java.util.List;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryViewHolder> {
-    private List<DisplayInventoryDTO> localData;
 
-    public InventoryAdapter(List<DisplayInventoryDTO> data) {
-        localData = data;
+    public interface OnViewProductBatchesListener {
+        // TODO: Feel free to change the name of the variable of the DisplayInventoryBatchDTO to whatever suits it
+        void onViewProductBatches(DisplayInventoryBatchDTO selectedProduct);
+    }
+    private List<DisplayInventoryDTO> inventoryList;
+
+    private final OnViewProductBatchesListener listener;
+
+
+
+    public InventoryAdapter(List<DisplayInventoryDTO> data, OnViewProductBatchesListener listener) {
+        this.inventoryList = data;
+        this.listener = listener;
     }
 
     @NonNull
@@ -30,17 +40,17 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull InventoryViewHolder holder, int position) {
-        DisplayInventoryDTO item = localData.get(position);
-        holder.bind(item);
+        DisplayInventoryDTO item = inventoryList.get(position);
+        holder.bind(item, listener);
     }
 
     @Override
     public int getItemCount() {
-        return localData != null ? localData.size() : 0;
+        return inventoryList != null ? inventoryList.size() : 0;
     }
 
     public void updateData(List<DisplayInventoryDTO> newData) {
-        this.localData = newData;
-        notifyDataSetChanged();
+        this.inventoryList = newData;
+        //notifyDataSetChanged();
     }
 }

@@ -15,7 +15,7 @@ import com.example.francosperfumemobile.components.DashboardCardView;
 
 public class DashboardFragment extends Fragment {
 
-    private DashboardCardView inventoryCard, requestCard, dispatchCard, deliveryCard;
+    private DashboardCardView cardInventory, cardRequest, cardDispatch, cardDelivery;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -36,24 +36,24 @@ public class DashboardFragment extends Fragment {
         initializeUI(view);
 
         //TODO: ADD DATA HERE. PLEASE CREATE A HOOK/SERVICE THAT GETS ALL OF THE DATA INSTEAD OF PUTTING THE LOGIC HERE.
-        if (inventoryCard != null) {
-            inventoryCard.setData("Total Inventory", "1,250", "12 items low stock");
+        if (cardInventory != null) {
+            cardInventory.setData("Total Inventory", "1,250", "12 items low stock");
         }
-        if (requestCard != null) {
-            requestCard.setData("Pending Requests", "5", "Action Required");
+        if (cardRequest != null) {
+            cardRequest.setData("Pending Requests", "5", "Action Required");
         }
-        if (dispatchCard != null) {
-            dispatchCard.setData("For Dispatch", "2", "Ready for shipping");
+        if (cardDispatch != null) {
+            cardDispatch.setData("For Dispatch", "2", "Ready for shipping");
         }
-        if (deliveryCard != null) {
-            deliveryCard.setData("Deliveries", "8", "In transit");
+        if (cardDelivery != null) {
+            cardDelivery.setData("Deliveries", "8", "In transit");
         }
     }
 
     private void initializeUI(View view) {
-        inventoryCard = view.findViewById(R.id.dashboard_inventory_card);
-        requestCard = view.findViewById(R.id.dashboard_requests_card);
-        dispatchCard = view.findViewById(R.id.dashboard_dispatch_card);
-        deliveryCard = view.findViewById(R.id.dashboard_delivery_card);
+        cardInventory = view.findViewById(R.id.dashboard_inventory_card);
+        cardRequest = view.findViewById(R.id.dashboard_requests_card);
+        cardDispatch = view.findViewById(R.id.dashboard_dispatch_card);
+        cardDelivery = view.findViewById(R.id.dashboard_delivery_card);
     }
 }
