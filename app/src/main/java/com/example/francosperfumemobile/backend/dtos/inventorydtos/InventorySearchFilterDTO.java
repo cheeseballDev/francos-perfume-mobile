@@ -1,6 +1,6 @@
 package com.example.francosperfumemobile.backend.dtos.inventorydtos;
 
-public class ProductFilterDTO {
+public class InventorySearchFilterDTO {
     private int PageCount = 1;
     private int PageSize = 20;
     private String Search;

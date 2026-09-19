@@ -33,8 +33,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-       initializeUI(view);
+        initializeUI(view);
 
         //TODO: ADD DATA HERE. PLEASE CREATE A HOOK/SERVICE THAT GETS ALL OF THE DATA INSTEAD OF PUTTING THE LOGIC HERE.
         if (inventoryCard != null) {
@@ -57,6 +56,4 @@ public class DashboardFragment extends Fragment {
         dispatchCard = view.findViewById(R.id.dashboard_dispatch_card);
         deliveryCard = view.findViewById(R.id.dashboard_delivery_card);
     }
-
-
 }

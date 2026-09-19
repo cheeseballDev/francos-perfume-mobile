@@ -7,23 +7,27 @@ public class SessionManager {
     private static final String PREFS_NAME = "francos_perfume_session";
     private static final String KEY_ACCESS_TOKEN = "access_token";
     private static final String KEY_EMPLOYEE_ID = "employee_id";
+    private static final String KEY_EMAIL = "email";
     private static final String KEY_BRANCH_ID = "branch_id";
     private static final String KEY_ROLE = "role";
     private static final String KEY_REQUIRES_PW_CHANGE = "requires_pw_change";
+    private static final String KEY_REQUIRES_OTP = "requires_otp";
     private final SharedPreferences sharedPrefs;
 
     public SessionManager(Context context){
         sharedPrefs = context.getSharedPreferences(PREFS_NAME, context.MODE_PRIVATE);
     }
 
-    public void createSession(String accessToken, int employeeId, int branchId, String role, boolean passwordChange){
+    public void createSession(int employeeId, String email, String accessToken, String role, int branchId, boolean passwordChange, boolean otp){
         SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.putString(KEY_ACCESS_TOKEN, accessToken);
         editor.putInt(KEY_EMPLOYEE_ID, employeeId);
-        editor.putInt(KEY_BRANCH_ID, branchId);
+        editor.putString(KEY_EMAIL, email);
+        editor.putString(KEY_ACCESS_TOKEN, accessToken);
         editor.putString(KEY_ROLE, role);
+        editor.putInt(KEY_BRANCH_ID, branchId);
         editor.putBoolean(KEY_REQUIRES_PW_CHANGE, passwordChange);
-        editor.apply();
+        editor.putBoolean(KEY_REQUIRES_OTP, otp);
+        boolean success = editor.commit();
     }
 
     public void updateAccessToken(String newToken) {
@@ -38,7 +42,8 @@ public class SessionManager {
     }
 
     public String getAccessToken() {
-        return sharedPrefs.getString(KEY_ACCESS_TOKEN, null);
+        String token = sharedPrefs.getString(KEY_ACCESS_TOKEN, null);
+        return token;
     }
 
     public int getEmployeeId() {
@@ -54,10 +59,13 @@ public class SessionManager {
     }
 
     public boolean getRequiresPwChange() {
-        return sharedPrefs.getBoolean(KEY_REQUIRES_PW_CHANGE, false);
+        boolean result = sharedPrefs.getBoolean(KEY_REQUIRES_PW_CHANGE, false);
+        return result;
     }
 
     public boolean isLoggedIn() {
-        return getAccessToken() != null && !getAccessToken().isEmpty();
+        String token = getAccessToken();
+        boolean result = token != null && !token.isEmpty();
+        return result;
     }
 }

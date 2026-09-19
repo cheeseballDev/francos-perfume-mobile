@@ -2,6 +2,7 @@ package com.example.francosperfumemobile.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -21,9 +22,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String PREFS_NAME = "francos_perfume_session";
-    private static final String KEY_ACCESS_TOKEN = "access_token";
-
     private BottomNavigationView bottomNavigationView;
     private DashboardCardView inventoryCard, requestCard, dispatchCard, deliveryCard;
 
@@ -41,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (savedInstanceState == null) {
+            loadFragment(new DashboardFragment());
             if (getIntent() != null && getIntent().hasExtra("PREVIOUS_ACTIVE_FRAGMENT")) {
                 handlePreviousActiveFragment(getIntent());
             } else {
@@ -49,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         initializeUI();
-
-
     }
 
     @Override

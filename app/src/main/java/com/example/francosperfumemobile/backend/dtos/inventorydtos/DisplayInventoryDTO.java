@@ -1,159 +1,177 @@
 package com.example.francosperfumemobile.backend.dtos.inventorydtos;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class DisplayInventoryDTO {
-    private int ProductId;
-    private String ProductDisplayId;
-    private String ProductName;
-    private String ProductType;
-    private String ProductGender;
-    private String ProductBarcode;
-    private String ProductStatus;
-    private double ProductPrice;
-    private String ProductImageUrl;
-    private String ProductDateCreated;
-    private Integer BranchId;
-    private String BranchDisplayId;
-    private String BranchName;
-    private int ProductQuantity;
-    private int ProductBatchCount;
-    private String StockWarning;
-    private List<DisplayBatchDTO> Batches;
+    @SerializedName("productId")
+    private int productId;
+    @SerializedName("productDisplayId")
+    private String productDisplayId;
+    @SerializedName("productName")
+    private String productName;
+    @SerializedName("productType")
+    private String productType;
+    @SerializedName("productGender")
+    private String productGender;
+    @SerializedName("productBarcode")
+    private String productBarcode;
+    @SerializedName("productStatus")
+    private String productStatus;
+    @SerializedName("productPrice")
+    private double productPrice;
+    @SerializedName("productImageUrl")
+    private String productImageUrl;
+    @SerializedName("productDateCreated")
+    private String productDateCreated;
+    @SerializedName("branchId")
+    private Integer branchId;
+    @SerializedName("branchDisplayId")
+    private String branchDisplayId;
+    @SerializedName("branchName")
+    private String branchName;
+    @SerializedName("productQuantity")
+    private int productQuantity;
+    @SerializedName("productBatchCount")
+    private int productBatchCount;
+    @SerializedName("stockWarning")
+    private String stockWarning;
+    @SerializedName("batches")
+    private List<DisplayBatchDTO> batches;
 
     public int getProductId() {
-        return ProductId;
+        return productId;
     }
 
     public void setProductId(int productId) {
-        ProductId = productId;
+        this.productId = productId;
     }
 
     public String getProductDisplayId() {
-        return ProductDisplayId;
+        return productDisplayId;
     }
 
     public void setProductDisplayId(String productDisplayId) {
-        ProductDisplayId = productDisplayId;
+        this.productDisplayId = productDisplayId;
     }
 
     public String getProductName() {
-        return ProductName;
+        return productName;
     }
 
     public void setProductName(String productName) {
-        ProductName = productName;
+        this.productName = productName;
     }
 
     public String getProductType() {
-        return ProductType;
+        return productType;
     }
 
     public void setProductType(String productType) {
-        ProductType = productType;
+        this.productType = productType;
     }
 
     public String getProductGender() {
-        return ProductGender;
+        return productGender;
     }
 
     public void setProductGender(String productGender) {
-        ProductGender = productGender;
+        this.productGender = productGender;
     }
 
     public String getProductBarcode() {
-        return ProductBarcode;
+        return productBarcode;
     }
 
     public void setProductBarcode(String productBarcode) {
-        ProductBarcode = productBarcode;
+        this.productBarcode = productBarcode;
     }
 
     public String getProductStatus() {
-        return ProductStatus;
+        return productStatus;
     }
 
     public void setProductStatus(String productStatus) {
-        ProductStatus = productStatus;
+        this.productStatus = productStatus;
     }
 
     public double getProductPrice() {
-        return ProductPrice;
+        return productPrice;
     }
 
     public void setProductPrice(double productPrice) {
-        ProductPrice = productPrice;
+        this.productPrice = productPrice;
     }
 
     public String getProductImageUrl() {
-        return ProductImageUrl;
+        return productImageUrl;
     }
 
     public void setProductImageUrl(String productImageUrl) {
-        ProductImageUrl = productImageUrl;
+        this.productImageUrl = productImageUrl;
     }
 
     public String getProductDateCreated() {
-        return ProductDateCreated;
+        return productDateCreated;
     }
 
     public void setProductDateCreated(String productDateCreated) {
-        ProductDateCreated = productDateCreated;
+        this.productDateCreated = productDateCreated;
     }
 
     public Integer getBranchId() {
-        return BranchId;
+        return branchId;
     }
 
     public void setBranchId(Integer branchId) {
-        BranchId = branchId;
+        this.branchId = branchId;
     }
 
     public String getBranchDisplayId() {
-        return BranchDisplayId;
+        return branchDisplayId;
     }
 
     public void setBranchDisplayId(String branchDisplayId) {
-        BranchDisplayId = branchDisplayId;
+        this.branchDisplayId = branchDisplayId;
     }
 
     public String getBranchName() {
-        return BranchName;
+        return branchName;
     }
 
     public void setBranchName(String branchName) {
-        BranchName = branchName;
+        this.branchName = branchName;
     }
 
     public int getProductQuantity() {
-        return ProductQuantity;
+        return productQuantity;
     }
 
     public void setProductQuantity(int productQuantity) {
-        ProductQuantity = productQuantity;
+        this.productQuantity = productQuantity;
     }
 
     public int getProductBatchCount() {
-        return ProductBatchCount;
+        return productBatchCount;
     }
 
     public void setProductBatchCount(int productBatchCount) {
-        ProductBatchCount = productBatchCount;
+        this.productBatchCount = productBatchCount;
     }
 
     public String getStockWarning() {
-        return StockWarning;
+        return stockWarning;
     }
 
     public void setStockWarning(String stockWarning) {
-        StockWarning = stockWarning;
+        this.stockWarning = stockWarning;
     }
 
     public List<DisplayBatchDTO> getBatches() {
-        return Batches;
+        return batches;
     }
 
     public void setBatches(List<DisplayBatchDTO> batches) {
-        Batches = batches;
+        this.batches = batches;
     }
 }
