@@ -6,34 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".fragments.InventoryFragment">
 
-        <EditText
-            android:id="@+id/edit_text_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/text_field_design"
-            android:ems="10"
-            android:hint="@string/hint_search_inventory"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:textSize="@dimen/font_m"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
+    <!-- Search Field -->
+    <EditText
+        android:id="@+id/edit_text_search"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/text_field_design"
+        android:ems="10"
+        android:hint="@string/hint_search_inventory"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:padding="10dp"
+        android:textSize="@dimen/font_m"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Filters Row 1: Perfume Type & Gender -->
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_search"
-        tools:layout_editor_absoluteX="16dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_search">
 
         <Spinner
             android:id="@+id/dropdown_perfume_type"
@@ -54,44 +57,49 @@
             android:minHeight="48dp" />
     </LinearLayout>
 
+    <!-- Filter Row 2: Branch Location -->
     <Spinner
         android:id="@+id/dropdown_branch"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/dropdown_design"
         android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
+    <!-- Scrollable RecyclerView (Bounded between Branch Dropdown and Pagination Bar) -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_inventory"
         android:layout_width="0dp"
-        android:layout_height="500dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="@+id/dropdown_branch"
-        app:layout_constraintStart_toStartOf="@+id/dropdown_branch"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/layout_pagination"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dropdown_branch"
         tools:listitem="@layout/card_inventory" />
 
+    <!-- Fixed Pagination Controls at the Bottom -->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_pagination"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_view_inventory">
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
             android:id="@+id/button_last_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_weight="1"
             android:backgroundTint="@color/transparent"
+            android:contentDescription="Previous Page"
             android:src="@drawable/icon_chevron_left"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -113,12 +121,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:layout_weight="1"
             android:backgroundTint="@color/transparent"
+            android:contentDescription="Next Page"
             android:src="@drawable/icon_chevron_right"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
