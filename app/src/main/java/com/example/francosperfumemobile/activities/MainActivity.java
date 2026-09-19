@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private View topToolbar;
     private ImageButton buttonMenu, buttonNotification;
     private AppCompatButton buttonLogout;
+    private TextView textViewBranch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         buttonMenu = topToolbar.findViewById(R.id.button_menu);
         buttonNotification = topToolbar.findViewById(R.id.button_notification);
         buttonLogout = drawerLayout.findViewById(R.id.button_logout);
+        textViewBranch = drawerLayout.findViewById(R.id.text_view_drawer_branch);
 
         initializeListeners();
     }
