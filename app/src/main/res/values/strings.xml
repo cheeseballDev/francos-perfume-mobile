@@ -70,7 +70,7 @@
     <string name="sample_delivery_id">DEL-###</string>
     <string name="request_sample_status">Pending</string>
     <string name="request_sample_stage">Owner Review</string>
-    <string name="request_sample_direction"><![CDATA[Sta. Lucia -> Riverbanks]]></string>
+    <string name="request_sample_from_branch">Sta. Lucia</string>
     <string name="hint_request_search">Search for request by id...</string>
     <string name="inbound_text">Inbound</string>
     <string name="outbound_text">Outbound</string>
@@ -89,4 +89,7 @@
     <string name="save_text">Save</string>
     <string name="cancel_text">Cancel</string>
     <string name="target_date_text">Target Date:</string>
+    <string name="sample_date_submitted">Date Submitted: 2026/01/31</string>
+    <string name="to_text">to</string>
+    <string name="request_sample_to_branch">Riverbanks</string>
 </resources>

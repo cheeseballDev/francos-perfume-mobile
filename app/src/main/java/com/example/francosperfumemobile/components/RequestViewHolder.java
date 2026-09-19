@@ -18,7 +18,7 @@ public class RequestViewHolder extends RecyclerView.ViewHolder {
         cardRequestUnitCount = view.findViewById(R.id.text_view_request_unit_count);
         cardRequestBatchCount = view.findViewById(R.id.text_view_request_batch_count);
         cardDeliveryId = view.findViewById(R.id.text_view_request_delivery_id);
-        cardRequestDirection = view.findViewById(R.id.text_view_request_direction);
+        cardRequestDirection = view.findViewById(R.id.text_view_request_from_branch);
         cardRequestStatus = view.findViewById(R.id.text_view_request_status);
         cardRequestStage = view.findViewById(R.id.text_view_request_stage);
     }

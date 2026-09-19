@@ -37,7 +37,7 @@ public class InventoryFragment extends Fragment {
 
     private final List<DisplayInventoryDTO> inventoryList = new ArrayList<>();
     private Spinner dropdownPerfumeType, dropdownGenderType, dropdownBranch;
-    private EditText textfieldSearch;
+    private EditText editTextSearch;
 
 
     public InventoryFragment() {
@@ -65,7 +65,7 @@ public class InventoryFragment extends Fragment {
     //i just need to get them to work
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        textfieldSearch = view.findViewById(R.id.textfield_search);
+        editTextSearch = view.findViewById(R.id.edit_text_search);
         dropdownPerfumeType = view.findViewById(R.id.dropdown_perfume_type);
         dropdownGenderType = view.findViewById(R.id.dropdown_gender_type);
         dropdownBranch = view.findViewById(R.id.dropdown_branch);

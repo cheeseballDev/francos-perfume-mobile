@@ -58,11 +58,11 @@
             app:layout_constraintTop_toBottomOf="@+id/text_view_request_id" />
 
         <TextView
-            android:id="@+id/text_view_request_direction"
+            android:id="@+id/text_view_request_from_branch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/request_sample_direction"
+            android:text="@string/request_sample_from_branch"
             app:layout_constraintStart_toStartOf="@+id/text_view_request_delivery_id"
             app:layout_constraintTop_toBottomOf="@+id/text_view_request_delivery_id" />
 
@@ -81,6 +81,26 @@
             android:textColor="@color/blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/text_view_request_delivery_id" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/to_text"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_request_from_branch"
+            app:layout_constraintStart_toEndOf="@+id/text_view_request_from_branch"
+            app:layout_constraintTop_toTopOf="@+id/text_view_request_from_branch" />
+
+        <TextView
+            android:id="@+id/text_view_to_branch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/request_sample_to_branch"
+            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="@+id/textView2" />
 
         <TextView
             android:id="@+id/text_view_request_stage"
