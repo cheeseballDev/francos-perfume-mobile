@@ -9,14 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestDTO;
+import com.example.francosperfumemobile.components.RequestViewHolder;
 
 import java.util.List;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestViewHolder> {
-    private List<DisplayRequestDTO> localData;
+    private List<DisplayRequestDTO> requestList;
 
     public RequestAdapter(List<DisplayRequestDTO> data) {
-        localData = data;
+        requestList = data;
     }
 
     @NonNull
@@ -28,17 +29,17 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
-        DisplayRequestDTO item = localData.get(position);
+        DisplayRequestDTO item = requestList.get(position);
         holder.bind(item);
     }
 
     @Override
     public int getItemCount() {
-        return localData != null ? localData.size() : 0;
+        return requestList != null ? requestList.size() : 0;
     }
 
     public void updateData(List<DisplayRequestDTO> newData) {
-        this.localData = newData;
+        this.requestList = newData;
         notifyDataSetChanged();
     }
 }

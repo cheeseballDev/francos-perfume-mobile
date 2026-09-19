@@ -17,7 +17,7 @@
         >
 
         <TextView
-            android:id="@+id/card_request_id"
+            android:id="@+id/text_view_request_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -29,46 +29,46 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/card_request_unit_count"
+            android:id="@+id/text_view_request_unit_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:text="@string/inventory_sample_unit_count"
             android:textSize="@dimen/font_m"
-            app:layout_constraintBottom_toBottomOf="@+id/card_request_id"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_request_id"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/card_request_batch_count"
+            android:id="@+id/text_view_request_batch_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/inventory_sample_batch_count"
             android:textSize="@dimen/font_m"
-            app:layout_constraintEnd_toEndOf="@+id/card_request_unit_count"
-            app:layout_constraintTop_toBottomOf="@id/card_request_unit_count" />
+            app:layout_constraintEnd_toEndOf="@+id/text_view_request_unit_count"
+            app:layout_constraintTop_toBottomOf="@id/text_view_request_unit_count" />
 
         <TextView
-            android:id="@+id/card_delivery_id"
+            android:id="@+id/text_view_request_delivery_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sample_delivery_id"
             android:textSize="@dimen/font_m"
-            app:layout_constraintStart_toStartOf="@+id/card_request_id"
-            app:layout_constraintTop_toBottomOf="@+id/card_request_id" />
+            app:layout_constraintStart_toStartOf="@+id/text_view_request_id"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_request_id" />
 
         <TextView
-            android:id="@+id/card_request_direction"
+            android:id="@+id/text_view_request_direction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/request_sample_direction"
-            app:layout_constraintStart_toStartOf="@+id/card_delivery_id"
-            app:layout_constraintTop_toBottomOf="@+id/card_delivery_id" />
+            app:layout_constraintStart_toStartOf="@+id/text_view_request_delivery_id"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_request_delivery_id" />
 
         <TextView
-            android:id="@+id/card_request_status"
+            android:id="@+id/text_view_request_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -81,10 +81,10 @@
             android:text="@string/request_sample_status"
             android:textColor="@color/blue"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/card_delivery_id" />
+            app:layout_constraintStart_toStartOf="@+id/text_view_request_delivery_id" />
 
         <TextView
-            android:id="@+id/card_request_stage"
+            android:id="@+id/text_view_request_stage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -96,12 +96,12 @@
             android:text="@string/request_sample_stage"
 
             android:textColor="@color/magenta"
-            app:layout_constraintBottom_toBottomOf="@+id/card_request_status"
-            app:layout_constraintStart_toEndOf="@+id/card_request_status"
-            app:layout_constraintTop_toTopOf="@+id/card_request_status" />
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_request_status"
+            app:layout_constraintStart_toEndOf="@+id/text_view_request_status"
+            app:layout_constraintTop_toTopOf="@+id/text_view_request_status" />
 
         <ImageButton
-            android:id="@+id/card_request_view_details"
+            android:id="@+id/text_view_request_view_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"

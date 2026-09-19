@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_ACCESS_TOKEN = "access_token";
 
     private BottomNavigationView bottomNavigationView;
-    private DashboardCardView inventoryCard, requestCard, dispatchCard, deliveryCard;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,11 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeUI() {
         bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
-
-        inventoryCard = findViewById(R.id.dashboard_inventory_card);
-        requestCard = findViewById(R.id.dashboard_requests_card);
-        dispatchCard = findViewById(R.id.dashboard_dispatch_card);
-        deliveryCard = findViewById(R.id.dashboard_delivery_card);
         initializeListeners();
     }
 

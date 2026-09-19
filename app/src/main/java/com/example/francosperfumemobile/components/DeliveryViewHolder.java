@@ -1,4 +1,4 @@
-package com.example.francosperfumemobile.adapters;
+package com.example.francosperfumemobile.components;
 
 import android.view.View;
 import android.widget.TextView;
@@ -13,11 +13,11 @@ public class DeliveryViewHolder extends RecyclerView.ViewHolder {
 
     public DeliveryViewHolder(View view) {
         super(view);
-        cardDeliveryId = view.findViewById(R.id.card_delivery_id);
-        cardDeliveryUnitCount = view.findViewById(R.id.card_delivery_unit_count);
-        cardDeliveryBatchCount = view.findViewById(R.id.card_delivery_batch_count);
-        cardDeliveryDirection = view.findViewById(R.id.card_delivery_direction);
-        cardDeliveryStage = view.findViewById(R.id.card_delivery_stage);
+        cardDeliveryId = view.findViewById(R.id.text_view_request_delivery_id);
+        cardDeliveryUnitCount = view.findViewById(R.id.text_view_delivery_unit_count);
+        cardDeliveryBatchCount = view.findViewById(R.id.text_view_delivery_batch_count);
+        cardDeliveryDirection = view.findViewById(R.id.text_view_delivery_direction);
+        cardDeliveryStage = view.findViewById(R.id.text_view_delivery_stage);
     }
 
     public void bind(DisplayDeliveryDTO item) {

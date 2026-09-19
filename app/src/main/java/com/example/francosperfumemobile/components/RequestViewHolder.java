@@ -1,4 +1,4 @@
-package com.example.francosperfumemobile.adapters;
+package com.example.francosperfumemobile.components;
 
 import android.view.View;
 import android.widget.TextView;
@@ -14,13 +14,13 @@ public class RequestViewHolder extends RecyclerView.ViewHolder {
 
     public RequestViewHolder(View view) {
         super(view);
-        cardRequestId = view.findViewById(R.id.card_request_id);
-        cardRequestUnitCount = view.findViewById(R.id.card_request_unit_count);
-        cardRequestBatchCount = view.findViewById(R.id.card_request_batch_count);
-        cardDeliveryId = view.findViewById(R.id.card_delivery_id);
-        cardRequestDirection = view.findViewById(R.id.card_request_direction);
-        cardRequestStatus = view.findViewById(R.id.card_request_status);
-        cardRequestStage = view.findViewById(R.id.card_request_stage);
+        cardRequestId = view.findViewById(R.id.text_view_request_id);
+        cardRequestUnitCount = view.findViewById(R.id.text_view_request_unit_count);
+        cardRequestBatchCount = view.findViewById(R.id.text_view_request_batch_count);
+        cardDeliveryId = view.findViewById(R.id.text_view_request_delivery_id);
+        cardRequestDirection = view.findViewById(R.id.text_view_request_direction);
+        cardRequestStatus = view.findViewById(R.id.text_view_request_status);
+        cardRequestStage = view.findViewById(R.id.text_view_request_stage);
     }
 
     public void bind(DisplayRequestDTO item) {

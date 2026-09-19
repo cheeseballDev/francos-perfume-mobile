@@ -2,7 +2,6 @@ package com.example.francosperfumemobile.components;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.drawable.Icon;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -14,7 +13,7 @@ import com.example.francosperfumemobile.R;
 
 public class DashboardCardView extends FrameLayout {
 
-    private TextView textTitle, textValue, textWarning;
+    private TextView textViewTitle, textViewValue, textViewWarning;
 
     private ImageView image;
 
@@ -25,17 +24,17 @@ public class DashboardCardView extends FrameLayout {
 
     private void initialize(Context context) {
         inflate(context, R.layout.card_dashboard, this);
-        image = findViewById(R.id.card_dashboard_icon);
-        textTitle = findViewById(R.id.card_dashboard_title);
-        textValue = findViewById(R.id.card_dashboard_value);
-        textWarning = findViewById(R.id.card_dashboard_warning);
+        image = findViewById(R.id.image_view_dashboard_icon);
+        textViewTitle = findViewById(R.id.text_view_dashboard_title);
+        textViewValue = findViewById(R.id.text_view_dashboard_value);
+        textViewWarning = findViewById(R.id.text_view_dashboard_warning);
     }
 
     public void setData(String title, String value, String warning) {
         setIcon(title);
-        if (textTitle != null) textTitle.setText(title);
-        if (textValue != null) textValue.setText(value);
-        if (textWarning != null) textWarning.setText(warning);
+        if (textViewTitle != null) textViewTitle.setText(title);
+        if (textViewValue != null) textViewValue.setText(value);
+        if (textViewWarning != null) textViewWarning.setText(warning);
     }
 
     private boolean containsIgnoreCase(String type, String text) {

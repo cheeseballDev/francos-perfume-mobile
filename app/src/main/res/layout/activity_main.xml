@@ -41,7 +41,7 @@
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
             <ImageView
-                android:id="@+id/logo"
+                android:id="@+id/image_view_logo"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"

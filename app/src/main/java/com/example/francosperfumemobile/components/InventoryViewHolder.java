@@ -1,4 +1,4 @@
-package com.example.francosperfumemobile.adapters;
+package com.example.francosperfumemobile.components;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -7,26 +7,29 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
+import com.example.francosperfumemobile.adapters.InventoryAdapter;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
 
 public class InventoryViewHolder extends RecyclerView.ViewHolder {
     ImageView imagePerfumeIcon;
     TextView textProductName, textProductId, textProductUnitCount, textProductBatchCount,
             textProductBranchLocation, textProductType, textProductGender;
+
+
     public InventoryViewHolder(View view) {
         super(view);
-        imagePerfumeIcon = view.findViewById(R.id.card_inventory_icon);
-        textProductName = view.findViewById(R.id.card_inventory_product_name);
-        textProductId = view.findViewById(R.id.card_inventory_product_id);
-        textProductUnitCount = view.findViewById(R.id.card_inventory_unit_count);
-        textProductBatchCount = view.findViewById(R.id.card_inventory_batch_count);
-        textProductBranchLocation = view.findViewById(R.id.card_inventory_branch_location);
-        textProductType = view.findViewById(R.id.card_inventory_product_type);
-        textProductGender = view.findViewById(R.id.card_inventory_gender_type);
+        imagePerfumeIcon = view.findViewById(R.id.image_view_inventory_icon);
+        textProductName = view.findViewById(R.id.text_view_inventory_product_name);
+        textProductId = view.findViewById(R.id.text_view_inventory_product_id);
+        textProductUnitCount = view.findViewById(R.id.text_view_inventory_unit_count);
+        textProductBatchCount = view.findViewById(R.id.text_view_inventory_batch_count);
+        textProductBranchLocation = view.findViewById(R.id.text_view_inventory_branch_location);
+        textProductType = view.findViewById(R.id.text_view_inventory_product_type);
+        textProductGender = view.findViewById(R.id.text_view_inventory_gender_type);
 
     }
 
-    public void bind(DisplayInventoryDTO item) {
+    public void bind(DisplayInventoryDTO item, InventoryAdapter.OnViewProductBatchesListener listener) {
         textProductName.setText(item.getProductName());
         textProductId.setText(item.getProductDisplayId());
         textProductUnitCount.setText(String.valueOf(item.getProductQuantity()));

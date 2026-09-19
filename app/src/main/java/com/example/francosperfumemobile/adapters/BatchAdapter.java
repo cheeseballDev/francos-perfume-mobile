@@ -3,21 +3,28 @@ package com.example.francosperfumemobile.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayBatchDTO;
+import com.example.francosperfumemobile.components.BatchViewHolder;
 
 import java.util.List;
 
 public class BatchAdapter extends RecyclerView.Adapter<BatchViewHolder> {
-    private List<DisplayBatchDTO> localData;
 
-    public BatchAdapter(List<DisplayBatchDTO> data) {
-        this.localData = data;
+    public interface OnEditBatchListener {
+        void onEditBatchClick(DisplayBatchDTO item);
+    }
+
+    private List<DisplayBatchDTO> batchList;
+    private final OnEditBatchListener listener;
+
+    public BatchAdapter(List<DisplayBatchDTO> data, OnEditBatchListener listener) {
+        this.batchList = data;
+        this.listener = listener;
     }
 
     @NonNull
@@ -29,17 +36,17 @@ public class BatchAdapter extends RecyclerView.Adapter<BatchViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull BatchViewHolder holder, int position) {
-        DisplayBatchDTO item = localData.get(position);
-        holder.bind(item);
+        DisplayBatchDTO item = batchList.get(position);
+        holder.bind(item, listener);
     }
 
     @Override
     public int getItemCount() {
-        return localData != null ? localData.size() : 0;
+        return batchList != null ? batchList.size() : 0;
     }
 
     public void updateData(List<DisplayBatchDTO> newData) {
-        this.localData = newData;
-        notifyDataSetChanged();
+        this.batchList = newData;
+        //notifyDataSetChanged();
     }
 }

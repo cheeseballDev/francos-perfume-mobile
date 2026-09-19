@@ -35,8 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     private void initializeUI() {
         loginButton = findViewById(R.id.button_login);
         forgotPasswordButton = findViewById(R.id.button_forgot_password);
-        emailTextField = findViewById(R.id.textfield_email);
-        passwordTextField = findViewById(R.id.textfield_password);
+        emailTextField = findViewById(R.id.edit_text_email);
+        passwordTextField = findViewById(R.id.edit_text_password);
 
         setListeners();
     }
