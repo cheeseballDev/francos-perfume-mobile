@@ -19,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.francosperfumemobile.R;
+import com.example.francosperfumemobile.backend.retrofit.SessionManager;
 import com.example.francosperfumemobile.components.DashboardCardView;
 import com.example.francosperfumemobile.fragments.DashboardFragment;
 import com.example.francosperfumemobile.fragments.DeliveryFragment;
@@ -129,7 +130,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         buttonLogout.setOnClickListener(v -> {
-            // TODO: Add logout function here
+            SessionManager sm = new SessionManager(this);
+            sm.clearSession();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         });
 
         // LISTENERS GALING SA AI
