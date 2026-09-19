@@ -1,46 +1,62 @@
 package com.example.francosperfumemobile.backend.responses.loginresponses;
 
+import com.google.gson.annotations.SerializedName;
+
 public class LoginResponse {
-    private int EmployeeId;
-    private int BranchId;
-    private String Role;
-    private String Email;
-    private String AccessToken;
-    private boolean RequiresPasswordChange;
+    @SerializedName("employeeId")
+    private int employeeId;
+    @SerializedName("branchId")
+    private int branchId;
+    @SerializedName("role")
+    private String role;
+    @SerializedName("email")
+    private String email;
+    @SerializedName("accessToken")
+    private String accessToken;
+    @SerializedName("requiresPasswordChange")
+    private boolean requiresPasswordChange;
+    @SerializedName("requiresOtp")
+    private boolean requiresOtp;
     public int getEmployeeId() {
-        return EmployeeId;
+        return employeeId;
     }
     public void setEmployeeId(int employeeId) {
-        EmployeeId = employeeId;
+        this.employeeId = employeeId;
     }
     public int getBranchId() {
-        return BranchId;
+        return branchId;
     }
     public void setBranchId(int branchId) {
-        BranchId = branchId;
+        this.branchId = branchId;
     }
     public String getRole() {
-        return Role;
+        return role;
     }
     public void setRole(String role) {
-        Role = role;
+        this.role = role;
     }
     public String getEmail() {
-        return Email;
+        return email;
     }
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
     public String getAccessToken() {
-        return AccessToken;
+        return accessToken;
     }
     public void setAccessToken(String accessToken) {
-        AccessToken = accessToken;
+        this.accessToken = accessToken;
     }
     public boolean isRequiresPasswordChange() {
-        return RequiresPasswordChange;
+        return requiresPasswordChange;
     }
     public void setRequiresPasswordChange(boolean requiresPasswordChange) {
-        RequiresPasswordChange = requiresPasswordChange;
+        this.requiresPasswordChange = requiresPasswordChange;
+    }
+    public boolean isRequiresOTP() {
+        return requiresOtp;
+    }
+    public void setRequiresOTP(boolean requiresOTP) {
+        this.requiresOtp = requiresOTP;
     }
 }

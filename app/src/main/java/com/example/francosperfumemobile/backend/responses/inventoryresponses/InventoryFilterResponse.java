@@ -1,30 +1,38 @@
 package com.example.francosperfumemobile.backend.responses.inventoryresponses;
 
+import com.example.francosperfumemobile.backend.dtos.inventorydtos.BranchDTO;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class InventoryFilterResponse {
-    private List<String> ProductTypes;
-    private List<String> ProductGenders;
-    private List<Integer> Branches;
+    @SerializedName("productTypes")
+    private List<String> productTypes;
+    @SerializedName("productGenders")
+    private List<String> productGenders;
+    @SerializedName("branches")
+    private List<BranchDTO> branches;
+
     public List<String> getProductTypes() {
-        return ProductTypes;
+        return productTypes;
     }
 
     public void setProductTypes(List<String> productTypes) {
-        this.ProductTypes = productTypes;
+        this.productTypes = productTypes;
     }
 
     public List<String> getProductGenders() {
-        return ProductGenders;
+        return productGenders;
     }
 
-    public void setProductGenders(List<String> productGenders) { this.ProductGenders = productGenders; }
-
-    public List<Integer> getBranches() {
-        return Branches;
+    public void setProductGenders(List<String> productGenders) {
+        this.productGenders = productGenders;
     }
 
-    public void setBranches(List<Integer> branches) {
-        this.Branches = branches;
+    public List<BranchDTO> getBranches() {
+        return branches;
+    }
+
+    public void setBranches(List<BranchDTO> branches) {
+        this.branches = branches;
     }
 }

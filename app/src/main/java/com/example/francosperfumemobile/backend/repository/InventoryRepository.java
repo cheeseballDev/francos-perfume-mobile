@@ -5,7 +5,7 @@ import android.content.Context;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.AddInventoryDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryBatchDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.EditBatchDTO;
-import com.example.francosperfumemobile.backend.dtos.inventorydtos.ProductFilterDTO;
+import com.example.francosperfumemobile.backend.dtos.inventorydtos.InventorySearchFilterDTO;
 import com.example.francosperfumemobile.backend.endpoints.InventoryAPIEndpoints;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.BatchResponse;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryFilterResponse;
@@ -23,7 +23,7 @@ public class InventoryRepository {
         this.api = RetrofitClient.getInstance(context).create(InventoryAPIEndpoints.class);
     }
 
-    public Call<InventoryResponse> displayInventory(ProductFilterDTO filter) {
+    public Call<InventoryResponse> displayInventory(InventorySearchFilterDTO filter) {
         return api.getInventory(
                 filter.getSearch(),
                 filter.getProductType(),
