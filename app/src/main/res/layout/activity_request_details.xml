@@ -8,46 +8,12 @@
     android:layout_height="match_parent"
     tools:context=".activities.RequestDetailsActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <include
         android:id="@+id/top_navigation_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:contentInsetEnd="0dp"
-        app:contentInsetStart="0dp"
+        layout="@layout/top_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <ImageView
-            android:id="@+id/button_menu"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="start"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/icon_menu"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-        <ImageView
-            android:id="@+id/image_view_logo"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:src="@drawable/francos_perfume_logo" />
-
-        <ImageView
-            android:id="@+id/button_notifcation"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/icon_notification" />
-
-    </androidx.appcompat.widget.Toolbar>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_go_back"

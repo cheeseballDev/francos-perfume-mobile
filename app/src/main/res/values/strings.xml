@@ -92,4 +92,6 @@
     <string name="sample_date_submitted">Date Submitted: 2026/01/31</string>
     <string name="to_text">to</string>
     <string name="request_sample_to_branch">Riverbanks</string>
+    <string name="drawer_sample_text">BRANCH: STA. LUCIA</string>
+    <string name="logout_text">Logout</string>
 </resources>

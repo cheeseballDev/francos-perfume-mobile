@@ -2,14 +2,20 @@ package com.example.francosperfumemobile.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.francosperfumemobile.R;
@@ -23,6 +29,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
+    private DrawerLayout drawerLayout;
+    private View topToolbar;
+    private ImageButton buttonMenu, buttonNotification;
+    private AppCompatButton buttonLogout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +95,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeUI() {
         bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
+        drawerLayout = findViewById(R.id.main);
+        topToolbar = findViewById(R.id.top_navigation_bar);
+        buttonMenu = topToolbar.findViewById(R.id.button_menu);
+        buttonNotification = topToolbar.findViewById(R.id.button_notification);
+        buttonLogout = drawerLayout.findViewById(R.id.button_logout);
+
         initializeListeners();
     }
 
@@ -102,8 +119,47 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
-    }
 
+        buttonMenu.setOnClickListener(v -> {
+            drawerLayout.openDrawer(GravityCompat.START);
+        });
+
+        buttonNotification.setOnClickListener(v -> {
+            Toast.makeText(this, "To be implemented", Toast.LENGTH_SHORT).show();
+        });
+
+        buttonLogout.setOnClickListener(v -> {
+            // TODO: Add logout function here
+        });
+
+        // LISTENERS GALING SA AI
+        OnBackPressedCallback backCallback = new OnBackPressedCallback(false) {
+            @Override
+            public void handleOnBackPressed() {
+                if (drawerLayout != null && drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }
+            }
+        };
+
+        getOnBackPressedDispatcher().addCallback(this, backCallback);
+
+        // 3. Listen for drawer changes to enable/disable the callback
+        drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // Intercept back gesture because the drawer is open
+                backCallback.setEnabled(true);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Let the system handle the back gesture normally because drawer is closed
+                backCallback.setEnabled(false);
+            }
+        });
+
+    }
     /*
     private void hideSystemUI() {
         // Tell the window to layout content edge-to-edge behind the bars
