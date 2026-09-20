@@ -29,14 +29,18 @@ public class InventoryViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void bind(DisplayInventoryDTO item, InventoryAdapter.OnViewProductBatchesListener listener) {
-        textProductName.setText(item.getProductName());
-        textProductId.setText(item.getProductDisplayId());
-        textProductUnitCount.setText(String.valueOf(item.getProductQuantity()));
-        textProductBatchCount.setText(String.valueOf(item.getProductBatchCount()));
-        textProductBranchLocation.setText(item.getBranchName());
-        textProductType.setText(item.getProductType());
-        textProductGender.setText(item.getProductGender());
+    public void bind(DisplayInventoryDTO display, InventoryAdapter.OnViewProductBatchesListener listener) {
+        textProductName.setText(display.getProductName());
+        textProductId.setText(display.getProductDisplayId());
+        textProductUnitCount.setText(String.valueOf(display.getProductQuantity()));
+        textProductBatchCount.setText(String.valueOf(display.getProductBatchCount()));
+        textProductBranchLocation.setText(display.getBranchName());
+        textProductType.setText(display.getProductType());
+        textProductGender.setText(display.getProductGender());
+
+        itemView.setOnClickListener(v -> {
+            listener.onViewProductBatches(display);
+        });
 
         // TODO: Add images
         /*

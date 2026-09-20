@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
-import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryBatchDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
 import com.example.francosperfumemobile.components.InventoryViewHolder;
 
@@ -18,7 +17,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryViewHolder> 
 
     public interface OnViewProductBatchesListener {
         // TODO: Feel free to change the name of the variable of the DisplayInventoryBatchDTO to whatever suits it
-        void onViewProductBatches(DisplayInventoryBatchDTO selectedProduct);
+        void onViewProductBatches(DisplayInventoryDTO selectedProduct);
     }
     private List<DisplayInventoryDTO> inventoryList;
 
@@ -40,8 +39,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull InventoryViewHolder holder, int position) {
-        DisplayInventoryDTO item = inventoryList.get(position);
-        holder.bind(item, listener);
+        DisplayInventoryDTO display = inventoryList.get(position);
+        holder.bind(display, listener);
     }
 
     @Override
