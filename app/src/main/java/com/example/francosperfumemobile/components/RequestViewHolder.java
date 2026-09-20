@@ -21,7 +21,7 @@ public class RequestViewHolder extends RecyclerView.ViewHolder {
         cardRequestFromBranch = view.findViewById(R.id.text_view_request_from_branch);
         cardRequestToBranch = view.findViewById(R.id.text_view_to_branch);
         cardRequestStatus = view.findViewById(R.id.text_view_request_status);
-        cardRequestStage = view.findViewById(R.id.text_view_request_stage);
+        cardRequestStage = view.findViewById(R.id.text_view_request_details_direction);
     }
 
     public void bind(DisplayRequestDTO item) {

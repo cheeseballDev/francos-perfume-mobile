@@ -94,4 +94,9 @@
     <string name="request_sample_to_branch">Riverbanks</string>
     <string name="drawer_sample_text">BRANCH: STA. LUCIA</string>
     <string name="logout_text">Logout</string>
+    <string name="from_branch_text">From Branch</string>
+    <string name="to_branch_text">To Branch</string>
+    <string name="created_by_text">Created By</string>
+    <string name="sample_name">Sample Name</string>
+    <string name="open_message_text">Open Message</string>
 </resources>

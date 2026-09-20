@@ -17,6 +17,7 @@
     <color name="gray">#878787</color>
     <color name="muted">#EFEFEF</color>
     <color name="darker_yellow_primary">#B8AD9E</color>
+    <color name="darker_yellow_secondary">#B48C34</color>
 
 
     <!-- UI COMPONENTS -->
