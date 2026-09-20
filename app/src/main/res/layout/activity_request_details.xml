@@ -138,6 +138,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_open_message"
+        android:layout_width="0dp"
         android:layout_height="36dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_design"
@@ -146,15 +147,34 @@
         android:text="@string/open_message_text"
         app:layout_constraintEnd_toEndOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_request_details_to_branch" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_request_details_to_branch"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <!-- to be changed to 0dp -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_requested_products"
+        android:layout_width="match_parent"
+
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_open_message"
+        tools:listitem="@layout/card_requested_products" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_request_timeline"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
 
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_open_message" />
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_requested_products" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -99,4 +99,9 @@
     <string name="created_by_text">Created By</string>
     <string name="sample_name">Sample Name</string>
     <string name="open_message_text">Open Message</string>
+    <string name="available_text">Available</string>
+    <string name="requested_qty_text">Requested Qty</string>
+    <string name="approve_request_question_text">Approve Request?</string>
+    <string name="approved_quantity_colon_text">Approved Quantity:</string>
+    <string name="enter_custom_approved_qty_here_hint">Enter custom approved qty here...</string>
 </resources>
