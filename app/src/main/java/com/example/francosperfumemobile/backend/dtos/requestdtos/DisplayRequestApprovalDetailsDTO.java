@@ -48,4 +48,6 @@ public class DisplayRequestApprovalDetailsDTO {
     public void setApprover(String approver) {
         Approver = approver;
     }
+
+    // TODO: Add origin_branch_id, destination_branch_id, creator_id
 }

@@ -151,30 +151,127 @@
         tools:ignore="TouchTargetSizeCheck" />
 
     <!-- to be changed to 0dp -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_requested_products"
-        android:layout_width="match_parent"
 
-        android:layout_height="100dp"
+    <!-- 1. First Container: Requested Products -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_border"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_open_message"
-        tools:listitem="@layout/card_requested_products" />
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout_timeline">
+        <!-- Added Bottom Constraint to chain it to the timeline container -->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_request_timeline"
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/requested_products_text"
+            android:textSize="@dimen/font_l"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_requested_products"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/card_requested_products"
+            />
+        <!-- Changed height to 0dp and added bottom constraint to parent so it fills the box -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- 2. Second Container: Timeline -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout_timeline"
         android:layout_width="match_parent"
-
-        android:layout_height="100dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_border"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_view_requested_products" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2">
+        <!-- Added ID, and constrained Top to container4 and Bottom to the bottom bar -->
 
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/timeline_text"
+            android:textSize="@dimen/font_l"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_request_timeline"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            tools:listitem="@layout/card_timeline" />
+        <!-- Changed height to 0dp (already had bottom constraint, which is good) -->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- 3. Fixed Bottom Bar -->
+    <LinearLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_reject_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_design"
+            android:backgroundTint="@color/red"
+            android:layout_margin="8dp"
+            android:text="@string/reject_request_text"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_accept"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_design"
+            android:backgroundTint="@color/green"
+            android:layout_margin="8dp"
+            android:text="@string/approve_request_text"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

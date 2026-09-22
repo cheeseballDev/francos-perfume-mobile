@@ -104,4 +104,10 @@
     <string name="approve_request_question_text">Approve Request?</string>
     <string name="approved_quantity_colon_text">Approved Quantity:</string>
     <string name="enter_custom_approved_qty_here_hint">Enter custom approved qty here...</string>
+    <string name="timeline_step_text">Timeline Step</string>
+    <string name="timeline_subtitle_text">Timeline subtitle</string>
+    <string name="requested_products_text">Requested Products</string>
+    <string name="timeline_text">Timeline</string>
+    <string name="approve_request_text">Approve Request</string>
+    <string name="reject_request_text">Reject Request</string>
 </resources>
