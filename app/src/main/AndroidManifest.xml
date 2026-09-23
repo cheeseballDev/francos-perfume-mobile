@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,11 +13,11 @@
         android:roundIcon="@mipmap/francos_perfume_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.FrancosPerfumeMobile"
-        android:usesCleartextTraffic="true" >
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,6 +39,14 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.RequestDetailsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".activities.DeliveryDetailsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".activities.DeliveryConfirmationActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>

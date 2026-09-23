@@ -16,7 +16,7 @@
         >
 
         <TextView
-            android:id="@+id/text_view_requested_product_name"
+            android:id="@+id/text_view_delivered_items_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -28,33 +28,34 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_view_inventory_product_id"
+            android:id="@+id/text_view_delivered_items_product_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="@string/inventory_sample_product_id"
             android:textSize="@dimen/font_m"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_view_requested_product_name" />
+            app:layout_constraintTop_toTopOf="@+id/text_view_delivered_items_product_name" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/available_text"
+            android:text="@string/requested_qty_text"
             android:textColor="@color/text_secondary"
             android:textSize="@dimen/font_s"
             app:layout_constraintEnd_toStartOf="@+id/textView4"
-            app:layout_constraintStart_toStartOf="@+id/text_view_requested_product_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_requested_product_name"
+            app:layout_constraintStart_toStartOf="@+id/text_view_delivered_items_product_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_delivered_items_product_name"
             app:layout_setHorizontal_chainStyle="packed" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/requested_qty_text"
+            android:gravity="center"
+            android:text="@string/received_question_mark_text"
             android:textColor="@color/text_secondary"
             android:textSize="@dimen/font_s"
             app:layout_constraintEnd_toStartOf="@+id/textView5"
@@ -67,73 +68,95 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:gravity="end"
-            android:text="@string/approve_request_question_text"
+            android:text="@string/received_quantity_text"
             android:textColor="@color/text_secondary"
             android:textSize="@dimen/font_s"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView4"
             app:layout_constraintTop_toTopOf="@+id/textView3" />
 
+        <EditText
+            android:id="@+id/edit_text_received_quantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/text_field_design"
+            android:ems="10"
+            android:gravity="end"
+            android:hint="@string/sample_number"
+            android:inputType="number"
+            android:padding="4dp"
+            android:textSize="@dimen/font_m"
+            app:layout_constraintBottom_toBottomOf="@+id/check_box_delivered_items_received"
+            app:layout_constraintEnd_toEndOf="@+id/textView5"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
         <TextView
-            android:id="@+id/text_view_requested_product_available_amount"
+            android:id="@+id/text_view_delivered_items_amount"
             android:layout_width="68dp"
             android:layout_height="27dp"
             android:text="@string/sample_number"
             android:textSize="@dimen/font_l"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/check_box_requested_product_approve"
+            app:layout_constraintBottom_toBottomOf="@+id/check_box_delivered_items_received"
             app:layout_constraintStart_toStartOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-        <TextView
-            android:id="@+id/text_view_requested_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sample_number"
-            android:textSize="@dimen/font_l"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/text_view_requested_product_available_amount"
-            app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toTopOf="@+id/text_view_requested_product_available_amount" />
-
         <CheckBox
-            android:id="@+id/check_box_requested_product_approve"
+            android:id="@+id/check_box_delivered_items_received"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/textView5"
-            app:layout_constraintStart_toEndOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintEnd_toEndOf="@+id/textView4"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@string/approved_quantity_colon_text"
+            android:text="@string/remarks_text"
             android:textColor="@color/text_secondary"
             android:textSize="@dimen/font_s"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_text_requested_products_approved_quantity_amount"
+            app:layout_constraintBottom_toBottomOf="@+id/dropdown_remarks"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edit_text_requested_products_approved_quantity_amount" />
+            app:layout_constraintTop_toTopOf="@+id/dropdown_remarks" />
 
-        <EditText
-            android:id="@+id/edit_text_requested_products_approved_quantity_amount"
+        <Spinner
+            android:id="@+id/dropdown_remarks"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/text_field_design"
+            android:background="@drawable/dropdown_design"
             android:ems="10"
             android:hint="@string/enter_custom_approved_qty_here_hint"
             android:inputType="number"
             android:padding="8dp"
             android:textSize="@dimen/font_s"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView6"
-            app:layout_constraintTop_toBottomOf="@+id/check_box_requested_product_approve" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_received_quantity" />
+
+        <EditText
+            android:id="@+id/edit_text_delivered_items_comments"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/text_field_design"
+            android:ems="10"
+            android:hint="@string/additional_information_hint"
+            android:inputType="text"
+            android:padding="8dp"
+            android:textSize="@dimen/font_s"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/dropdown_remarks" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -108,6 +108,13 @@
     <string name="timeline_subtitle_text">Timeline subtitle</string>
     <string name="requested_products_text">Requested Products</string>
     <string name="timeline_text">Timeline</string>
-    <string name="approve_request_text">Approve Request</string>
-    <string name="reject_request_text">Reject Request</string>
+    <string name="approve_text">Approve</string>
+    <string name="deny_text">Reject</string>
+    <string name="received_question_mark_text">Received?</string>
+    <string name="close_text">Close</string>
+    <string name="no_message_text">No message</string>
+    <string name="message_text">Message</string>
+    <string name="received_quantity_text">Received Quantity</string>
+    <string name="remarks_text">Remarks</string>
+    <string name="additional_information_hint">Enter additional information here</string>
 </resources>

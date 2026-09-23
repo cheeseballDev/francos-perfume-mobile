@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.RequestDetailsActivity">
+    tools:context=".activities.DeliveryDetailsActivity">
 
     <include
         android:id="@+id/top_navigation_bar"
@@ -36,19 +35,19 @@
         app:srcCompat="@drawable/icon_chevron_left" />
 
     <TextView
-        android:id="@+id/text_view_request_details_id"
+        android:id="@+id/text_view_delivery_details_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="@string/sample_request_id"
+        android:text="@string/sample_delivery_id"
         android:textSize="@dimen/font_l"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_go_back" />
 
     <TextView
-        android:id="@+id/text_view_request_details_date_submitted"
+        android:id="@+id/text_view_delivery_details_date_submitted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -58,7 +57,7 @@
         app:layout_constraintTop_toTopOf="@+id/button_go_back" />
 
     <TextView
-        android:id="@+id/text_view_request_details_direction"
+        android:id="@+id/text_view_delivery_details_direction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/badge_design"
@@ -68,9 +67,9 @@
         android:textSize="@dimen/font_l"
         android:text="@string/inbound_text"
         android:textColor="@color/darker_yellow_secondary"
-        app:layout_constraintBottom_toBottomOf="@+id/text_view_request_details_id"
-        app:layout_constraintEnd_toEndOf="@+id/text_view_request_details_date_submitted"
-        app:layout_constraintTop_toTopOf="@+id/text_view_request_details_id" />
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_delivery_details_id"
+        app:layout_constraintEnd_toEndOf="@+id/text_view_delivery_details_date_submitted"
+        app:layout_constraintTop_toTopOf="@+id/text_view_delivery_details_id" />
 
     <TextView
         android:id="@+id/textView3"
@@ -81,8 +80,8 @@
         android:textColor="@color/text_secondary"
         android:textSize="@dimen/font_s"
         app:layout_constraintEnd_toStartOf="@+id/textView4"
-        app:layout_constraintStart_toStartOf="@+id/text_view_request_details_id"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_request_details_id"
+        app:layout_constraintStart_toStartOf="@+id/text_view_delivery_details_id"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_delivery_details_id"
         app:layout_setHorizontal_chainStyle="packed" />
 
     <TextView
@@ -104,12 +103,12 @@
         android:text="@string/created_by_text"
         android:textColor="@color/text_secondary"
         android:textSize="@dimen/font_s"
-        app:layout_constraintEnd_toEndOf="@+id/text_view_request_details_direction"
+        app:layout_constraintEnd_toEndOf="@+id/text_view_delivery_details_direction"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="@+id/textView3" />
 
     <TextView
-        android:id="@+id/text_view_request_details_from_branch"
+        android:id="@+id/text_view_deliver_details_from_branch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/request_sample_from_branch"
@@ -118,17 +117,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
-        android:id="@+id/text_view_request_details_to_branch"
+        android:id="@+id/text_view_delivery_details_to_branch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/request_sample_to_branch"
         android:textSize="@dimen/font_m"
-        app:layout_constraintBottom_toBottomOf="@+id/text_view_request_details_from_branch"
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_deliver_details_from_branch"
         app:layout_constraintStart_toStartOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/text_view_request_details_from_branch" />
+        app:layout_constraintTop_toTopOf="@+id/text_view_deliver_details_from_branch" />
 
     <TextView
-        android:id="@+id/text_view_request_details_created_by"
+        android:id="@+id/text_view_delivery_details_created_by"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sample_name"
@@ -136,23 +135,6 @@
         app:layout_constraintEnd_toEndOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_open_message"
-        android:layout_width="0dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_design"
-        android:backgroundTint="@color/yellow_primary"
-
-        android:text="@string/open_message_text"
-        app:layout_constraintEnd_toEndOf="@+id/textView5"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_request_details_to_branch"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <!-- to be changed to 0dp -->
-
-    <!-- 1. First Container: Requested Products -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
@@ -160,12 +142,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/bg_border"
         android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_open_message"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout_timeline">
+        app:layout_constraintTop_toBottomOf="@+id/text_view_delivery_details_to_branch">
         <!-- Added Bottom Constraint to chain it to the timeline container -->
 
         <TextView
@@ -181,66 +164,22 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_requested_products"
+            android:id="@+id/recycler_view_delivery_items"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:listitem="@layout/card_requested_products"
-            />
+            tools:listitem="@layout/card_delivered_items" />
         <!-- Changed height to 0dp and added bottom constraint to parent so it fills the box -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- 2. Second Container: Timeline -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout_timeline"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/bg_border"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2">
-        <!-- Added ID, and constrained Top to container4 and Bottom to the bottom bar -->
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/timeline_text"
-            android:textSize="@dimen/font_l"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_request_timeline"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8"
-            tools:listitem="@layout/card_timeline" />
-        <!-- Changed height to 0dp (already had bottom constraint, which is good) -->
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- 3. Fixed Bottom Bar -->
     <LinearLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
@@ -274,4 +213,5 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
