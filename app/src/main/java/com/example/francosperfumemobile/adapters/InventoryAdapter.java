@@ -23,8 +23,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryViewHolder> 
 
     private final OnViewProductBatchesListener listener;
 
-
-
     public InventoryAdapter(List<DisplayInventoryDTO> data, OnViewProductBatchesListener listener) {
         this.inventoryList = data;
         this.listener = listener;
@@ -48,6 +46,13 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryViewHolder> 
         return inventoryList != null ? inventoryList.size() : 0;
     }
 
+    public void addData(List<DisplayInventoryDTO> newItems) {
+        if (newItems != null && !newItems.isEmpty()) {
+            int startPosition = this.inventoryList.size();
+            this.inventoryList.addAll(newItems);
+            notifyItemRangeInserted(startPosition, newItems.size());
+        }
+    }
     public void updateData(List<DisplayInventoryDTO> newData) {
         this.inventoryList = newData;
         //notifyDataSetChanged();
