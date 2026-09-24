@@ -8,6 +8,10 @@ public class DisplayRequestApprovalDetailsDTO {
     private String Remarks;
     private Date ApprovedAt;
     private String Approver;
+    public String RequesterEmployeeId;
+    public String RequesterEmployeeRole;
+    public String FromBranchName;
+    public String ToBranchName;
 
     public String getStage() {
         return Stage;
@@ -47,5 +51,21 @@ public class DisplayRequestApprovalDetailsDTO {
 
     public void setApprover(String approver) {
         Approver = approver;
+    }
+
+    public String getRequesterEmployeeId() {
+        return RequesterEmployeeId;
+    }
+
+    public String getRequesterEmployeeRole() {
+        return RequesterEmployeeRole;
+    }
+
+    public String getFromBranchName() {
+        return FromBranchName;
+    }
+
+    public String getToBranchName() {
+        return ToBranchName;
     }
 }
