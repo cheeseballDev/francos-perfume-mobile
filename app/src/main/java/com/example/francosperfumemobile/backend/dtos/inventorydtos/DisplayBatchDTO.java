@@ -2,19 +2,41 @@ package com.example.francosperfumemobile.backend.dtos.inventorydtos;
 
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public abstract class DisplayBatchDTO implements Parcelable {
+    @SerializedName("batchId")
     private int BatchId;
+
+    @SerializedName("batchDisplayId")
     private String BatchDisplayId;
+
+    @SerializedName("batchItemId")
     private int BatchItemId;
+
+    @SerializedName("productId")
     private int ProductId;
+
+    @SerializedName("productName")
     private String ProductName;
+
+    @SerializedName("branchId")
     private int BranchId;
+
+    @SerializedName("branchLocation")
     private String BranchLocation;
+
+    @SerializedName("quantity")
     private int Quantity;
+
+    @SerializedName("createdAt")
     private String CreatedAt;
+
+    @SerializedName("expiryDate")
     private String ExpiryDate;
+
 
     public int getBatchId() {
         return BatchId;

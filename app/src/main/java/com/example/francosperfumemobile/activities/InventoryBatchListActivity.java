@@ -21,15 +21,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.adapters.BatchAdapter;
-import com.example.francosperfumemobile.adapters.InventoryAdapter;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayBatchDTO;
-import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryBatchDTO;
-import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
+import com.example.francosperfumemobile.backend.dtos.inventorydtos.SendInventoryBatchRequestDTO;
+import com.example.francosperfumemobile.backend.repository.InventoryRepository;
+import com.example.francosperfumemobile.backend.responses.inventoryresponses.BatchResponse;
+import com.example.francosperfumemobile.backend.retrofit.SessionManager;
 import com.example.francosperfumemobile.dialogs.EditBatchDialog;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class InventoryBatchListActivity extends AppCompatActivity {
 
@@ -40,6 +45,8 @@ public class InventoryBatchListActivity extends AppCompatActivity {
     private View topToolbar;
     private ImageButton buttonMenu, buttonNotification;
     private AppCompatButton buttonLogout;
+    private InventoryRepository inventoryRepository;
+    private BatchAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,13 +58,26 @@ public class InventoryBatchListActivity extends AppCompatActivity {
             return insets;
         });
 
+        //initializeUI();
+        initializeRecyclerView();
+
         if (getIntent() != null && getIntent().hasExtra(PRODUCT_ID)) {
             int productId = getIntent().getIntExtra(PRODUCT_ID, -1);
-            // TODO: create functions to add all batches with X productId into the recyclerview. or change the logic i dont mind
-        }
 
-        initializeUI();
-        initializeRecyclerView();
+            if (productId == -1) {
+                Toast.makeText(this, "Unknown product", Toast.LENGTH_SHORT).show();
+                finish();
+                return;
+            }
+
+            int branchId = new SessionManager(this).getBranchId();
+
+            SendInventoryBatchRequestDTO dto = new SendInventoryBatchRequestDTO();
+            dto.setProductId(productId);
+            dto.setBranchId(branchId);
+            inventoryRepository = new InventoryRepository(this);
+            loadBatches(dto);
+        }
     }
 
     public static Intent newIntent(Context context, int productId) {
@@ -67,9 +87,8 @@ public class InventoryBatchListActivity extends AppCompatActivity {
     }
 
 
-
     private void initializeRecyclerView() {
-        BatchAdapter adapter = new BatchAdapter(batchList, selectedBatch -> {
+        adapter = new BatchAdapter(batchList, selectedBatch -> {
             EditBatchDialog dialog = EditBatchDialog.newInstance(selectedBatch);
             dialog.show(getSupportFragmentManager(), "EditBatchDialog");
         });
@@ -84,7 +103,7 @@ public class InventoryBatchListActivity extends AppCompatActivity {
         topToolbar = findViewById(R.id.top_navigation_bar);
         buttonMenu = topToolbar.findViewById(R.id.button_menu);
         buttonNotification = topToolbar.findViewById(R.id.button_notification);
-        buttonLogout = drawerLayout.findViewById(R.id.button_logout);
+        //buttonLogout = drawerLayout.findViewById(R.id.button_logout);
         intializeListeners();
     }
 
@@ -105,9 +124,15 @@ public class InventoryBatchListActivity extends AppCompatActivity {
             Toast.makeText(this, "To be implemented", Toast.LENGTH_SHORT).show();
         });
 
+        /*
         buttonLogout.setOnClickListener(v -> {
-            // TODO: Add logout function here
+            SessionManager sm = new SessionManager(this);
+            sm.clearSession();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         });
+
+         */
 
         // LISTENERS GALING SA AI
         OnBackPressedCallback backCallback = new OnBackPressedCallback(false) {
@@ -136,5 +161,33 @@ public class InventoryBatchListActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void loadBatches(SendInventoryBatchRequestDTO dto) {
+
+        inventoryRepository.getInventoryBatches(dto).enqueue(new Callback<BatchResponse>() {
+
+            @Override
+            public void onResponse(Call<BatchResponse> call, Response<BatchResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    BatchResponse batchResponse = response.body();
+                    List<DisplayBatchDTO> batches = batchResponse.getBatches();
+
+                    if (batches != null) {
+                        batchList.clear();
+                        batchList.addAll(batches);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                } else {
+                    Toast.makeText(InventoryBatchListActivity.this, "Failed to load batches", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BatchResponse> call, Throwable t) {
+                Toast.makeText(InventoryBatchListActivity.this, "Network error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

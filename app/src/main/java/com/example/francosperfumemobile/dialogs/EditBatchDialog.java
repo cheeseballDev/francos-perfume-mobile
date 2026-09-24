@@ -23,6 +23,8 @@ public class EditBatchDialog extends DialogFragment {
     EditText editTextTargetDate, editTextBatchStock;
     Spinner dropdownReason;
     ImageButton buttonPlus, buttonMinus;
+
+
     public static EditBatchDialog newInstance(DisplayBatchDTO selectedBatch) {
         EditBatchDialog dialog = new EditBatchDialog();
         Bundle args = new Bundle();

@@ -3,7 +3,7 @@ package com.example.francosperfumemobile.backend.repository;
 import android.content.Context;
 
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.AddInventoryDTO;
-import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryBatchDTO;
+import com.example.francosperfumemobile.backend.dtos.inventorydtos.SendInventoryBatchRequestDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.EditBatchDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.InventorySearchFilterDTO;
 import com.example.francosperfumemobile.backend.endpoints.InventoryAPIEndpoints;
@@ -40,7 +40,7 @@ public class InventoryRepository {
         return api.getInventoryItemDetails(productId);
     }
 
-    public Call<BatchResponse> getInventoryBatches(DisplayInventoryBatchDTO dto) {
+    public Call<BatchResponse> getInventoryBatches(SendInventoryBatchRequestDTO dto) {
         return api.getInventoryBatches(
                 dto.getProductId(),
                 dto.getBranchId()
