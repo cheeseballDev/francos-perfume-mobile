@@ -9,7 +9,7 @@
     tools:context=".activities.RequestDetailsActivity">
 
     <include
-        android:id="@+id/top_navigation_bar"
+        android:id="@+id/top_navigation_bar_request_details"
         layout="@layout/top_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_go_back"
+        android:id="@+id/button_request_details_go_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -32,7 +32,7 @@
         app:iconSize="24dp"
         app:iconTint="@color/text_secondary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_navigation_bar"
+        app:layout_constraintTop_toBottomOf="@+id/top_navigation_bar_request_details"
         app:srcCompat="@drawable/icon_chevron_left" />
 
     <TextView
@@ -45,7 +45,7 @@
         android:textSize="@dimen/font_l"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_go_back" />
+        app:layout_constraintTop_toBottomOf="@+id/button_request_details_go_back" />
 
     <TextView
         android:id="@+id/text_view_request_details_date_submitted"
@@ -53,9 +53,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="@string/sample_date_submitted"
-        app:layout_constraintBottom_toBottomOf="@+id/button_go_back"
+        app:layout_constraintBottom_toBottomOf="@+id/button_request_details_go_back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_go_back" />
+        app:layout_constraintTop_toTopOf="@+id/button_request_details_go_back" />
 
     <TextView
         android:id="@+id/text_view_request_details_direction"

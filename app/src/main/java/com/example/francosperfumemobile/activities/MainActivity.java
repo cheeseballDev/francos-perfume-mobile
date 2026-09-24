@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     private void initializeUI() {
         bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
         drawerLayout = findViewById(R.id.main);
-        topToolbar = findViewById(R.id.top_navigation_bar);
+        topToolbar = findViewById(R.id.top_navigation_bar_main);
         buttonMenu = topToolbar.findViewById(R.id.button_menu);
         buttonNotification = topToolbar.findViewById(R.id.button_notification);
         buttonLogout = drawerLayout.findViewById(R.id.button_logout);

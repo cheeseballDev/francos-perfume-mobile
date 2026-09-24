@@ -58,8 +58,9 @@ public class InventoryBatchListActivity extends AppCompatActivity {
             return insets;
         });
 
-        //initializeUI();
+        initializeUI();
         initializeRecyclerView();
+        intializeListeners();
 
         if (getIntent() != null && getIntent().hasExtra(PRODUCT_ID)) {
             int productId = getIntent().getIntExtra(PRODUCT_ID, -1);
@@ -99,12 +100,11 @@ public class InventoryBatchListActivity extends AppCompatActivity {
     }
 
     private void initializeUI() {
-        backButton = findViewById(R.id.button_go_back);
-        topToolbar = findViewById(R.id.top_navigation_bar);
+        backButton = findViewById(R.id.button_inventory_batch_go_back);
+        topToolbar = findViewById(R.id.top_navigation_bar_inventory_batch);
         buttonMenu = topToolbar.findViewById(R.id.button_menu);
         buttonNotification = topToolbar.findViewById(R.id.button_notification);
         //buttonLogout = drawerLayout.findViewById(R.id.button_logout);
-        intializeListeners();
     }
 
     private void intializeListeners() {

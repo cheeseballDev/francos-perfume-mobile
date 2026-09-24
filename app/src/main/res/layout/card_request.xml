@@ -93,7 +93,7 @@
             app:layout_constraintTop_toTopOf="@+id/text_view_request_from_branch" />
 
         <TextView
-            android:id="@+id/text_view_to_branch"
+            android:id="@+id/text_view_request_to_branch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -103,7 +103,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView2" />
 
         <TextView
-            android:id="@+id/text_view_request_details_direction"
+            android:id="@+id/text_view_request_stage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -118,6 +118,24 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_view_request_status"
             app:layout_constraintStart_toEndOf="@+id/text_view_request_status"
             app:layout_constraintTop_toTopOf="@+id/text_view_request_status" />
+
+        <TextView
+            android:id="@+id/text_view_request_direction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/badge_design"
+            android:backgroundTint="@color/yellow_primary"
+            android:padding="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/inbound_text"
+
+            android:textColor="@color/yellow_secondary"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_request_stage"
+            app:layout_constraintStart_toEndOf="@+id/text_view_request_stage"
+            app:layout_constraintTop_toTopOf="@+id/text_view_request_stage" />
+
 
         <ImageButton
             android:id="@+id/text_view_request_view_details"

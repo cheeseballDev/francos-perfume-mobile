@@ -6,7 +6,7 @@
     app:cardCornerRadius="16dp"
     app:strokeColor="@color/border_stroke"
     app:strokeWidth="1dp"
-    android:layout_margin="8dp"
+    android:layout_marginTop="8dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -16,7 +16,7 @@
         >
 
         <ImageView
-            android:id="@+id/image_view_inventory_icon"
+            android:id="@+id/image_view_delivery_items_icon"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
@@ -30,8 +30,8 @@
 
         <TextView
             android:id="@+id/text_view_delivery_items_product_name"
-            app:layout_constraintStart_toEndOf="@+id/image_view_inventory_icon"
-            app:layout_constraintTop_toTopOf="@+id/image_view_inventory_icon"
+            app:layout_constraintStart_toEndOf="@+id/image_view_delivery_items_icon"
+            app:layout_constraintTop_toTopOf="@+id/image_view_delivery_items_icon"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:textStyle="bold"
@@ -52,13 +52,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_view_delivery_items_product_Sid"
+            android:id="@+id/text_view_delivery_items_product_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/inventory_sample_product_id"
             android:textSize="@dimen/font_m"
-            app:layout_constraintBottom_toBottomOf="@+id/image_view_inventory_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/image_view_delivery_items_icon"
             app:layout_constraintStart_toStartOf="@+id/text_view_delivery_items_product_name"
             app:layout_constraintTop_toBottomOf="@+id/text_view_delivery_items_product_name" />
 

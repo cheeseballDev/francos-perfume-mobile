@@ -38,12 +38,16 @@ public class InventoryFragment extends Fragment {
     private final List<DisplayInventoryDTO> inventoryList = new ArrayList<>();
     private Spinner dropdownPerfumeType, dropdownGenderType, dropdownBranch;
     private EditText editTextSearch;
+    private RecyclerView recyclerView;
+
+    private InventoryAdapter adapter;
 
 
     public InventoryFragment() {
         // Required empty public constructoraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     }
 
+    // can use this to create local variables
     public static InventoryFragment newInstance(String param1, String param2) {
         InventoryFragment fragment = new InventoryFragment();
         return fragment;
@@ -65,21 +69,11 @@ public class InventoryFragment extends Fragment {
     //i just need to get them to work
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        editTextSearch = view.findViewById(R.id.edit_text_search);
-        dropdownPerfumeType = view.findViewById(R.id.dropdown_perfume_type);
-        dropdownGenderType = view.findViewById(R.id.dropdown_gender_type);
-        dropdownBranch = view.findViewById(R.id.dropdown_branch);
+        initializeUI(view);
+        initializeRecyclerView(view);
+        intializeListeners();
+
         loadDropdowns(dropdownPerfumeType, dropdownGenderType, dropdownBranch);
-
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_inventory);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
-
-        InventoryAdapter adapter = new InventoryAdapter(inventoryList, selectedProduct -> {
-            Intent intent = InventoryBatchListActivity.newIntent(requireContext(), selectedProduct.getProductId());
-            startActivity(intent);
-        });
-        recyclerView.setAdapter(adapter);
 
         InventoryRepository inventoryRepository = new InventoryRepository(requireContext());
         InventorySearchFilterDTO filter = new InventorySearchFilterDTO();
@@ -119,6 +113,8 @@ public class InventoryFragment extends Fragment {
             }
         });
     }
+
+    // TODO: add another class for this
     public void loadDropdowns(Spinner type, Spinner gender, Spinner branch) {
         InventoryRepository repository = new InventoryRepository(requireContext());
         Call<InventoryFilterResponse> call = repository.getInventoryFilters();
@@ -177,5 +173,28 @@ public class InventoryFragment extends Fragment {
                 Toast.makeText(requireContext(), "Network error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void initializeUI(View view) {
+        editTextSearch = view.findViewById(R.id.edit_text_search);
+        dropdownPerfumeType = view.findViewById(R.id.dropdown_perfume_type);
+        dropdownGenderType = view.findViewById(R.id.dropdown_gender_type);
+        dropdownBranch = view.findViewById(R.id.dropdown_branch);
+    }
+
+    private void initializeRecyclerView(View view) {
+        recyclerView = view.findViewById(R.id.recycler_view_inventory);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+
+         adapter = new InventoryAdapter(inventoryList, selectedProduct -> {
+            Intent intent = InventoryBatchListActivity.newIntent(requireContext(), selectedProduct.getProductId());
+            startActivity(intent);
+        });
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void intializeListeners() {
+        // TODO: Add needed listeners
     }
 }

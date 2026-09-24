@@ -9,8 +9,17 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.francosperfumemobile.R;
+import com.example.francosperfumemobile.backend.dtos.deliverydtos.DisplayDeliveryDetailsDTO;
+import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayBatchDTO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DeliveryDetailsActivity extends AppCompatActivity {
+
+
+    private final List<DisplayDeliveryDetailsDTO> deliveryList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +32,15 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
             return insets;
         });
 
+        initializeUI();
+        initializeRecyclerView();
+    }
+
+    private void initializeRecyclerView() {
+
+    }
+
+    private void initializeUI() {
 
     }
 }
