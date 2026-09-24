@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,9 +25,11 @@ import com.example.francosperfumemobile.backend.dtos.inventorydtos.InventorySear
 import com.example.francosperfumemobile.backend.repository.InventoryRepository;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryFilterResponse;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryResponse;
+import com.example.francosperfumemobile.helpers.FilterManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,15 +41,16 @@ public class InventoryFragment extends Fragment {
     private Spinner dropdownPerfumeType, dropdownGenderType, dropdownBranch;
     private EditText editTextSearch;
     private RecyclerView recyclerView;
-
-    private InventoryAdapter adapter;
+    private InventoryAdapter inventoryAdapter;
+    private final InventorySearchFilterDTO currentFilter = new InventorySearchFilterDTO();
+    private ProgressBar progressBar;
 
 
     public InventoryFragment() {
         // Required empty public constructoraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     }
 
-    // can use this to create local variables
+    // can use this to create local variables or get variables from other activities/fragments to this specific one
     public static InventoryFragment newInstance(String param1, String param2) {
         InventoryFragment fragment = new InventoryFragment();
         return fragment;
@@ -72,108 +75,44 @@ public class InventoryFragment extends Fragment {
         initializeUI(view);
         initializeRecyclerView(view);
         intializeListeners();
+        initializeDropdowns(dropdownPerfumeType, dropdownGenderType, dropdownBranch);
+        fetchInventory(currentFilter);
+        // TODO: Add the pagination here using the new FilterManager.
 
-        loadDropdowns(dropdownPerfumeType, dropdownGenderType, dropdownBranch);
+    }
+    private void fetchInventory(InventorySearchFilterDTO filter) {
+        progressBar.setVisibility(View.VISIBLE);
 
-        InventoryRepository inventoryRepository = new InventoryRepository(requireContext());
-        InventorySearchFilterDTO filter = new InventorySearchFilterDTO();
-
-
-        filter.setSearch(null);
-        filter.setProductType(null);
-        filter.setProductGender(null);
-        filter.setBranch(null);
-        filter.setFromDate(null);
-        filter.setToDate(null);
-        filter.setPageCount(1);
-        filter.setPageSize(20);
-
-        Call<InventoryResponse> call = inventoryRepository.displayInventory(filter);
-        call.enqueue(new Callback<InventoryResponse>() {
+        InventoryRepository repository = new InventoryRepository(requireContext());
+        repository.displayInventory(filter).enqueue(new Callback<InventoryResponse>() {
             @Override
             public void onResponse(Call<InventoryResponse> call, Response<InventoryResponse> response) {
+                if (!isAdded() || getContext() == null) return;
+
+                progressBar.setVisibility(View.GONE);
+
                 if (response.isSuccessful() && response.body() != null) {
-                    InventoryResponse inventoryResponse = response.body();
-                    List<DisplayInventoryDTO> data = inventoryResponse.getData();
-                    if (data != null && !data.isEmpty()) {
-                        inventoryList.clear();
-                        inventoryList.addAll(data);
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        Toast.makeText(requireContext(), "No inventory data found", Toast.LENGTH_SHORT).show();
-                    }
+                    List<DisplayInventoryDTO> items = response.body().getData();
+                    inventoryAdapter.updateData(items);
                 } else {
-                    Toast.makeText(requireContext(), "Failed to load inventory" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Failed to fetch inventory", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<InventoryResponse> call, Throwable t) {
-                Toast.makeText(requireContext(), "Network error", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    // TODO: add another class for this
-    public void loadDropdowns(Spinner type, Spinner gender, Spinner branch) {
-        InventoryRepository repository = new InventoryRepository(requireContext());
-        Call<InventoryFilterResponse> call = repository.getInventoryFilters();
-        call.enqueue(new Callback<InventoryFilterResponse>() {
-            @Override
-            public void onResponse(Call<InventoryFilterResponse> call, Response<InventoryFilterResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    InventoryFilterResponse filterResponse = response.body();
-
-                    List<String> productTypes = filterResponse.getProductTypes();
-                    if (productTypes != null) {
-                        ArrayAdapter<String> productTypeAdapter =
-                                new ArrayAdapter<>(
-                                        requireContext(),
-                                        android.R.layout.simple_spinner_item,
-                                        productTypes
-                                );
-
-                        productTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        type.setAdapter(productTypeAdapter);
-                    }
-
-                    List<String> productGenders = filterResponse.getProductGenders();
-                    if (productGenders != null) {
-                        ArrayAdapter<String> genderAdapter =
-                                new ArrayAdapter<>(requireContext(),
-                                        android.R.layout.simple_spinner_item,
-                                        productGenders
-                                );
-
-                        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        gender.setAdapter(genderAdapter);
-                    }
-
-                    List<String> branches = filterResponse.getBranches();
-                    if(branches != null){
-                        ArrayAdapter<String> branchAdapter =
-                                new ArrayAdapter<>(
-                                        requireContext(),
-                                        android.R.layout.simple_spinner_item,
-                                        branches
-                                );
-
-                        branchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                        branch.setAdapter(branchAdapter);
-                    }
-
-                } else {
-                    Toast.makeText(requireContext(), "Failed to load filters", Toast.LENGTH_SHORT).show();
+                if (isAdded() && getContext() != null) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
-
-            @Override
-            public void onFailure(Call<InventoryFilterResponse> call, Throwable t) {
-                Toast.makeText(requireContext(), "Network error", Toast.LENGTH_SHORT).show();
-            }
         });
     }
+
+    /*
+
+
+     */
 
     private void initializeUI(View view) {
         editTextSearch = view.findViewById(R.id.edit_text_search);
@@ -187,11 +126,55 @@ public class InventoryFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
 
-         adapter = new InventoryAdapter(inventoryList, selectedProduct -> {
+         inventoryAdapter = new InventoryAdapter(inventoryList, selectedProduct -> {
             Intent intent = InventoryBatchListActivity.newIntent(requireContext(), selectedProduct.getProductId());
             startActivity(intent);
         });
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(inventoryAdapter);
+    }
+
+    public void initializeDropdowns(Spinner typeSpinner, Spinner genderSpinner, Spinner branchSpinner) {
+        InventoryRepository repository = new InventoryRepository(requireContext());
+        repository.getInventoryFilters().enqueue(new Callback<InventoryFilterResponse>() {
+            @Override
+            public void onResponse(Call<InventoryFilterResponse> call, Response<InventoryFilterResponse> response) {
+                if (!isAdded() || getContext() == null) return;
+
+                if (response.isSuccessful() && response.body() != null) {
+                    InventoryFilterResponse filterResponse = response.body();
+
+                    FilterManager.setupSpinner(requireContext(), typeSpinner, filterResponse.getProductTypes(), "All Types");
+                    FilterManager.setupSpinner(requireContext(), genderSpinner, filterResponse.getProductGenders(), "All Genders");
+                    FilterManager.setupSpinner(requireContext(), branchSpinner, filterResponse.getBranches(), "All Branches");
+                } else {
+                    Toast.makeText(getContext(), "Failed to load filters", Toast.LENGTH_SHORT).show();
+                }
+
+                initializeSpinnerListeners();
+            }
+
+            @Override
+            public void onFailure(Call<InventoryFilterResponse> call, Throwable t) {
+                if (isAdded() && getContext() != null) {
+                    Toast.makeText(getContext(), "Network error", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void initializeSpinnerListeners() {
+        dropdownPerfumeType.setOnItemSelectedListener(new FilterManager.SimpleItemSelectedListener() {
+            @Override
+            public void onSelected(int position, String value) {
+                String selectedType = (position == 0) ? null : value;
+
+                if (!Objects.equals(currentFilter.getProductType(), selectedType)) {
+                    currentFilter.setProductType(selectedType);
+                    currentFilter.setPageCount(1); // Reset to page 1 on filter change
+                    fetchInventory(currentFilter);
+                }
+            }
+        });
     }
 
     private void intializeListeners() {

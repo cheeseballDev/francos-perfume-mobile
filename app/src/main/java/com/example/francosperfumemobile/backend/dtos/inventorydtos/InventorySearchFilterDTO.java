@@ -3,12 +3,12 @@ package com.example.francosperfumemobile.backend.dtos.inventorydtos;
 public class InventorySearchFilterDTO {
     private int PageCount = 1;
     private int PageSize = 20;
-    private String Search;
-    private String FromDate;
-    private String ToDate;
-    private String ProductType;
-    private String ProductGender;
-    private Integer Branch;
+    private String Search = null;
+    private String FromDate = null;
+    private String ToDate = null;
+    private String ProductType = null;
+    private String ProductGender = null;
+    private Integer Branch = null;
     public int getPageCount() {
         return PageCount;
     }
