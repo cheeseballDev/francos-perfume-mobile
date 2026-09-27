@@ -237,26 +237,4 @@ public class InventoryFragment extends Fragment {
             buttonNextPage.setVisibility(isLoading ? View.GONE : View.VISIBLE);
         }
     }
-
-    private void showLoading(boolean isPageChange) {
-        if (isPageChange) {
-            textViewPagination.setVisibility(View.GONE);
-            progressBarPagination.setVisibility(View.VISIBLE);
-            buttonNextPage.setEnabled(false);
-            buttonLastPage.setEnabled(false);
-        } else {
-            progressBarMain.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        }
-    }
-
-    private void hideLoading() {
-        progressBarMain.setVisibility(View.GONE);
-        progressBarPagination.setVisibility(View.GONE);
-
-        recyclerView.setVisibility(View.VISIBLE);
-        textViewPagination.setVisibility(View.VISIBLE);
-        buttonNextPage.setEnabled(true);
-        buttonLastPage.setEnabled(true);
-    }
 }
