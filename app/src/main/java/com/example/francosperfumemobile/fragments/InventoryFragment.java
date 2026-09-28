@@ -1,5 +1,4 @@
 package com.example.francosperfumemobile.fragments;
-
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -45,13 +44,11 @@ public class InventoryFragment extends Fragment {
     private EditText editTextSearch;
     private TextView textViewPagination;
     private ImageButton buttonNextPage, buttonLastPage;
-    private RecyclerView recyclerView;
     private InventoryAdapter inventoryAdapter;
     private final InventorySearchFilterDTO currentFilter = new InventorySearchFilterDTO();
     private ProgressBar progressBarMain, progressBarPagination;
     private int totalItemCount = 0;
-    private boolean isLoading = false;
-
+    private boolean isLoading;
 
     public InventoryFragment() {
         // Required empty public constructoraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -82,7 +79,7 @@ public class InventoryFragment extends Fragment {
         initializeUI(view);
         initializeRecyclerView(view);
         intializeListeners();
-        initializeDropdowns(dropdownPerfumeType, dropdownGenderType, dropdownBranch);
+        initializeDropdowns();
         fetchInventory(currentFilter, true);
         // TODO: Add the pagination here using the new FilterManager.
     }
@@ -138,7 +135,7 @@ public class InventoryFragment extends Fragment {
     }
 
     private void initializeRecyclerView(View view) {
-        recyclerView = view.findViewById(R.id.recycler_view_inventory);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_inventory);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
 
@@ -149,7 +146,7 @@ public class InventoryFragment extends Fragment {
         recyclerView.setAdapter(inventoryAdapter);
     }
 
-    public void initializeDropdowns(Spinner typeSpinner, Spinner genderSpinner, Spinner branchSpinner) {
+    public void initializeDropdowns() {
         InventoryRepository repository = new InventoryRepository(requireContext());
         repository.getInventoryFilters().enqueue(new Callback<InventoryFilterResponse>() {
             @Override
@@ -159,9 +156,9 @@ public class InventoryFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     InventoryFilterResponse filterResponse = response.body();
 
-                    FilterManager.setupSpinner(requireContext(), typeSpinner, filterResponse.getProductTypes(), "All Types");
-                    FilterManager.setupSpinner(requireContext(), genderSpinner, filterResponse.getProductGenders(), "All Genders");
-                    FilterManager.setupSpinner(requireContext(), branchSpinner, filterResponse.getBranches(), "All Branches");
+                    FilterManager.setupSpinner(requireContext(), dropdownPerfumeType, filterResponse.getProductTypes(), "All Types");
+                    FilterManager.setupSpinner(requireContext(), dropdownGenderType, filterResponse.getProductGenders(), "All Genders");
+                    FilterManager.setupSpinner(requireContext(), dropdownBranch, filterResponse.getBranches(), "All Branches");
                 } else {
                     Toast.makeText(getContext(), "Failed to load filters", Toast.LENGTH_SHORT).show();
                 }
@@ -186,7 +183,34 @@ public class InventoryFragment extends Fragment {
 
                 if (!Objects.equals(currentFilter.getProductType(), selectedType)) {
                     currentFilter.setProductType(selectedType);
-                    currentFilter.setPageCount(1); // Reset to page 1 on filter change
+                    currentFilter.setPageCount(1);
+                    fetchInventory(currentFilter, true);
+                }
+            }
+        });
+
+        dropdownGenderType.setOnItemSelectedListener(new FilterManager.SimpleItemSelectedListener() {
+            @Override
+            public void onSelected(int position, String value) {
+                String selectedGender = (position == 0) ? null : value;
+
+                if (!Objects.equals(currentFilter.getProductGender(), selectedGender)) {
+                    currentFilter.setProductGender(selectedGender);
+                    currentFilter.setPageCount(1);
+                    fetchInventory(currentFilter, true);
+                }
+            }
+        });
+
+        dropdownBranch.setOnItemSelectedListener(new FilterManager.SimpleItemSelectedListener() {
+            @Override
+            public void onSelected(int position, String value) {
+                String selectedBranch = (position == 0) ? null : value;
+
+                if (!Objects.equals(currentFilter.getBranch(), selectedBranch)) {
+                    // TODO: Add correct branch filtering here since selectedBranch is a string
+                    currentFilter.setBranch(selectedBranch);
+                    currentFilter.setPageCount(1);
                     fetchInventory(currentFilter, true);
                 }
             }
@@ -194,7 +218,16 @@ public class InventoryFragment extends Fragment {
     }
 
     private void intializeListeners() {
-        // TODO: Add needed listeners
+
+        buttonNextPage.setOnClickListener(v -> {
+            currentFilter.setPageCount(currentFilter.getPageCount() + 1);
+            fetchInventory(currentFilter, false);
+        });
+
+        buttonLastPage.setOnClickListener(v -> {
+            currentFilter.setPageCount(currentFilter.getPageCount() - 1);
+            fetchInventory(currentFilter, false);
+        });
     }
 
     private void resetPaginationAndFetch() {
@@ -221,7 +254,6 @@ public class InventoryFragment extends Fragment {
         }
     }
 
-    // Helper to manage UI progress indicators cleanly
     private void setLoadingState(boolean isInitialFetch, boolean isLoading) {
         this.isLoading = isLoading && !isInitialFetch;
 

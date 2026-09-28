@@ -9,15 +9,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DisplayDeliveryDTO;
+import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestDTO;
 import com.example.francosperfumemobile.components.DeliveryViewHolder;
 
 import java.util.List;
 
 public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryViewHolder> {
     private List<DisplayDeliveryDTO> deliveryList;
+    private final DeliveryAdapter.OnDeliveryClickListener listener;
 
-    public DeliveryAdapter(List<DisplayDeliveryDTO> data) {
+    public interface OnDeliveryClickListener {
+        void onDeliveryClick(DisplayRequestDTO request);
+    }
+
+    public DeliveryAdapter(List<DisplayDeliveryDTO> data, DeliveryAdapter.OnDeliveryClickListener listener) {
         this.deliveryList = data;
+        this.listener = listener;
     }
 
     @NonNull

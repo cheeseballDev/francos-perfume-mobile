@@ -19,6 +19,18 @@
     <color name="darker_yellow_primary">#B8AD9E</color>
     <color name="darker_yellow_secondary">#B48C34</color>
 
+    <color name="status_approved_bg">#20509C54</color>
+    <color name="status_approved_text">#509C54</color>
+
+    <color name="status_pending_bg">#25FFBC2B</color>
+    <color name="status_pending_text">#B48C34</color>
+
+    <color name="status_dispatched_bg">#20424E9E</color>
+    <color name="status_dispatched_text">#424E9E</color>
+
+    <color name="status_rejected_bg">#207E102C</color>
+    <color name="status_rejected_text">#7E102C</color>
+
 
     <!-- UI COMPONENTS -->
     <color name="bg_app">#F6F5FF</color>

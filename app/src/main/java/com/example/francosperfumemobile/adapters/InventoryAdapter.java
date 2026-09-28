@@ -46,11 +46,11 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryViewHolder> 
         return inventoryList != null ? inventoryList.size() : 0;
     }
 
-    public void addData(List<DisplayInventoryDTO> newItems) {
-        if (newItems != null && !newItems.isEmpty()) {
+    public void addData(List<DisplayInventoryDTO> newData) {
+        if (newData != null && !newData.isEmpty()) {
             int startPosition = this.inventoryList.size();
-            this.inventoryList.addAll(newItems);
-            notifyItemRangeInserted(startPosition, newItems.size());
+            this.inventoryList.addAll(newData);
+            notifyItemRangeInserted(startPosition, newData.size());
         }
     }
     public void updateData(List<DisplayInventoryDTO> newData) {

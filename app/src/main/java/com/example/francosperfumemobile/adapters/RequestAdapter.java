@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
+import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
 import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestDTO;
 import com.example.francosperfumemobile.components.RequestViewHolder;
 
@@ -15,9 +16,15 @@ import java.util.List;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestViewHolder> {
     private List<DisplayRequestDTO> requestList;
+    private final OnRequestClickListener listener;
 
-    public RequestAdapter(List<DisplayRequestDTO> data) {
-        requestList = data;
+    public interface OnRequestClickListener {
+        void onRequestClick(DisplayRequestDTO request);
+    }
+
+    public RequestAdapter(List<DisplayRequestDTO> data, OnRequestClickListener listener) {
+        this.requestList = data;
+        this.listener = listener;
     }
 
     @NonNull
@@ -31,6 +38,12 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestViewHolder> {
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
         DisplayRequestDTO item = requestList.get(position);
         holder.bind(item);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onRequestClick(item);
+            }
+        });
     }
 
     @Override
@@ -42,4 +55,14 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestViewHolder> {
         this.requestList = newData;
         notifyDataSetChanged();
     }
+
+    public void addData(List<DisplayRequestDTO> newData) {
+        if (newData != null && !newData.isEmpty()) {
+            int startPosition = this.requestList.size();
+            this.requestList.addAll(newData);
+            notifyItemRangeInserted(startPosition, newData.size());
+        }
+    }
+
+
 }
