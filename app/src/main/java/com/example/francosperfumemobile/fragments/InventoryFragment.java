@@ -138,8 +138,8 @@ public class InventoryFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_inventory);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-
          inventoryAdapter = new InventoryAdapter(inventoryList, selectedProduct -> {
+             //todo: set the name of the intent
             Intent intent = InventoryBatchListActivity.newIntent(requireContext(), selectedProduct.getProductId());
             startActivity(intent);
         });

@@ -30,8 +30,6 @@ public class DeliveryViewHolder extends RecyclerView.ViewHolder {
         deliveryFromBranch.setText(item.getFromBranchName());
         deliveryToBranch.setText(item.getToBranchName());
         deliveryStage.setText(item.getDeliveryStatus());
-
-        // TODO: Add conditional statement to get user's branch and then setting the deliveryDirection to inbound/outbound
-        // deliveryDirection.setText(userBranch == getFromBranchName() ? "OUTBOUND" : "INBOUND") or something like that wherein userBranch can be a sharedpref
+        deliveryDirection.setText(item.getDirection());
     }
 }

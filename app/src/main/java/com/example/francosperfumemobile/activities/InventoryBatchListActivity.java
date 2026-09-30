@@ -87,7 +87,6 @@ public class InventoryBatchListActivity extends AppCompatActivity {
         return intent;
     }
 
-
     private void initializeRecyclerView() {
         adapter = new BatchAdapter(batchList, selectedBatch -> {
             EditBatchDialog dialog = EditBatchDialog.newInstance(selectedBatch);
@@ -178,6 +177,8 @@ public class InventoryBatchListActivity extends AppCompatActivity {
                         batchList.addAll(batches);
                         adapter.notifyDataSetChanged();
                     }
+
+                    // todo: add empty state
 
                 } else {
                     Toast.makeText(InventoryBatchListActivity.this, "Failed to load batches", Toast.LENGTH_SHORT).show();

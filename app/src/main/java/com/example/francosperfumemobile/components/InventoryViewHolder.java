@@ -12,31 +12,30 @@ import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInvent
 
 public class InventoryViewHolder extends RecyclerView.ViewHolder {
     ImageView imagePerfumeIcon;
-    TextView textProductName, textProductId, textProductUnitCount, textProductBatchCount,
-            textProductBranchLocation, textProductType, textProductGender;
+    TextView productName, productId, productUnitCount, productBatchCount,
+            productBranchLocation, productType, productGender;
 
 
     public InventoryViewHolder(View view) {
         super(view);
         imagePerfumeIcon = view.findViewById(R.id.image_view_inventory_icon);
-        textProductName = view.findViewById(R.id.text_view_inventory_product_name);
-        textProductId = view.findViewById(R.id.text_view_inventory_product_id);
-        textProductUnitCount = view.findViewById(R.id.text_view_inventory_unit_count);
-        textProductBatchCount = view.findViewById(R.id.text_view_inventory_batch_count);
-        textProductBranchLocation = view.findViewById(R.id.text_view_inventory_branch_location);
-        textProductType = view.findViewById(R.id.text_view_inventory_product_type);
-        textProductGender = view.findViewById(R.id.text_view_inventory_gender_type);
-
+        productName = view.findViewById(R.id.text_view_inventory_product_name);
+        productId = view.findViewById(R.id.text_view_inventory_product_id);
+        productUnitCount = view.findViewById(R.id.text_view_inventory_unit_count);
+        productBatchCount = view.findViewById(R.id.text_view_inventory_batch_count);
+        productBranchLocation = view.findViewById(R.id.text_view_inventory_branch_location);
+        productType = view.findViewById(R.id.text_view_inventory_product_type);
+        productGender = view.findViewById(R.id.text_view_inventory_gender_type);
     }
 
     public void bind(DisplayInventoryDTO display, InventoryAdapter.OnViewProductBatchesListener listener) {
-        textProductName.setText(display.getProductName());
-        textProductId.setText(display.getProductDisplayId());
-        textProductUnitCount.setText(String.valueOf(display.getProductQuantity()));
-        textProductBatchCount.setText(String.valueOf(display.getProductBatchCount()));
-        textProductBranchLocation.setText(display.getBranchName());
-        textProductType.setText(display.getProductType());
-        textProductGender.setText(display.getProductGender());
+        productName.setText(display.getProductName());
+        productId.setText(display.getProductDisplayId());
+        productUnitCount.setText(String.valueOf(display.getProductQuantity()));
+        productBatchCount.setText(String.valueOf(display.getProductBatchCount()));
+        productBranchLocation.setText(display.getBranchName());
+        productType.setText(display.getProductType());
+        productGender.setText(display.getProductGender());
 
         itemView.setOnClickListener(v -> {
             listener.onViewProductBatches(display);

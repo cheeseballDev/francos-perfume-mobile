@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.DeliveryDetailsActivity">
+    tools:context=".activities.DeliveryConfirmationActivity">
 
     <include
         android:id="@+id/top_navigation_bar_delivery_confirmation"
@@ -149,7 +149,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_delivery_details_to_branch">
-        <!-- Added Bottom Constraint to chain it to the timeline container -->
 
         <TextView
             android:id="@+id/textView7"
@@ -175,10 +174,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7"
             tools:listitem="@layout/card_delivered_items" />
-        <!-- Changed height to 0dp and added bottom constraint to parent so it fills the box -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <LinearLayout
         android:id="@+id/constraintLayout2"
@@ -190,28 +187,27 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_reject_cancel"
+            android:id="@+id/button_confirm_delivery"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:background="@drawable/button_design"
-            android:backgroundTint="@color/red"
             android:layout_margin="8dp"
-            android:text="@string/deny_text"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_accept"
-            android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
             android:background="@drawable/button_design"
             android:backgroundTint="@color/green"
-            android:layout_margin="8dp"
-            android:text="@string/approve_text"
+            android:text="@string/confirm_delivery"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent" />
     </LinearLayout>
+
+    <!-- Main Loading Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progress_bar_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

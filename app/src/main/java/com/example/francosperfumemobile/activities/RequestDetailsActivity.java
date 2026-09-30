@@ -104,6 +104,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
         findViewById(R.id.button_request_details_go_back).setOnClickListener(v -> finish());
     }
 
+    //todo: adjust if need dto OR requestId itself is fine
     private void fetchRequestDetails(int requestId) {
         if (progressBarMain != null) {
             progressBarMain.setVisibility(View.VISIBLE);

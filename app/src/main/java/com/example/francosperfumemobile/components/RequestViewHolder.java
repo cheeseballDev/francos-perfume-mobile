@@ -26,9 +26,10 @@ public class RequestViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(DisplayRequestDTO item) {
         requestId.setText(item.getRequestDisplayId());
-        // cardRequestUnitCount.setText("0"); // Not in DTO
         requestBatchCount.setText(String.valueOf(item.getItemCount()));
         // cardDeliveryId.setText("N/A"); // Not in DTO
+        //todo: add deliveryId
+        requestUnitCount.setText(item.getItemCount());
         requestFromBranch.setText(item.getRequestedFrom());
         requestToBranch.setText(item.getDeliveredTo());
         requestStatus.setText(item.getRequestStatus());

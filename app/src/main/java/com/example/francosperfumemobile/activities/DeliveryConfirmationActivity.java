@@ -23,6 +23,11 @@ public class DeliveryConfirmationActivity extends AppCompatActivity {
             return insets;
         });
 
+        initializeUI();
+
+    }
+
+    private void initializeUI() {
 
     }
 }

@@ -13,7 +13,7 @@ import com.example.francosperfumemobile.R;
 
 public class DashboardCardView extends FrameLayout {
 
-    private TextView textViewTitle, textViewValue, textViewWarning;
+    private TextView title, value, warning;
 
     private ImageView image;
 
@@ -25,16 +25,16 @@ public class DashboardCardView extends FrameLayout {
     private void initialize(Context context) {
         inflate(context, R.layout.card_dashboard, this);
         image = findViewById(R.id.image_view_dashboard_icon);
-        textViewTitle = findViewById(R.id.text_view_dashboard_title);
-        textViewValue = findViewById(R.id.text_view_dashboard_value);
-        textViewWarning = findViewById(R.id.text_view_dashboard_warning);
+        title = findViewById(R.id.text_view_dashboard_title);
+        value = findViewById(R.id.text_view_dashboard_value);
+        warning = findViewById(R.id.text_view_dashboard_warning);
     }
 
     public void setData(String title, String value, String warning) {
         setIcon(title);
-        if (textViewTitle != null) textViewTitle.setText(title);
-        if (textViewValue != null) textViewValue.setText(value);
-        if (textViewWarning != null) textViewWarning.setText(warning);
+        if (this.title != null) this.title.setText(title);
+        if (this.value != null) this.value.setText(value);
+        if (this.warning != null) this.warning.setText(warning);
     }
 
     private boolean containsIgnoreCase(String type, String text) {

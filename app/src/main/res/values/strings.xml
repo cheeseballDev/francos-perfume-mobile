@@ -117,4 +117,5 @@
     <string name="received_quantity_text">Received Quantity</string>
     <string name="remarks_text">Remarks</string>
     <string name="additional_information_hint">Enter additional information here</string>
+    <string name="confirm_delivery">Confirm Delivery</string>
 </resources>
