@@ -1,19 +1,47 @@
 package com.example.francosperfumemobile.backend.dtos.requestdtos;
 
+import com.google.gson.annotations.SerializedName;
+
 public class DisplayRequestDTO {
+    @SerializedName("requestId")
     private int RequestId;
+
+    @SerializedName("requestDisplayId")
     private String RequestDisplayId;
+
+    @SerializedName("fromBranchId")
     private int FromBranchId;
+
+    @SerializedName("toBranchId")
     private int ToBranchId;
+
+    @SerializedName("requestedFrom")
     private String RequestedFrom;
+
+    @SerializedName("deliveredTo")
     private String DeliveredTo;
+
+    @SerializedName("employeeDisplayId")
     private String EmployeeDisplayId;
+
+    @SerializedName("requestStatus")
     private String RequestStatus;
+
+    @SerializedName("requestStage")
     private String RequestStage;
+
+    @SerializedName("requestMessage")
     private String RequestMessage;
+
+    @SerializedName("requestComment")
     private String RequestComment;
-    private java.util.Date RequestDateSubmitted;
+
+    @SerializedName("requestDateSubmitted")
+    private String RequestDateSubmitted;
+
+    @SerializedName("itemCount")
     private int ItemCount;
+
 
     public int getRequestId() {
         return RequestId;
@@ -103,11 +131,11 @@ public class DisplayRequestDTO {
         RequestComment = requestComment;
     }
 
-    public java.util.Date getRequestDateSubmitted() {
+    public String getRequestDateSubmitted() {
         return RequestDateSubmitted;
     }
 
-    public void setRequestDateSubmitted(java.util.Date requestDateSubmitted) {
+    public void setRequestDateSubmitted(String requestDateSubmitted) {
         RequestDateSubmitted = requestDateSubmitted;
     }
 

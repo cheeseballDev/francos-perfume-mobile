@@ -25,8 +25,10 @@ import com.example.francosperfumemobile.adapters.InventoryAdapter;
 import com.example.francosperfumemobile.adapters.RequestAdapter;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.InventorySearchFilterDTO;
+import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestApprovalDetailsDTO;
 import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestDTO;
 import com.example.francosperfumemobile.backend.dtos.requestdtos.RequestFilterDTO;
+import com.example.francosperfumemobile.backend.dtos.requestdtos.RequestProductFilterDTO;
 import com.example.francosperfumemobile.backend.repository.InventoryRepository;
 import com.example.francosperfumemobile.backend.repository.RequestRepository;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryFilterResponse;
@@ -40,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,11 +86,13 @@ public class RequestFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        RequestFilterDTO filterDTO = new RequestFilterDTO();
         initializeUI(view);
         initializeRecyclerView(view);
         initializeListeners();
         initializeDropdowns();
         initializeSpinnerListeners();
+        fetchRequests(filterDTO, true);
     }
 
     private void fetchRequests(RequestFilterDTO filter, boolean isInitialFetch) {
@@ -117,7 +122,7 @@ public class RequestFragment extends Fragment {
 
                     updateResultCounterAndButton();
                 } else {
-                    Toast.makeText(getContext(), "Failed to fetch inventory", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Failed to fetch requests", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -183,10 +188,18 @@ public class RequestFragment extends Fragment {
 
                 if (response.isSuccessful() && response.body() != null) {
                     RequestFiltersResponse filterResponse = response.body();
+                    List<String> productNames = new ArrayList<>();
+                    if (filterResponse.getProducts() != null) {
+                        for (RequestProductFilterDTO product : filterResponse.getProducts()) {
+                            if (product != null && product.getProductName() != null) {
+                                productNames.add(product.getProductName());
+                            }
+                        }
+                    }
 
-                    FilterManager.setupSpinner(requireContext(), dropdownDirection, filterResponse.getDirection(), "All directions");
-                    FilterManager.setupSpinner(requireContext(), dropdownStatus, filterResponse.getStatus(), "All status");
-                    FilterManager.setupSpinner(requireContext(), dropdownStage, filterResponse.getStage(), "All stages");
+                    FilterManager.setupSpinner(requireContext(), dropdownDirection, productNames, "All products");
+                    FilterManager.setupSpinner(requireContext(), dropdownStatus, filterResponse.getRequestStatus(), "All status");
+                    FilterManager.setupSpinner(requireContext(), dropdownStage, filterResponse.getStages(), "All stages");
                 } else {
                     Toast.makeText(getContext(), "Failed to load filters", Toast.LENGTH_SHORT).show();
                 }

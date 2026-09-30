@@ -129,9 +129,11 @@ public class InventoryFragment extends Fragment {
         dropdownPerfumeType = view.findViewById(R.id.dropdown_perfume_type);
         dropdownGenderType = view.findViewById(R.id.dropdown_gender_type);
         dropdownBranch = view.findViewById(R.id.dropdown_branch);
-
+        buttonNextPage = view.findViewById(R.id.button_next_page);
+        buttonLastPage = view.findViewById(R.id.button_last_page);
         progressBarMain = view.findViewById(R.id.progress_bar_main);
         progressBarPagination = view.findViewById(R.id.progress_bar_pagination);
+        textViewPagination = view.findViewById(R.id.text_view_inventory_pagination);
     }
 
     private void initializeRecyclerView(View view) {
@@ -140,8 +142,9 @@ public class InventoryFragment extends Fragment {
 
          inventoryAdapter = new InventoryAdapter(inventoryList, selectedProduct -> {
              //todo: set the name of the intent
-            Intent intent = InventoryBatchListActivity.newIntent(requireContext(), selectedProduct.getProductId());
-            startActivity(intent);
+             Intent intent = new Intent(requireContext(), InventoryBatchListActivity.class);
+             intent.putExtra("PRODUCT_ID", selectedProduct.getProductId());
+             startActivity(intent);
         });
         recyclerView.setAdapter(inventoryAdapter);
     }
@@ -218,7 +221,6 @@ public class InventoryFragment extends Fragment {
     }
 
     private void intializeListeners() {
-
         buttonNextPage.setOnClickListener(v -> {
             currentFilter.setPageCount(currentFilter.getPageCount() + 1);
             fetchInventory(currentFilter, false);

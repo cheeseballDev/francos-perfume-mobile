@@ -103,6 +103,7 @@ public class InventoryBatchListActivity extends AppCompatActivity {
         topToolbar = findViewById(R.id.top_navigation_bar_inventory_batch);
         buttonMenu = topToolbar.findViewById(R.id.button_menu);
         buttonNotification = topToolbar.findViewById(R.id.button_notification);
+        drawerLayout = findViewById(R.id.main);
         //buttonLogout = drawerLayout.findViewById(R.id.button_logout);
     }
 
@@ -187,7 +188,7 @@ public class InventoryBatchListActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<BatchResponse> call, Throwable t) {
-                Toast.makeText(InventoryBatchListActivity.this, "Network error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(InventoryBatchListActivity.this,"Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

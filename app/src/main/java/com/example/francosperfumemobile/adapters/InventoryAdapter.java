@@ -55,6 +55,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryViewHolder> 
     }
     public void updateData(List<DisplayInventoryDTO> newData) {
         this.inventoryList = newData;
-        //notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 }

@@ -21,7 +21,7 @@ public interface InventoryAPIEndpoints {
             @Query("Search") String search,
             @Query("ProductType") String productType,
             @Query("ProductGender") String productGender,
-            @Query("Branch") Integer branch,
+            @Query("Branch") String branch,
             @Query("FromDate") String fromDate,
             @Query("ToDate") String toDate,
             @Query("PageCount") int pageCount,

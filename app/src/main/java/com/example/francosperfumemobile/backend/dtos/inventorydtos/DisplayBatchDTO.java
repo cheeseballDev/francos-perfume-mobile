@@ -1,12 +1,15 @@
 package com.example.francosperfumemobile.backend.dtos.inventorydtos;
 
+import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public abstract class DisplayBatchDTO implements Parcelable {
+public class DisplayBatchDTO implements Parcelable {
     @SerializedName("batchId")
     private int BatchId;
 
@@ -37,6 +40,31 @@ public abstract class DisplayBatchDTO implements Parcelable {
     @SerializedName("expiryDate")
     private String ExpiryDate;
 
+
+    protected DisplayBatchDTO(Parcel in) {
+        BatchId = in.readInt();
+        BatchDisplayId = in.readString();
+        BatchItemId = in.readInt();
+        ProductId = in.readInt();
+        ProductName = in.readString();
+        BranchId = in.readInt();
+        BranchLocation = in.readString();
+        Quantity = in.readInt();
+        CreatedAt = in.readString();
+        ExpiryDate = in.readString();
+    }
+
+    public static final Creator<DisplayBatchDTO> CREATOR = new Creator<DisplayBatchDTO>() {
+        @Override
+        public DisplayBatchDTO createFromParcel(Parcel in) {
+            return new DisplayBatchDTO(in);
+        }
+
+        @Override
+        public DisplayBatchDTO[] newArray(int size) {
+            return new DisplayBatchDTO[size];
+        }
+    };
 
     public int getBatchId() {
         return BatchId;
@@ -116,5 +144,27 @@ public abstract class DisplayBatchDTO implements Parcelable {
 
     public void setExpiryDate(String expiryDate) {
         ExpiryDate = expiryDate;
+    }
+
+
+    //idk wtf these do but apparently these needs to be generated for me to turn this to a normal class as said by the error thingy
+    //using abstract results in the backend not returning shit
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(BatchId);
+        dest.writeString(BatchDisplayId);
+        dest.writeInt(BatchItemId);
+        dest.writeInt(ProductId);
+        dest.writeString(ProductName);
+        dest.writeInt(BranchId);
+        dest.writeString(BranchLocation);
+        dest.writeInt(Quantity);
+        dest.writeString(CreatedAt);
+        dest.writeString(ExpiryDate);
     }
 }

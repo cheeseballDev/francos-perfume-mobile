@@ -8,7 +8,7 @@ public class InventorySearchFilterDTO {
     private String ToDate = null;
     private String ProductType = null;
     private String ProductGender = null;
-    private Integer Branch = null;
+    private String Branch = null;
     public int getPageCount() {
         return PageCount;
     }
@@ -65,11 +65,11 @@ public class InventorySearchFilterDTO {
         ProductGender = productGender;
     }
 
-    public Integer getBranch() {
+    public String getBranch() {
         return Branch;
     }
 
-    public void setBranch(Integer branch) {
+    public void setBranch(String branch) {
         Branch = branch;
     }
 }
