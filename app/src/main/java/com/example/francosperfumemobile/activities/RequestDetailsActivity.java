@@ -1,20 +1,17 @@
 package com.example.francosperfumemobile.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
@@ -24,55 +21,83 @@ import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestA
 import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestItemDetailsDTO;
 import com.example.francosperfumemobile.backend.repository.RequestRepository;
 import com.example.francosperfumemobile.backend.responses.requestresponses.RequestDetailResponse;
-import com.google.android.material.button.MaterialButton;
+import com.example.francosperfumemobile.helpers.RecyclerViewHelper;
+import com.example.francosperfumemobile.helpers.SafeCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class RequestDetailsActivity extends AppCompatActivity {
 
-    private final List<DisplayRequestItemDetailsDTO> requestedProductsList = new ArrayList<>();
-    private final List<DisplayRequestApprovalDetailsDTO> requestTimelineList = new ArrayList<>();
+    private static final String EXTRA_REQUEST_ID = "REQUEST_ID";
+
+    private final List<DisplayRequestItemDetailsDTO> listRequestedProducts = new ArrayList<>();
+    private final List<DisplayRequestApprovalDetailsDTO> listRequestTimeline = new ArrayList<>();
 
     private TextView textViewRequestId, textViewDateSubmitted, textViewDirection,
             textViewFromBranch, textViewToBranch, textViewCreatedBy;
     private ProgressBar progressBarMain;
-    private MaterialButton buttonGoBack;
-    private AppCompatButton buttonAccept, buttonRejectCancel, buttonOpenMessage;
 
-    private RecyclerView requestApprovalRecyclerView, requestedProductsRecyclerView;
     private RequestApprovalAdapter requestApprovalAdapter;
     private RequestedItemsAdapter requestedItemsAdapter;
+
+    public static Intent newIntent(Context context, int requestId) {
+        Intent intent = new Intent(context, RequestDetailsActivity.class);
+        intent.putExtra(EXTRA_REQUEST_ID, requestId);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_request_details);
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawerlayout_inventory_batch_list), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        initializeUI();
-        initializeRecyclerViews();
-        initializeListeners();
-
-        Intent intent = getIntent();
-        int requestId = intent.getIntExtra("REQUEST_ID", -1);
+        int requestId = getIntent().getIntExtra(EXTRA_REQUEST_ID, -1);
         if (requestId == -1) {
             Toast.makeText(this, "Invalid request ID", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
+        initializeUI();
+        initializeRecyclerViews();
+        initializeListeners();
         fetchRequestDetails(requestId);
+
+    }
+    private void fetchRequestDetails(int requestId) {
+        RequestRepository repository = new RequestRepository(this);
+        repository.getRequestDetails(requestId).enqueue(new SafeCallback<RequestDetailResponse>(this, progressBarMain) {
+            @Override
+            public void onSuccess(RequestDetailResponse detailResponse) {
+                if (detailResponse.getData() == null) return;
+
+                textViewRequestId.setText(detailResponse.getData().getRequestDisplayId());
+                textViewDateSubmitted.setText(String.format("Date submitted: %s", detailResponse.getData().getRequestDateSubmitted()));
+                textViewFromBranch.setText(detailResponse.getData().getRequestedFrom());
+                textViewToBranch.setText(detailResponse.getData().getDeliveredTo());
+                // TODO: Employee name should be fetched from backend
+                textViewCreatedBy.setText(detailResponse.getData().getEmployeeDisplayId());
+
+                if (detailResponse.getData().getItems() != null) {
+                    listRequestedProducts.clear();
+                    listRequestedProducts.addAll(detailResponse.getData().getItems());
+                    requestedItemsAdapter.notifyDataSetChanged();
+                }
+
+                if (detailResponse.getData().getApprovals() != null) {
+                    listRequestTimeline.clear();
+                    listRequestTimeline.addAll(detailResponse.getData().getApprovals());
+                    requestApprovalAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     private void initializeUI() {
@@ -87,71 +112,18 @@ public class RequestDetailsActivity extends AppCompatActivity {
     }
 
     private void initializeRecyclerViews() {
-        requestedProductsRecyclerView = findViewById(R.id.recycler_view_requested_products);
-        requestApprovalRecyclerView = findViewById(R.id.recycler_view_request_timeline);
+        RecyclerView requestedProductsRecyclerView = findViewById(R.id.recycler_view_requested_products);
+        RecyclerView requestApprovalRecyclerView = findViewById(R.id.recycler_view_request_timeline);
 
-        requestedProductsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        requestApprovalRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        requestedItemsAdapter = new RequestedItemsAdapter(listRequestedProducts);
+        requestApprovalAdapter = new RequestApprovalAdapter(listRequestTimeline);
 
-        requestedItemsAdapter = new RequestedItemsAdapter(requestedProductsList);
-        requestApprovalAdapter = new RequestApprovalAdapter(requestTimelineList);
-
-        requestedProductsRecyclerView.setAdapter(requestedItemsAdapter);
-        requestApprovalRecyclerView.setAdapter(requestApprovalAdapter);
+        RecyclerViewHelper.setupVertical(this, requestedProductsRecyclerView, requestedItemsAdapter);
+        RecyclerViewHelper.setupVertical(this, requestApprovalRecyclerView, requestApprovalAdapter);
     }
 
     private void initializeListeners() {
         findViewById(R.id.button_request_details_go_back).setOnClickListener(v -> finish());
     }
 
-    //todo: adjust if need dto OR requestId itself is fine
-    private void fetchRequestDetails(int requestId) {
-        if (progressBarMain != null) {
-            progressBarMain.setVisibility(View.VISIBLE);
-        }
-
-        RequestRepository repository = new RequestRepository(this);
-        repository.getRequestDetails(requestId).enqueue(new Callback<RequestDetailResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<RequestDetailResponse> call, @NonNull Response<RequestDetailResponse> response) {
-                if (isFinishing() || isDestroyed()) return;
-
-                if (progressBarMain != null) {
-                    progressBarMain.setVisibility(View.GONE);
-                }
-
-                if (response.isSuccessful() && response.body() != null) {
-                    RequestDetailResponse detailResponse = response.body();
-
-                    textViewRequestId.setText(detailResponse.getData().getRequestDisplayId());
-                    textViewDateSubmitted.setText(String.format("Date submitted: %s", detailResponse.getData().getRequestDateSubmitted()));
-                    textViewFromBranch.setText(detailResponse.getData().getRequestedFrom());
-                    textViewToBranch.setText(detailResponse.getData().getDeliveredTo());
-                    //TODO: Employee name should be fetched from backend
-                    textViewCreatedBy.setText(detailResponse.getData().getEmployeeDisplayId());
-
-                    requestedProductsList.clear();
-                    requestedProductsList.addAll(detailResponse.getData().getItems());
-                    requestedItemsAdapter.notifyDataSetChanged();
-
-                    requestTimelineList.clear();
-                    requestTimelineList.addAll(detailResponse.getData().getApprovals());
-                    requestApprovalAdapter.notifyDataSetChanged();
-
-                } else {
-                    Toast.makeText(RequestDetailsActivity.this, "Failed to fetch request details", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<RequestDetailResponse> call, @NonNull Throwable t) {
-                if (isFinishing() || isDestroyed()) return;
-
-                if (progressBarMain != null) {
-                    progressBarMain.setVisibility(View.GONE);
-                }
-                Toast.makeText(RequestDetailsActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 }

@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DisplayDeliveryDetailsDTO;
-import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayBatchDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_delivery_details);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawerlayout_inventory_batch_list), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -44,10 +43,6 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
 
         initializeUI();
         initializeRecyclerView();
-    }
-
-    private void initializeRecyclerView() {
-
     }
 
     private void initializeUI() {
@@ -63,4 +58,9 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
         buttonAccept = findViewById(R.id.button_accept);
         buttonReject = findViewById(R.id.button_reject_cancel);
     }
+
+    private void initializeRecyclerView() {
+
+    }
+
 }

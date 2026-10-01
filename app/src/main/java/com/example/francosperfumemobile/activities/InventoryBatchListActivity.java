@@ -21,12 +21,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.adapters.BatchAdapter;
+import com.example.francosperfumemobile.adapters.RequestAdapter;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayBatchDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.SendInventoryBatchRequestDTO;
 import com.example.francosperfumemobile.backend.repository.InventoryRepository;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.BatchResponse;
 import com.example.francosperfumemobile.backend.retrofit.SessionManager;
 import com.example.francosperfumemobile.dialogs.EditBatchDialog;
+import com.example.francosperfumemobile.helpers.NavigationHelper;
+import com.example.francosperfumemobile.helpers.RecyclerViewHelper;
+import com.example.francosperfumemobile.helpers.SafeCallback;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -46,13 +50,20 @@ public class InventoryBatchListActivity extends AppCompatActivity {
     private ImageButton buttonMenu, buttonNotification;
     private AppCompatButton buttonLogout;
     private InventoryRepository inventoryRepository;
-    private BatchAdapter adapter;
+    private BatchAdapter batchAdapter;
+
+    public static Intent newIntent(Context context, int productId) {
+        Intent intent = new Intent(context, InventoryBatchListActivity.class);
+        intent.putExtra(PRODUCT_ID, productId);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_inventory_batch_list);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawerlayout_inventory_batch_list), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -81,31 +92,25 @@ public class InventoryBatchListActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent newIntent(Context context, int productId) {
-        Intent intent = new Intent(context, InventoryBatchListActivity.class);
-        intent.putExtra(PRODUCT_ID, productId);
-        return intent;
-    }
-
-    private void initializeRecyclerView() {
-        adapter = new BatchAdapter(batchList, selectedBatch -> {
-            EditBatchDialog dialog = EditBatchDialog.newInstance(selectedBatch);
-            dialog.show(getSupportFragmentManager(), "EditBatchDialog");
-        });
-
-        RecyclerView recyclerView = findViewById(R.id.recycler_view_batch);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-    }
-
     private void initializeUI() {
         backButton = findViewById(R.id.button_inventory_batch_go_back);
         topToolbar = findViewById(R.id.top_navigation_bar_inventory_batch);
         buttonMenu = topToolbar.findViewById(R.id.button_menu);
         buttonNotification = topToolbar.findViewById(R.id.button_notification);
-        drawerLayout = findViewById(R.id.main);
-        //buttonLogout = drawerLayout.findViewById(R.id.button_logout);
+        drawerLayout = findViewById(R.id.drawerlayout_inventory_batch_list);
+        buttonLogout = drawerLayout.findViewById(R.id.button_logout);
     }
+
+
+    private void initializeRecyclerView() {
+        RecyclerView recyclerViewBatch = findViewById(R.id.recycler_view_batch);
+        batchAdapter = new BatchAdapter(batchList, selectedBatch -> {
+            EditBatchDialog dialog = EditBatchDialog.newInstance(selectedBatch);
+            dialog.show(getSupportFragmentManager(), "EditBatchDialog");
+        });
+        RecyclerViewHelper.setupVertical(this, recyclerViewBatch, batchAdapter);
+    }
+
 
     private void intializeListeners() {
         backButton.setOnClickListener(v -> {
@@ -133,62 +138,22 @@ public class InventoryBatchListActivity extends AppCompatActivity {
         });
 
          */
-
-        // LISTENERS GALING SA AI
-        OnBackPressedCallback backCallback = new OnBackPressedCallback(false) {
-            @Override
-            public void handleOnBackPressed() {
-                if (drawerLayout != null && drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                }
-            }
-        };
-
-        getOnBackPressedDispatcher().addCallback(this, backCallback);
-
-        // 3. Listen for drawer changes to enable/disable the callback
-        drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                // Intercept back gesture because the drawer is open
-                backCallback.setEnabled(true);
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                // Let the system handle the back gesture normally because drawer is closed
-                backCallback.setEnabled(false);
-            }
-        });
-
+        NavigationHelper.setupDrawerBackButton(this, drawerLayout);
     }
 
     private void loadBatches(SendInventoryBatchRequestDTO dto) {
-
-        inventoryRepository.getInventoryBatches(dto).enqueue(new Callback<BatchResponse>() {
-
+        inventoryRepository.getInventoryBatches(dto).enqueue(new SafeCallback<BatchResponse>(this) {
             @Override
-            public void onResponse(Call<BatchResponse> call, Response<BatchResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    BatchResponse batchResponse = response.body();
-                    List<DisplayBatchDTO> batches = batchResponse.getBatches();
+            public void onSuccess(BatchResponse batchResponse) {
+                List<DisplayBatchDTO> batches = batchResponse.getBatches();
 
-                    if (batches != null) {
-                        batchList.clear();
-                        batchList.addAll(batches);
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    // todo: add empty state
-
-                } else {
-                    Toast.makeText(InventoryBatchListActivity.this, "Failed to load batches", Toast.LENGTH_SHORT).show();
+                if (batches != null) {
+                    batchList.clear();
+                    batchList.addAll(batches);
+                    batchAdapter.notifyDataSetChanged();
                 }
-            }
 
-            @Override
-            public void onFailure(Call<BatchResponse> call, Throwable t) {
-                Toast.makeText(InventoryBatchListActivity.this,"Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                // todo: add empty state
             }
         });
     }

@@ -10,8 +10,8 @@
         android:id="@+id/edit_text_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/text_field_design"
         android:ems="10"
@@ -30,11 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
-
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_search"
-        app:layout_constraintStart_toStartOf="@id/edit_text_search"
         app:layout_constraintEnd_toEndOf="@id/edit_text_search"
-        >
+        app:layout_constraintStart_toStartOf="@id/edit_text_search"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_search">
 
         <Spinner
             android:id="@+id/dropdown_from_branch"
@@ -65,60 +63,54 @@
 
     </LinearLayout>
 
-
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/request_toggle_button_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:spacing="2dp"
-        app:singleSelection="true"
-        app:selectionRequired="true"
-        app:checkedButton="@id/button_request_all"
+        app:checkedButton="@id/button_delivery_all"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
         app:layout_constraintStart_toStartOf="@id/linearLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:selectionRequired="true"
+        app:singleSelection="true">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_request_inbound"
+            android:id="@+id/button_delivery_inbound"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/button_filter_color"
             android:text="@string/inbound_text"
-            app:cornerRadius="8dp"
             android:textColor="@color/text_filter_color"
-            android:backgroundTint="@color/button_filter_color"
+            app:cornerRadius="8dp"
             app:strokeColor="@color/stroke_filter_color"
-            app:strokeWidth="1dp"
-
-            />
+            app:strokeWidth="1dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_request_outbound"
+            android:id="@+id/button_delivery_outbound"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/button_filter_color"
             android:text="@string/outbound_text"
-            app:cornerRadius="8dp"
             android:textColor="@color/text_filter_color"
-            android:backgroundTint="@color/button_filter_color"
+            app:cornerRadius="8dp"
             app:strokeColor="@color/stroke_filter_color"
-            app:strokeWidth="1dp"
-            />
+            app:strokeWidth="1dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_request_all"
+            android:id="@+id/button_delivery_all"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/all_requests_text"
-            app:cornerRadius="8dp"
-            android:textColor="@color/text_filter_color"
             android:backgroundTint="@color/button_filter_color"
+            android:text="@string/all_requests_text"
+            android:textColor="@color/text_filter_color"
+            app:cornerRadius="8dp"
             app:strokeColor="@color/stroke_filter_color"
-            app:strokeWidth="2dp"
-
-            />
+            app:strokeWidth="2dp" />
 
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -135,20 +127,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingVertical="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-
         <ImageButton
-            android:id="@+id/button_last_page"
+            android:id="@+id/button_delivery_last_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_weight="1"
             android:backgroundTint="@color/transparent"
             android:src="@drawable/icon_chevron_left"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -156,27 +146,49 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_view_request_pagination"
+            android:id="@+id/text_view_delivery_pagination"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pagination_sample_text"
             android:textSize="@dimen/font_m"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_next_page"
-            app:layout_constraintStart_toEndOf="@+id/button_last_page"
+            app:layout_constraintEnd_toStartOf="@+id/button_delivery_next_page"
+            app:layout_constraintStart_toEndOf="@+id/button_delivery_last_page"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/button_next_page"
+            android:id="@+id/button_delivery_next_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:layout_weight="1"
             android:backgroundTint="@color/transparent"
             android:src="@drawable/icon_chevron_right"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ProgressBar
+            android:id="@+id/progress_bar_delivery_pagination"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="20dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Delivery Loading Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progress_bar_delivery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,8 +4,8 @@ public class DeliveryFilterDTO {
     private int PageCount = 1;
     private int PageSize = 20;
     private String Search;
-    private Integer FromBranchId;
-    private Integer ToBranchId;
+    private String FromBranchName;
+    private String ToBranchName;
     private String DeliveryStatus;
     private String FromDate;
     private String ToDate;
@@ -34,22 +34,6 @@ public class DeliveryFilterDTO {
         Search = search;
     }
 
-    public Integer getFromBranchId() {
-        return FromBranchId;
-    }
-
-    public void setFromBranchId(Integer fromBranchId) {
-        FromBranchId = fromBranchId;
-    }
-
-    public Integer getToBranchId() {
-        return ToBranchId;
-    }
-
-    public void setToBranchId(Integer toBranchId) {
-        ToBranchId = toBranchId;
-    }
-
     public String getDeliveryStatus() {
         return DeliveryStatus;
     }
@@ -73,4 +57,21 @@ public class DeliveryFilterDTO {
     public void setToDate(String toDate) {
         ToDate = toDate;
     }
+
+    public String getFromBranchName() {
+        return FromBranchName;
+    }
+
+    public void setFromBranchName(String fromBranch) {
+        FromBranchName = fromBranch;
+    }
+
+    public String getToBranchName() {
+        return ToBranchName;
+    }
+
+    public void setToBranchName(String toBranch) {
+        ToBranchName = toBranch;
+    }
+
 }

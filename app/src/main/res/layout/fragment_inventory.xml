@@ -85,7 +85,7 @@
         tools:listitem="@layout/card_inventory" />
 
     <ProgressBar
-        android:id="@+id/progress_bar_main"
+        android:id="@+id/progress_bar_inventory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -105,7 +105,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
-            android:id="@+id/button_last_page"
+            android:id="@+id/button_inventory_last_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -125,23 +125,23 @@
             android:text="@string/pagination_sample_text"
             android:textSize="@dimen/font_m"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_next_page"
-            app:layout_constraintStart_toEndOf="@+id/button_last_page"
+            app:layout_constraintEnd_toStartOf="@+id/button_inventory_next_page"
+            app:layout_constraintStart_toEndOf="@+id/button_inventory_last_page"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Pagination Page Change Loading Indicator -->
+        <!-- todo can be removed -->
         <ProgressBar
-            android:id="@+id/progress_bar_pagination"
+            android:id="@+id/progress_bar_inventory_pagination"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_next_page"
-            app:layout_constraintStart_toEndOf="@+id/button_last_page"
+            app:layout_constraintEnd_toStartOf="@+id/button_inventory_next_page"
+            app:layout_constraintStart_toEndOf="@+id/button_inventory_last_page"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/button_next_page"
+            android:id="@+id/button_inventory_next_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"

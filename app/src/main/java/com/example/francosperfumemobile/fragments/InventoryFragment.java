@@ -27,6 +27,7 @@ import com.example.francosperfumemobile.backend.repository.InventoryRepository;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryFilterResponse;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryResponse;
 import com.example.francosperfumemobile.helpers.FilterManager;
+import com.example.francosperfumemobile.helpers.SafeCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,51 +130,40 @@ public class InventoryFragment extends Fragment {
         dropdownPerfumeType = view.findViewById(R.id.dropdown_perfume_type);
         dropdownGenderType = view.findViewById(R.id.dropdown_gender_type);
         dropdownBranch = view.findViewById(R.id.dropdown_branch);
-        buttonNextPage = view.findViewById(R.id.button_next_page);
-        buttonLastPage = view.findViewById(R.id.button_last_page);
-        progressBarMain = view.findViewById(R.id.progress_bar_main);
-        progressBarPagination = view.findViewById(R.id.progress_bar_pagination);
+
+        progressBarMain = view.findViewById(R.id.progress_bar_inventory);
+        progressBarPagination = view.findViewById(R.id.progress_bar_inventory_pagination);
+
+        buttonNextPage = view.findViewById(R.id.button_inventory_next_page);
+        buttonLastPage = view.findViewById(R.id.button_inventory_last_page);
         textViewPagination = view.findViewById(R.id.text_view_inventory_pagination);
     }
 
     private void initializeRecyclerView(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_inventory);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        RecyclerView recyclerViewInventory = view.findViewById(R.id.recycler_view_inventory);
+        recyclerViewInventory.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-         inventoryAdapter = new InventoryAdapter(inventoryList, selectedProduct -> {
-             //todo: set the name of the intent
-             Intent intent = new Intent(requireContext(), InventoryBatchListActivity.class);
-             intent.putExtra("PRODUCT_ID", selectedProduct.getProductId());
-             startActivity(intent);
+        inventoryAdapter = new InventoryAdapter(inventoryList, selectedProduct -> {
+            //todo: set the name of the intent
+            Intent intent = new Intent(requireContext(), InventoryBatchListActivity.class);
+            intent.putExtra("PRODUCT_ID", selectedProduct.getProductId());
+            startActivity(intent);
         });
-        recyclerView.setAdapter(inventoryAdapter);
+        recyclerViewInventory.setAdapter(inventoryAdapter);
     }
 
     public void initializeDropdowns() {
         InventoryRepository repository = new InventoryRepository(requireContext());
-        repository.getInventoryFilters().enqueue(new Callback<InventoryFilterResponse>() {
+
+        repository.getInventoryFilters().enqueue(new SafeCallback<InventoryFilterResponse>(this) {
             @Override
-            public void onResponse(Call<InventoryFilterResponse> call, Response<InventoryFilterResponse> response) {
-                if (!isAdded() || getContext() == null) return;
-
-                if (response.isSuccessful() && response.body() != null) {
-                    InventoryFilterResponse filterResponse = response.body();
-
-                    FilterManager.setupSpinner(requireContext(), dropdownPerfumeType, filterResponse.getProductTypes(), "All Types");
-                    FilterManager.setupSpinner(requireContext(), dropdownGenderType, filterResponse.getProductGenders(), "All Genders");
-                    FilterManager.setupSpinner(requireContext(), dropdownBranch, filterResponse.getBranches(), "All Branches");
-                } else {
-                    Toast.makeText(getContext(), "Failed to load filters", Toast.LENGTH_SHORT).show();
-                }
+            public void onSuccess(InventoryFilterResponse filterResponse) {
+                // FilterManager handles the UI logic of populating the spinners
+                FilterManager.setupSpinner(requireContext(), dropdownPerfumeType, filterResponse.getProductTypes(), "All Types");
+                FilterManager.setupSpinner(requireContext(), dropdownGenderType, filterResponse.getProductGenders(), "All Genders");
+                FilterManager.setupSpinner(requireContext(), dropdownBranch, filterResponse.getBranches(), "All Branches");
 
                 initializeSpinnerListeners();
-            }
-
-            @Override
-            public void onFailure(Call<InventoryFilterResponse> call, Throwable t) {
-                if (isAdded() && getContext() != null) {
-                    Toast.makeText(getContext(), "Network error", Toast.LENGTH_SHORT).show();
-                }
             }
         });
     }
@@ -211,7 +201,6 @@ public class InventoryFragment extends Fragment {
                 String selectedBranch = (position == 0) ? null : value;
 
                 if (!Objects.equals(currentFilter.getBranch(), selectedBranch)) {
-                    // TODO: Add correct branch filtering here since selectedBranch is a string
                     currentFilter.setBranch(selectedBranch);
                     currentFilter.setPageCount(1);
                     fetchInventory(currentFilter, true);

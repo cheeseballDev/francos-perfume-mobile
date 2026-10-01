@@ -21,11 +21,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.retrofit.SessionManager;
-import com.example.francosperfumemobile.components.DashboardCardView;
 import com.example.francosperfumemobile.fragments.DashboardFragment;
 import com.example.francosperfumemobile.fragments.DeliveryFragment;
 import com.example.francosperfumemobile.fragments.InventoryFragment;
 import com.example.francosperfumemobile.fragments.RequestFragment;
+import com.example.francosperfumemobile.helpers.NavigationHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //TODO: Ask opinion how the hiding of systemUI would look like
         //hideSystemUI();
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawerlayout_inventory_batch_list), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeUI() {
         bottomNavigationView = findViewById(R.id.bottom_navigation_bar);
-        drawerLayout = findViewById(R.id.main);
+        drawerLayout = findViewById(R.id.drawerlayout_main);
         topToolbar = findViewById(R.id.top_navigation_bar_main);
         buttonMenu = topToolbar.findViewById(R.id.button_menu);
         buttonNotification = topToolbar.findViewById(R.id.button_notification);
@@ -139,33 +139,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
 
-        // LISTENERS GALING SA AI
-        OnBackPressedCallback backCallback = new OnBackPressedCallback(false) {
-            @Override
-            public void handleOnBackPressed() {
-                if (drawerLayout != null && drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                }
-            }
-        };
-
-        getOnBackPressedDispatcher().addCallback(this, backCallback);
-
-        // 3. Listen for drawer changes to enable/disable the callback
-        drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                // Intercept back gesture because the drawer is open
-                backCallback.setEnabled(true);
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                // Let the system handle the back gesture normally because drawer is closed
-                backCallback.setEnabled(false);
-            }
-        });
-
+        NavigationHelper.setupDrawerBackButton(this, drawerLayout);
     }
 
     /*

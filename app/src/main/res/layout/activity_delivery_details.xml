@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/drawerlayout_delivery_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.DeliveryDetailsActivity">
@@ -82,7 +82,7 @@
         app:layout_constraintEnd_toStartOf="@+id/textView4"
         app:layout_constraintStart_toStartOf="@+id/text_view_delivery_details_id"
         app:layout_constraintTop_toBottomOf="@+id/text_view_delivery_details_id"
-        app:layout_setHorizontal_chainStyle="packed" />
+        app:layout_constraintHorizontal_chainStyle="packed" />
 
     <TextView
         android:id="@+id/textView4"

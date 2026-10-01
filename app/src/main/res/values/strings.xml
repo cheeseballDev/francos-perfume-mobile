@@ -118,4 +118,6 @@
     <string name="remarks_text">Remarks</string>
     <string name="additional_information_hint">Enter additional information here</string>
     <string name="confirm_delivery">Confirm Delivery</string>
+    <string name="back_to_login">Back to Login</string>
+    <string name="send_reset_instructions">Send Reset Instructions</string>
 </resources>

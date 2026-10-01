@@ -19,7 +19,7 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryViewHolder> {
     private final DeliveryAdapter.OnDeliveryClickListener listener;
 
     public interface OnDeliveryClickListener {
-        void onDeliveryClick(DisplayRequestDTO request);
+        void onDeliveryClick(DisplayDeliveryDTO delivery);
     }
 
     public DeliveryAdapter(List<DisplayDeliveryDTO> data, DeliveryAdapter.OnDeliveryClickListener listener) {
@@ -48,5 +48,13 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryViewHolder> {
     public void updateData(List<DisplayDeliveryDTO> newData) {
         this.deliveryList = newData;
         notifyDataSetChanged();
+    }
+
+    public void addData(List<DisplayDeliveryDTO> newData) {
+        if (newData != null && !newData.isEmpty()) {
+            int startPosition = this.deliveryList.size();
+            this.deliveryList.addAll(newData);
+            notifyItemRangeInserted(startPosition, newData.size());
+        }
     }
 }

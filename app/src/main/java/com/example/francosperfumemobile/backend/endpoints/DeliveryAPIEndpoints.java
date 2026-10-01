@@ -15,8 +15,9 @@ public interface DeliveryAPIEndpoints {
             @Query("PageNumber") int pageNumber,
             @Query("PageSize") int pageSize,
             @Query("Search") String search,
-            @Query("FromBranchId") Integer fromBranchId,
-            @Query("ToBranchId") Integer toBranchId,
+            //todo: check if fromBranch or fromBranchName
+            @Query("FromBranchName") String fromBranch,
+            @Query("ToBranchName") String toBranch,
             @Query("DeliveryStatus") String deliveryStatus,
             @Query("FromDate") String fromDate,
             @Query("ToDate") String toDate
