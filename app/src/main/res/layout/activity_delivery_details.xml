@@ -145,13 +145,13 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/bg_border"
         android:padding="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/layout_bottom_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_delivery_details_to_branch">
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/text_view_delivery_details_title_recycler"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -172,46 +172,63 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7"
-            tools:listitem="@layout/card_delivered_items" />
+            app:layout_constraintTop_toBottomOf="@+id/text_view_delivery_details_title_recycler"
+            tools:listitem="@layout/card_delivery_inbound_items" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/constraintLayout2"
+    <FrameLayout
+        android:id="@+id/layout_bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_reject_cancel"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_design"
-            android:backgroundTint="@color/red"
-            android:text="@string/deny_text"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent" />
+        <LinearLayout
+            android:id="@+id/layout_inbound_actions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_accept"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_design"
-            android:backgroundTint="@color/green"
-            android:text="@string/approve_text"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_confirm_delivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#4CAF50"
+                android:text="Confirm Delivery" />
+        </LinearLayout>
 
-    <!-- Main Loading Progress Bar -->
+        <LinearLayout
+            android:id="@+id/layout_outbound_actions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_cancel_request"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="#8B0000"
+                android:text="Cancel Request" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_mark_in_transit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="#3B5998"
+                android:text="Mark as In Transit" />
+        </LinearLayout>
+
+    </FrameLayout>
+
     <ProgressBar
         android:id="@+id/progress_bar_delivery_details"
         android:layout_width="wrap_content"

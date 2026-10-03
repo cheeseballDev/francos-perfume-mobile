@@ -26,6 +26,7 @@ public class RequestedItemsAdapter extends RecyclerView.Adapter<RequestedItemsVi
         return new RequestedItemsViewHolder(view);
     }
 
+    //todo: add listeners here
     @Override
     public void onBindViewHolder(@NonNull RequestedItemsViewHolder holder, int position) {
         DisplayRequestItemDetailsDTO requestedItem = requestedItems.get(position);

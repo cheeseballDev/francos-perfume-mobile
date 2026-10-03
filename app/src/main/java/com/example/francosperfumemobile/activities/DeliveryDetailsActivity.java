@@ -15,9 +15,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.adapters.DeliveryItemsAdapter;
+import com.example.francosperfumemobile.backend.dtos.deliverydtos.DeliveryFilterDTO;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DeliveryItemDTO;
+import com.example.francosperfumemobile.backend.dtos.deliverydtos.DisplayDeliveryDTO;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DisplayDeliveryDetailsDTO;
+import com.example.francosperfumemobile.backend.repository.DeliveryRepository;
+import com.example.francosperfumemobile.backend.responses.deliveryresponses.DeliveryDetailResponse;
+import com.example.francosperfumemobile.backend.responses.deliveryresponses.DeliveryListResponse;
+import com.example.francosperfumemobile.helpers.PaginationHelper;
 import com.example.francosperfumemobile.helpers.RecyclerViewHelper;
+import com.example.francosperfumemobile.helpers.SafeCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +40,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
     private AppCompatButton buttonAccept, buttonReject;
     private RecyclerView recyclerViewDeliveryItems;
     private DeliveryItemsAdapter deliveryItemsAdapter;
+    private String direction;
 
 
     @Override
@@ -40,15 +48,43 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_delivery_details);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawerlayout_inventory_batch_list), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawerlayout_delivery_details), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
+        //todo: add intent here
+        // also, can add intent that gets the direction type so that it doesn't have to load the delivery details just to get the delivery type
+        // but idk
+
         initializeUI();
         initializeRecyclerView();
+        fetchDeliveryDetails(0);
+    }
 
+    private void fetchDeliveryDetails(int deliveryId) {
+        DeliveryRepository repository = new DeliveryRepository(this);
+        repository.getDeliveryDetails(deliveryId).enqueue(new SafeCallback<DeliveryDetailResponse>(this, progressBarDeliveryDetails) {
+            @Override
+            public void onSuccess(DeliveryDetailResponse response) {
+                List<DeliveryItemDTO> items = response.getData().getItems();
+
+                if (items != null && !items.isEmpty()) {
+                    deliveryItemsAdapter.updateData(items);
+                }
+
+                textViewDeliveryDetailsId.setText(response.getData().getDeliveryDisplayId());
+                // todo: add created by here
+                //textViewDeliveryDetailsCreatedBy.setText(response.getData().get);
+                textViewDeliveryDetailsDateCreated.setText(String.valueOf(response.getData().getCreatedAt()));
+                textViewDeliveryDetailsFromBranch.setText(response.getData().getFromBranchName());
+                textViewDeliveryDetailsToBranch.setText(response.getData().getToBranchName());
+                // todo: add formatting here in the future
+                textViewDeliveryDetailsDirection.setText(response.getData().getDirection());
+
+            }
+        });
     }
 
     private void initializeUI() {
@@ -63,14 +99,27 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
 
         buttonAccept = findViewById(R.id.button_accept);
         buttonReject = findViewById(R.id.button_reject_cancel);
+        initializeListeners();
     }
 
     private void initializeRecyclerView() {
         recyclerViewDeliveryItems = findViewById(R.id.recycler_view_delivery_items);
-        deliveryItemsAdapter = new DeliveryItemsAdapter(deliveryItemList, selectedDelivery -> {
+        deliveryItemsAdapter = new DeliveryItemsAdapter(deliveryItemList, direction, selectedDelivery -> {
 
         });
         recyclerViewDeliveryItems.setAdapter(deliveryItemsAdapter);
         RecyclerViewHelper.setupVertical(this, recyclerViewDeliveryItems, deliveryItemsAdapter);
+    }
+
+    private void initializeListeners() {
+
+        //todo: add if statement to add if conditions that changes the button layout depending on the direction
+        buttonAccept.setOnClickListener(v -> {
+
+        });
+
+        buttonReject.setOnClickListener(v -> {
+
+        });
     }
 }

@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DeliveryItemDTO;
 
-public class DeliveryItemsViewHolder extends RecyclerView.ViewHolder {
+public class DeliveryOutboundViewHolder extends RecyclerView.ViewHolder {
 
     ImageView deliveryItemsImage;
     TextView deliveryItemsProductName, deliveryItemsProductId, deliveryItemsUnitCount;
 
-    public DeliveryItemsViewHolder(View view) {
+    public DeliveryOutboundViewHolder(View view) {
         super(view);
         deliveryItemsImage = view.findViewById(R.id.image_view_delivery_items_icon);
         deliveryItemsProductName = view.findViewById(R.id.text_view_delivery_items_product_name);

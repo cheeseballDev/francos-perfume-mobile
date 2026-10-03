@@ -50,4 +50,14 @@ public class PaginationHelper {
             }
         }
     }
+
+    public static void setLoadingState(
+            boolean isInitialFetch,
+            boolean isLoading,
+            ProgressBar progressBar
+    ) {
+        if (progressBar != null) {
+            progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        }
+    }
 }

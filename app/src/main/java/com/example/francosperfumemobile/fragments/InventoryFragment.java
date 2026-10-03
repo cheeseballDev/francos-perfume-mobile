@@ -1,4 +1,5 @@
 package com.example.francosperfumemobile.fragments;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,11 +17,9 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.activities.InventoryBatchListActivity;
-import com.example.francosperfumemobile.activities.RequestDetailsActivity;
 import com.example.francosperfumemobile.adapters.InventoryAdapter;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.InventorySearchFilterDTO;
@@ -34,10 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class InventoryFragment extends Fragment {
 
@@ -53,13 +48,11 @@ public class InventoryFragment extends Fragment {
     private boolean isLoading;
 
     public InventoryFragment() {
-        // Required empty public constructoraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        // Required empty public constructor
     }
 
-    // can use this to create local variables or get variables from other activities/fragments to this specific one
-    public static InventoryFragment newInstance(String param1, String param2) {
-        InventoryFragment fragment = new InventoryFragment();
-        return fragment;
+    public static InventoryFragment newInstance() {
+        return new InventoryFragment();
     }
 
     @Override
@@ -69,40 +62,35 @@ public class InventoryFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_inventory, container, false);
     }
 
-
-    //i know it looks like a complete fucking mess, but ill move them to their own service soon if possible
-    //i just need to get them to work
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         initializeUI(view);
         initializeRecyclerView(view);
-        intializeListeners();
+        initializeListeners();
         initializeDropdowns();
         fetchInventory(currentFilter, true);
-        // TODO: Add the pagination here using the new FilterManager.
     }
 
     private void fetchInventory(InventorySearchFilterDTO filter, boolean isInitialFetch) {
         setLoadingState(isInitialFetch, true);
-        progressBarMain.setVisibility(View.VISIBLE);
+
+        ProgressBar activeProgressBar = isInitialFetch ? progressBarMain : progressBarPagination;
 
         InventoryRepository repository = new InventoryRepository(requireContext());
-        repository.displayInventory(filter).enqueue(new Callback<InventoryResponse>() {
+        repository.displayInventory(filter).enqueue(new SafeCallback<InventoryResponse>(this, activeProgressBar) {
             @Override
-            public void onResponse(Call<InventoryResponse> call, Response<InventoryResponse> response) {
-                if (!isAdded() || getContext() == null) return;
-
-                progressBarMain.setVisibility(View.GONE);
-
+            public void onSuccess(InventoryResponse response) {
                 setLoadingState(isInitialFetch, false);
 
-                if (response.isSuccessful() && response.body() != null) {
-                    List<DisplayInventoryDTO> items = response.body().getData();
-                    totalItemCount = response.body().getTotalInventories();
+                if (response != null) {
+                    List<DisplayInventoryDTO> items = response.getData();
+                    totalItemCount = response.getTotalInventories();
 
                     if (isInitialFetch) {
                         inventoryAdapter.updateData(items != null ? items : new ArrayList<>());
@@ -111,16 +99,6 @@ public class InventoryFragment extends Fragment {
                     }
 
                     updateResultCounterAndButton();
-                } else {
-                    Toast.makeText(getContext(), "Failed to fetch inventory", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<InventoryResponse> call, Throwable t) {
-                if (isAdded() && getContext() != null) {
-                    progressBarMain.setVisibility(View.GONE);
-                    Toast.makeText(getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -145,12 +123,12 @@ public class InventoryFragment extends Fragment {
         recyclerViewInventory.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         inventoryAdapter = new InventoryAdapter(inventoryList, selectedProduct -> {
-            openRequestDetails(selectedProduct.getProductId());
+            openInventoryBatchList(selectedProduct.getProductId());
         });
         recyclerViewInventory.setAdapter(inventoryAdapter);
     }
 
-    private void openRequestDetails(int productId) {
+    private void openInventoryBatchList(int productId) {
         Intent intent = new Intent(requireContext(), InventoryBatchListActivity.class);
         intent.putExtra("PRODUCT_ID", productId);
         startActivity(intent);
@@ -162,12 +140,13 @@ public class InventoryFragment extends Fragment {
         repository.getInventoryFilters().enqueue(new SafeCallback<InventoryFilterResponse>(this) {
             @Override
             public void onSuccess(InventoryFilterResponse filterResponse) {
-                // FilterManager handles the UI logic of populating the spinners
-                FilterManager.setupSpinner(requireContext(), dropdownPerfumeType, filterResponse.getProductTypes(), "All Types");
-                FilterManager.setupSpinner(requireContext(), dropdownGenderType, filterResponse.getProductGenders(), "All Genders");
-                FilterManager.setupSpinner(requireContext(), dropdownBranch, filterResponse.getBranches(), "All Branches");
+                if (filterResponse != null) {
+                    FilterManager.setupSpinner(requireContext(), dropdownPerfumeType, filterResponse.getProductTypes(), "All Types");
+                    FilterManager.setupSpinner(requireContext(), dropdownGenderType, filterResponse.getProductGenders(), "All Genders");
+                    FilterManager.setupSpinner(requireContext(), dropdownBranch, filterResponse.getBranches(), "All Branches");
 
-                initializeSpinnerListeners();
+                    initializeSpinnerListeners();
+                }
             }
         });
     }
@@ -180,8 +159,7 @@ public class InventoryFragment extends Fragment {
 
                 if (!Objects.equals(currentFilter.getProductType(), selectedType)) {
                     currentFilter.setProductType(selectedType);
-                    currentFilter.setPageCount(1);
-                    fetchInventory(currentFilter, true);
+                    resetPaginationAndFetch();
                 }
             }
         });
@@ -193,8 +171,7 @@ public class InventoryFragment extends Fragment {
 
                 if (!Objects.equals(currentFilter.getProductGender(), selectedGender)) {
                     currentFilter.setProductGender(selectedGender);
-                    currentFilter.setPageCount(1);
-                    fetchInventory(currentFilter, true);
+                    resetPaginationAndFetch();
                 }
             }
         });
@@ -206,22 +183,23 @@ public class InventoryFragment extends Fragment {
 
                 if (!Objects.equals(currentFilter.getBranch(), selectedBranch)) {
                     currentFilter.setBranch(selectedBranch);
-                    currentFilter.setPageCount(1);
-                    fetchInventory(currentFilter, true);
+                    resetPaginationAndFetch();
                 }
             }
         });
     }
 
-    private void intializeListeners() {
+    private void initializeListeners() {
         buttonNextPage.setOnClickListener(v -> {
             currentFilter.setPageCount(currentFilter.getPageCount() + 1);
             fetchInventory(currentFilter, false);
         });
 
         buttonLastPage.setOnClickListener(v -> {
-            currentFilter.setPageCount(currentFilter.getPageCount() - 1);
-            fetchInventory(currentFilter, false);
+            if (currentFilter.getPageCount() > 1) {
+                currentFilter.setPageCount(currentFilter.getPageCount() - 1);
+                fetchInventory(currentFilter, false);
+            }
         });
     }
 
@@ -256,12 +234,13 @@ public class InventoryFragment extends Fragment {
             if (progressBarMain != null) {
                 progressBarMain.setVisibility(isLoading ? View.VISIBLE : View.GONE);
             }
-            if (isLoading) {
-                progressBarMain.setVisibility(View.GONE);
-            }
         } else {
-            progressBarPagination.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-            buttonNextPage.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+            if (progressBarPagination != null) {
+                progressBarPagination.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+            }
+            if (buttonNextPage != null) {
+                buttonNextPage.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+            }
         }
     }
 }
