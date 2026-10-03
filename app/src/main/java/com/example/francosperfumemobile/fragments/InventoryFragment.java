@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.activities.InventoryBatchListActivity;
+import com.example.francosperfumemobile.activities.RequestDetailsActivity;
 import com.example.francosperfumemobile.adapters.InventoryAdapter;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.InventorySearchFilterDTO;
@@ -144,12 +145,15 @@ public class InventoryFragment extends Fragment {
         recyclerViewInventory.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         inventoryAdapter = new InventoryAdapter(inventoryList, selectedProduct -> {
-            //todo: set the name of the intent
-            Intent intent = new Intent(requireContext(), InventoryBatchListActivity.class);
-            intent.putExtra("PRODUCT_ID", selectedProduct.getProductId());
-            startActivity(intent);
+            openRequestDetails(selectedProduct.getProductId());
         });
         recyclerViewInventory.setAdapter(inventoryAdapter);
+    }
+
+    private void openRequestDetails(int productId) {
+        Intent intent = new Intent(requireContext(), InventoryBatchListActivity.class);
+        intent.putExtra("PRODUCT_ID", productId);
+        startActivity(intent);
     }
 
     public void initializeDropdowns() {

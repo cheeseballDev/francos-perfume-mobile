@@ -9,16 +9,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DeliveryItemDTO;
+import com.example.francosperfumemobile.backend.dtos.deliverydtos.DisplayDeliveryDetailsDTO;
+import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
 import com.example.francosperfumemobile.components.DeliveryItemsViewHolder;
 
 import java.util.List;
 
 public class DeliveryItemsAdapter extends RecyclerView.Adapter<DeliveryItemsViewHolder> {
 
+    public interface OnViewDeliveryItemsListener {
+        // TODO: Feel free to change the name of the variable of the DisplayInventoryBatchDTO to whatever suits it
+        void onViewProductBatches(DeliveryItemDTO selectedDeliveryItems);
+    }
     private List<DeliveryItemDTO> deliveryItems;
+    private final DeliveryItemsAdapter.OnViewDeliveryItemsListener listener;
 
-    public DeliveryItemsAdapter(List<DeliveryItemDTO> data) {
+    public DeliveryItemsAdapter(List<DeliveryItemDTO> data, OnViewDeliveryItemsListener listener) {
         this.deliveryItems = data;
+        this.listener = listener;
     }
 
     @NonNull
