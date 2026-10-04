@@ -16,10 +16,10 @@ public class DeliveryOutboundViewHolder extends RecyclerView.ViewHolder {
 
     public DeliveryOutboundViewHolder(View view) {
         super(view);
-        deliveryItemsImage = view.findViewById(R.id.image_view_delivery_items_icon);
-        deliveryItemsProductName = view.findViewById(R.id.text_view_delivery_items_product_name);
-        deliveryItemsProductId = view.findViewById(R.id.text_view_delivery_items_product_id);
-        deliveryItemsUnitCount = view.findViewById(R.id.text_view_delivery_items_unit_count);
+        deliveryItemsImage = view.findViewById(R.id.image_view_delivery_outbound_icon);
+        deliveryItemsProductName = view.findViewById(R.id.text_view_delivery_outbound_product_name);
+        deliveryItemsProductId = view.findViewById(R.id.text_view_delivery_outbound_product_id);
+        deliveryItemsUnitCount = view.findViewById(R.id.text_view_delivery_outbound_unit_count);
     }
 
     public void bind(DeliveryItemDTO item) {

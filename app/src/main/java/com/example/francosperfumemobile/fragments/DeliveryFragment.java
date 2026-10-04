@@ -201,7 +201,7 @@ public class DeliveryFragment extends Fragment {
     }
 
     private void initializeRecyclerView(View view) {
-        RecyclerView recyclerViewDelivery = view.findViewById(R.id.recycler_view_inventory);
+        RecyclerView recyclerViewDelivery = view.findViewById(R.id.recycler_view_delivery);
         recyclerViewDelivery.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         deliveryAdapter = new DeliveryAdapter(deliveryList, selectedDelivery -> {

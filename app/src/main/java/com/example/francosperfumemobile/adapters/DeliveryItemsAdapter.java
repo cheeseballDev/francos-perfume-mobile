@@ -56,19 +56,13 @@ public class DeliveryItemsAdapter extends RecyclerView.Adapter<RecyclerView.View
         DeliveryItemDTO item = deliveryItems.get(position);
 
         if (holder instanceof DeliveryDetailsInboundViewHolder) {
-            ((DeliveryDetailsInboundViewHolder) holder).bind(item);
+            DeliveryDetailsInboundViewHolder inboundViewHolder = (DeliveryDetailsInboundViewHolder) holder;
+            inboundViewHolder.bind(item);
+
         } else if (holder instanceof DeliveryOutboundViewHolder) {
-            ((DeliveryOutboundViewHolder) holder).bind(item);
+            DeliveryOutboundViewHolder outboundViewHolder = (DeliveryOutboundViewHolder) holder;
+            outboundViewHolder.bind(item);
         }
-
-
-        // todo: add the listeners for the checkbox and text field for the deliveryinboundviewholder
-
-        holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onViewProductBatches(item);
-            }
-        });
     }
 
     @Override
