@@ -21,7 +21,8 @@ public interface RequestAPIEndpoints {
             @Query("RequestStatus") String requestStatus,
             @Query("Direction") String direction,
             @Query("FromDate") String fromDate,
-            @Query("ToDate") String toDate
+            @Query("ToDate") String toDate,
+            @Query("Stage") String stage
     );
 
     @GET("api/request/{id}")

@@ -163,15 +163,9 @@ public class RequestFragment extends Fragment {
     private void initializeRecyclerView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_request);
         requestAdapter = new RequestAdapter(requestList, request -> {
-            openRequestDetails(request.getRequestId());
+            startActivity(RequestDetailsActivity.newIntent(requireContext(), request.getRequestId()));
         });
         RecyclerViewHelper.setupVertical(requireContext(), recyclerView, requestAdapter);
-    }
-
-    private void openRequestDetails(int requestId) {
-        Intent intent = new Intent(requireContext(), RequestDetailsActivity.class);
-        intent.putExtra("REQUEST_ID", requestId);
-        startActivity(intent);
     }
 
     private void initializeUI(View view) {

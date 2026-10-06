@@ -76,14 +76,21 @@ public class RequestDetailsActivity extends AppCompatActivity {
         repository.getRequestDetails(requestId).enqueue(new SafeCallback<RequestDetailResponse>(this, progressBarMain) {
             @Override
             public void onSuccess(RequestDetailResponse detailResponse) {
-                if (detailResponse.getData() == null) return;
+                if (detailResponse.getData() == null) {
+                    Toast.makeText(RequestDetailsActivity.this, "Request details not found", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String rawDate = detailResponse.getData().getRequestDateSubmitted();
+                String dateOnly = (rawDate != null && rawDate.contains("T"))
+                        ? rawDate.split("T")[0]
+                        : rawDate;
 
+                textViewDateSubmitted.setText(String.format("Date submitted: %s", dateOnly));
                 textViewRequestId.setText(detailResponse.getData().getRequestDisplayId());
-                textViewDateSubmitted.setText(String.format("Date submitted: %s", detailResponse.getData().getRequestDateSubmitted()));
                 textViewFromBranch.setText(detailResponse.getData().getRequestedFrom());
                 textViewToBranch.setText(detailResponse.getData().getDeliveredTo());
-                // TODO: Employee name should be fetched from backend
-                textViewCreatedBy.setText(detailResponse.getData().getEmployeeDisplayId());
+                textViewCreatedBy.setText(detailResponse.getData().getEmployeeName());
+                textViewDirection.setText(detailResponse.getData().getRequestDirection());
 
                 if (detailResponse.getData().getItems() != null) {
                     listRequestedProducts.clear();

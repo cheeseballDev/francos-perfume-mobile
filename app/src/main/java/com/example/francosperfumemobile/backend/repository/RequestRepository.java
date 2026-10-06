@@ -26,7 +26,8 @@ public class RequestRepository {
                 filter.getRequestStatus(),
                 filter.getDirection(),
                 filter.getFromDate(),
-                filter.getToDate()
+                filter.getToDate(),
+                filter.getStage()
         );
     }
 

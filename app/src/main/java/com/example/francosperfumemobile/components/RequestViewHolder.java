@@ -10,29 +10,32 @@ import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestD
 
 public class RequestViewHolder extends RecyclerView.ViewHolder {
     TextView requestId, requestUnitCount, requestBatchCount, deliveryId,
-            requestFromBranch, requestToBranch, requestStatus, requestStage;
+            requestFromBranch, requestToBranch, requestStatus, requestStage, requestDirection;
 
     public RequestViewHolder(View view) {
         super(view);
         requestId = view.findViewById(R.id.text_view_request_id);
+        deliveryId = view.findViewById(R.id.text_view_request_delivery_id);
         requestUnitCount = view.findViewById(R.id.text_view_request_unit_count);
         requestBatchCount = view.findViewById(R.id.text_view_request_batch_count);
         deliveryId = view.findViewById(R.id.text_view_request_delivery_id);
         requestFromBranch = view.findViewById(R.id.text_view_request_from_branch);
         requestToBranch = view.findViewById(R.id.text_view_request_to_branch);
         requestStatus = view.findViewById(R.id.text_view_request_status);
-        requestStage = view.findViewById(R.id.text_view_request_details_direction);
+        requestStage = view.findViewById(R.id.text_view_request_stage);
+        requestDirection = view.findViewById(R.id.text_view_request_direction);
     }
 
     public void bind(DisplayRequestDTO item) {
         requestId.setText(item.getRequestDisplayId());
         requestBatchCount.setText(String.valueOf(item.getItemCount()));
-        // cardDeliveryId.setText("N/A"); // Not in DTO
-        //todo: add deliveryId
-        requestUnitCount.setText(item.getItemCount());
+        deliveryId.setText(item.getDeliveryDisplayId());
+        //cardDeliveryId.setText("N/A"); // Not in DTO
+        requestUnitCount.setText(String.valueOf(item.getItemCount()));
         requestFromBranch.setText(item.getRequestedFrom());
         requestToBranch.setText(item.getDeliveredTo());
         requestStatus.setText(item.getRequestStatus());
         requestStage.setText(item.getRequestStage());
+        requestDirection.setText(item.getRequestDirection());
     }
 }
