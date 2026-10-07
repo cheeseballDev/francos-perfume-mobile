@@ -1,19 +1,37 @@
 package com.example.francosperfumemobile.backend.dtos.requestdtos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class DisplayRequestDetailsDTO {
+    @SerializedName("requestId")
     private int RequestId;
+    @SerializedName("fromBranchId")
     private int FromBranchId;
+    @SerializedName("toBranchId")
     private int ToBranchId;
+    @SerializedName("requestDisplayId")
     private String RequestDisplayId;
+    @SerializedName("requestedFrom")
     private String RequestedFrom;
+    @SerializedName("deliveredTo")
     private String DeliveredTo;
+    @SerializedName("employeeDisplayId")
     private String EmployeeDisplayId;
+    @SerializedName("employeeName")
+    private String EmployeeName;
+    @SerializedName("requestStatus")
     private String RequestStatus;
+    @SerializedName("requestDirection")
+    private String RequestDirection;
+    @SerializedName("requestMessage")
     private String RequestMessage;
+    @SerializedName("requestComment")
     private String RequestComment;
-    private java.util.Date RequestDateSubmitted;
+    @SerializedName("requestDateSubmitted")
+    private String RequestDateSubmitted;
+
     private List<DisplayRequestItemDetailsDTO> Items;
     private List<DisplayRequestApprovalDetailsDTO> Approvals;
 
@@ -72,6 +90,13 @@ public class DisplayRequestDetailsDTO {
     public void setEmployeeDisplayId(String employeeDisplayId) {
         EmployeeDisplayId = employeeDisplayId;
     }
+    public String getEmployeeName() {
+        return EmployeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        EmployeeName = employeeName;
+    }
 
     public String getRequestStatus() {
         return RequestStatus;
@@ -80,7 +105,13 @@ public class DisplayRequestDetailsDTO {
     public void setRequestStatus(String requestStatus) {
         RequestStatus = requestStatus;
     }
+    public String getRequestDirection() {
+        return RequestDirection;
+    }
 
+    public void setRequestDirection(String requestDirection) {
+        RequestDirection = requestDirection;
+    }
     public String getRequestMessage() {
         return RequestMessage;
     }
@@ -97,11 +128,11 @@ public class DisplayRequestDetailsDTO {
         RequestComment = requestComment;
     }
 
-    public java.util.Date getRequestDateSubmitted() {
+    public String getRequestDateSubmitted() {
         return RequestDateSubmitted;
     }
 
-    public void setRequestDateSubmitted(java.util.Date requestDateSubmitted) {
+    public void setRequestDateSubmitted(String requestDateSubmitted) {
         RequestDateSubmitted = requestDateSubmitted;
     }
 

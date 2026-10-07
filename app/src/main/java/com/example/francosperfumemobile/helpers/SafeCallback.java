@@ -51,7 +51,14 @@ public abstract class SafeCallback<T> implements Callback<T> {
         if (response.isSuccessful() && response.body() != null) {
             onSuccess(response.body());
         } else {
-            showToast("Operation failed");
+            String errorMsg = "HTTP " + response.code();
+            try {
+                if (response.errorBody() != null) {
+                    errorMsg += ": " + response.errorBody().string();
+                }
+            } catch (Exception ignored) {}
+
+            showToast("Operation failed (" + errorMsg + ")");
         }
     }
 

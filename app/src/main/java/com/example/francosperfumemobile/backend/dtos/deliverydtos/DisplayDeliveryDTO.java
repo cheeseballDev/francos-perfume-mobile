@@ -1,19 +1,32 @@
 package com.example.francosperfumemobile.backend.dtos.deliverydtos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 import java.util.List;
 
 public class DisplayDeliveryDTO {
+    @SerializedName("deliveryId")
     private int DeliveryId;
+    @SerializedName("requestId")
     private int RequestId;
+    @SerializedName("deliveryDisplayId")
     private String DeliveryDisplayId;
+    @SerializedName("requestDisplayId")
     private String RequestDisplayId;
+    @SerializedName("direction")
     private String Direction;
+    @SerializedName("deliveryStatus")
     private String DeliveryStatus;
-    private Date CreatedAt;
+    @SerializedName("createdAt")
+    private String CreatedAt;
+    @SerializedName("fromBranchName")
     private String FromBranchName;
+    @SerializedName("toBranchName")
     private String ToBranchName;
+    @SerializedName("itemCount")
     private int ItemCount;
+    @SerializedName("totalUnits")
     private int TotalUnits;
     private List<DeliveryItemDTO> Items;
 
@@ -65,11 +78,11 @@ public class DisplayDeliveryDTO {
         DeliveryStatus = deliveryStatus;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return CreatedAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         CreatedAt = createdAt;
     }
 

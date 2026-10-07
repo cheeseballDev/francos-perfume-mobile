@@ -1,5 +1,6 @@
 package com.example.francosperfumemobile.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
@@ -33,6 +34,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
 
 
     private final List<DisplayDeliveryDetailsDTO> deliveryDetailsList = new ArrayList<>();
+    private static final String EXTRA_DELIVERY_ID = "DELIVERY_ID";
     private final List<DeliveryItemDTO> deliveryItemList = new ArrayList<>();
     private TextView textViewDeliveryDetailsId, textViewDeliveryDetailsDateCreated, textViewDeliveryDetailsDirection,
             textViewDeliveryDetailsFromBranch, textViewDeliveryDetailsToBranch, textViewDeliveryDetailsCreatedBy;
@@ -42,6 +44,12 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
     private DeliveryItemsAdapter deliveryItemsAdapter;
     private String direction;
 
+
+    public static Intent newIntent(Context context, int deliveryId) {
+        Intent intent = new Intent(context, DeliveryDetailsActivity.class);
+        intent.putExtra(EXTRA_DELIVERY_ID, deliveryId);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +65,10 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
         //todo: add intent here
         // also, can add intent that gets the direction type so that it doesn't have to load the delivery details just to get the delivery type
         // but idk
-
+        int deliveryId = getIntent().getIntExtra(EXTRA_DELIVERY_ID, 0);
         initializeUI();
         initializeRecyclerView();
-        fetchDeliveryDetails(0);
+        fetchDeliveryDetails(deliveryId);
     }
 
     private void fetchDeliveryDetails(int deliveryId) {
@@ -74,10 +82,14 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
                     deliveryItemsAdapter.updateData(items);
                 }
 
+                String rawDate = response.getData().getCreatedAt();
+                String dateOnly = (rawDate != null && rawDate.contains("T"))
+                        ? rawDate.split("T")[0]
+                        : rawDate;
+
                 textViewDeliveryDetailsId.setText(response.getData().getDeliveryDisplayId());
-                // todo: add created by here
-                //textViewDeliveryDetailsCreatedBy.setText(response.getData().get);
-                textViewDeliveryDetailsDateCreated.setText(String.valueOf(response.getData().getCreatedAt()));
+                textViewDeliveryDetailsCreatedBy.setText(response.getData().getCreatedBy());
+                textViewDeliveryDetailsDateCreated.setText(dateOnly);
                 textViewDeliveryDetailsFromBranch.setText(response.getData().getFromBranchName());
                 textViewDeliveryDetailsToBranch.setText(response.getData().getToBranchName());
                 // todo: add formatting here in the future
@@ -89,17 +101,17 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
 
     private void initializeUI() {
         textViewDeliveryDetailsId = findViewById(R.id.text_view_delivery_details_id);
-        textViewDeliveryDetailsDateCreated = findViewById(R.id.text_view_request_details_date_submitted);
-        textViewDeliveryDetailsDirection = findViewById(R.id.text_view_delivery_direction);
-        textViewDeliveryDetailsFromBranch = findViewById(R.id.text_view_delivery_from_branch);
-        textViewDeliveryDetailsToBranch = findViewById(R.id.text_view_delivery_to_branch);
+        textViewDeliveryDetailsDateCreated = findViewById(R.id.text_view_delivery_details_date_submitted);
+        textViewDeliveryDetailsDirection = findViewById(R.id.text_view_delivery_details_direction);
+        textViewDeliveryDetailsFromBranch = findViewById(R.id.text_view_delivery_details_from_branch);
+        textViewDeliveryDetailsToBranch = findViewById(R.id.text_view_delivery_details_to_branch);
         textViewDeliveryDetailsCreatedBy = findViewById(R.id.text_view_delivery_details_created_by);
 
         progressBarDeliveryDetails = findViewById(R.id.progress_bar_delivery_details);
 
         buttonAccept = findViewById(R.id.button_accept);
         buttonReject = findViewById(R.id.button_reject_cancel);
-        initializeListeners();
+        //initializeListeners();
     }
 
     private void initializeRecyclerView() {
@@ -111,6 +123,8 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
         RecyclerViewHelper.setupVertical(this, recyclerViewDeliveryItems, deliveryItemsAdapter);
     }
 
+
+    /*
     private void initializeListeners() {
 
         //todo: add if statement to add if conditions that changes the button layout depending on the direction
@@ -122,4 +136,6 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
 
         });
     }
+
+     */
 }

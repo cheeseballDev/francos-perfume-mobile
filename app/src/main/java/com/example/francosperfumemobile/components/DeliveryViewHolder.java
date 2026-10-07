@@ -14,7 +14,7 @@ public class DeliveryViewHolder extends RecyclerView.ViewHolder {
 
     public DeliveryViewHolder(View view) {
         super(view);
-        deliveryId = view.findViewById(R.id.text_view_request_delivery_id);
+        deliveryId = view.findViewById(R.id.text_view_delivery_id);
         deliveryUnitCount = view.findViewById(R.id.text_view_delivery_unit_count);
         deliveryBatchCount = view.findViewById(R.id.text_view_delivery_batch_count);
         deliveryFromBranch = view.findViewById(R.id.text_view_delivery_from_branch);

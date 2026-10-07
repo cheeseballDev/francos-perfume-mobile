@@ -38,6 +38,12 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryViewHolder> {
     public void onBindViewHolder(@NonNull DeliveryViewHolder holder, int position) {
         DisplayDeliveryDTO item = deliveryList.get(position);
         holder.bind(item);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onDeliveryClick(item);
+            }
+        });
     }
 
     @Override

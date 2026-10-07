@@ -108,7 +108,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView3" />
 
     <TextView
-        android:id="@+id/text_view_deliver_details_from_branch"
+        android:id="@+id/text_view_delivery_details_from_branch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/request_sample_from_branch"
@@ -122,9 +122,9 @@
         android:layout_height="wrap_content"
         android:text="@string/request_sample_to_branch"
         android:textSize="@dimen/font_m"
-        app:layout_constraintBottom_toBottomOf="@+id/text_view_deliver_details_from_branch"
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_delivery_details_from_branch"
         app:layout_constraintStart_toStartOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/text_view_deliver_details_from_branch" />
+        app:layout_constraintTop_toTopOf="@+id/text_view_delivery_details_from_branch" />
 
     <TextView
         android:id="@+id/text_view_delivery_details_created_by"

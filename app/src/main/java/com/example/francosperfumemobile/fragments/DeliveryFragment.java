@@ -40,6 +40,7 @@ import com.example.francosperfumemobile.backend.responses.requestresponses.Reque
 import com.example.francosperfumemobile.backend.responses.requestresponses.RequestListResponse;
 import com.example.francosperfumemobile.helpers.FilterManager;
 import com.example.francosperfumemobile.helpers.PaginationHelper;
+import com.example.francosperfumemobile.helpers.RecyclerViewHelper;
 import com.example.francosperfumemobile.helpers.SafeCallback;
 import com.google.android.material.button.MaterialButton;
 
@@ -141,8 +142,8 @@ public class DeliveryFragment extends Fragment {
                 String selectedFromBranch = (position == 0) ? null : value;
 
                 // todo: change into branchname instead of branchid
-                if (!Objects.equals(currentFilter.getFromBranchName(), selectedFromBranch)) {
-                    currentFilter.setFromBranchName(selectedFromBranch);
+                if (!Objects.equals(currentFilter.getFromBranch(), selectedFromBranch)) {
+                    currentFilter.setFromBranch(selectedFromBranch);
                     currentFilter.setPageCount(1);
                     fetchDeliveries(currentFilter, true);
                 }
@@ -154,8 +155,8 @@ public class DeliveryFragment extends Fragment {
             public void onSelected(int position, String value) {
                 String selectedStatus = (position == 0) ? null : value;
 
-                if (!Objects.equals(currentFilter.getDeliveryStatus(), selectedStatus)) {
-                    currentFilter.setDeliveryStatus(selectedStatus);
+                if (!Objects.equals(currentFilter.getStatus(), selectedStatus)) {
+                    currentFilter.setSearch(selectedStatus);
                     currentFilter.setPageCount(1);
                     fetchDeliveries(currentFilter, true);
                 }
@@ -167,8 +168,8 @@ public class DeliveryFragment extends Fragment {
             public void onSelected(int position, String value) {
                 String selectedDirection = (position == 0) ? null : value;
 
-                if (!Objects.equals(currentFilter.getToBranchName(), selectedDirection)) {
-                    currentFilter.setToBranchName(selectedDirection);
+                if (!Objects.equals(currentFilter.getToBranch(), selectedDirection)) {
+                    currentFilter.setToBranch(selectedDirection);
                     currentFilter.setPageCount(1);
                     fetchDeliveries(currentFilter, true);
                 }
@@ -205,15 +206,8 @@ public class DeliveryFragment extends Fragment {
         recyclerViewDelivery.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         deliveryAdapter = new DeliveryAdapter(deliveryList, selectedDelivery -> {
-            openDeliveryDetails(selectedDelivery.getDeliveryId());
+            startActivity(DeliveryDetailsActivity.newIntent(requireContext(), selectedDelivery.getDeliveryId()));
         });
-
-        recyclerViewDelivery.setAdapter(deliveryAdapter);
-    }
-
-    private void openDeliveryDetails(int deliveryId) {
-        Intent intent = new Intent(requireContext(), DeliveryDetailsActivity.class);
-        intent.putExtra("DELIVERY_ID", deliveryId);
-        startActivity(intent);
+        RecyclerViewHelper.setupVertical(requireContext(), recyclerViewDelivery, deliveryAdapter);
     }
 }

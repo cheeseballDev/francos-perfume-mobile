@@ -4,11 +4,12 @@ public class DeliveryFilterDTO {
     private int PageCount = 1;
     private int PageSize = 20;
     private String Search;
-    private String FromBranchName;
-    private String ToBranchName;
-    private String DeliveryStatus;
+    private String FromBranch;
+    private String ToBranch;
+    private String Status;
     private String FromDate;
     private String ToDate;
+    private String Direction;
 
     public int getPageCount() {
         return PageCount;
@@ -34,12 +35,12 @@ public class DeliveryFilterDTO {
         Search = search;
     }
 
-    public String getDeliveryStatus() {
-        return DeliveryStatus;
+    public String getStatus() {
+        return Status;
     }
 
-    public void setDeliveryStatus(String deliveryStatus) {
-        DeliveryStatus = deliveryStatus;
+    public void setStatus(String status) {
+        Status = status;
     }
 
     public String getFromDate() {
@@ -58,20 +59,29 @@ public class DeliveryFilterDTO {
         ToDate = toDate;
     }
 
-    public String getFromBranchName() {
-        return FromBranchName;
+    public String getFromBranch() {
+        return FromBranch;
     }
 
-    public void setFromBranchName(String fromBranch) {
-        FromBranchName = fromBranch;
+    public void setFromBranch(String fromBranch) {
+        FromBranch = fromBranch;
     }
 
-    public String getToBranchName() {
-        return ToBranchName;
+    public String getToBranch() {
+        return ToBranch;
     }
 
-    public void setToBranchName(String toBranch) {
-        ToBranchName = toBranch;
+    public void setToBranch(String toBranch) {
+        ToBranch = toBranch;
     }
+
+    public String getDirection() {
+        return Direction;
+    }
+
+    public void setDirection(String direction) {
+        Direction = direction;
+    }
+
 
 }

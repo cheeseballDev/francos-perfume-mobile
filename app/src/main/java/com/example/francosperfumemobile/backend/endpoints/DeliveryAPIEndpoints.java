@@ -10,34 +10,33 @@ import retrofit2.http.*;
 
 public interface DeliveryAPIEndpoints {
 
-    @GET("")
+    @GET("api/deliveries")
     Call<DeliveryListResponse> getDeliveries(
             @Query("PageNumber") int pageNumber,
             @Query("PageSize") int pageSize,
             @Query("Search") String search,
-            //todo: check if fromBranch or fromBranchName
-            @Query("FromBranchName") String fromBranch,
-            @Query("ToBranchName") String toBranch,
-            @Query("DeliveryStatus") String deliveryStatus,
+            @Query("FromBranch") String fromBranch,
+            @Query("ToBranch") String toBranch,
+            @Query("Status") String deliveryStatus,
             @Query("FromDate") String fromDate,
             @Query("ToDate") String toDate
     );
 
 
-    @POST("{deliveryId}/dispatch")
+    @POST("api/deliveries/{deliveryId}/dispatch")
     Call<DispatchDeliveryResponse> dispatchDelivery(@Path("deliveryId") int deliveryId);
 
-    @POST("{deliveryId}/receive")
+    @POST("api/deliveries/{deliveryId}/receive")
     Call<ReceiveDeliveryResponse> receiveDelivery(
             @Path("deliveryId") int deliveryId,
             @Body ReceiveDeliveryDTO dto);
 
-    @GET("{deliveryId}")
+    @GET("api/deliveries/{deliveryId}")
     Call<DeliveryDetailResponse> getDeliveryDetails(@Path("deliveryId") int deliveryId);
 
-    @POST("{deliveryId}/cancel")
+    @POST("api/deliveries/{deliveryId}/cancel")
     Call<CancelDeliveryResponse> cancelDelivery(@Path("deliveryId") int deliveryId);
 
-    @GET("filters")
+    @GET("api/deliveries/filters")
     Call<DeliveryFiltersResponse> getDeliveryFilters();
 }

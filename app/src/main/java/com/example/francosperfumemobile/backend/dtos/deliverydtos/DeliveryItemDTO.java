@@ -1,10 +1,17 @@
 package com.example.francosperfumemobile.backend.dtos.deliverydtos;
 
+import com.google.gson.annotations.SerializedName;
+
 public class DeliveryItemDTO {
+    @SerializedName("deliveryItemId")
     private int DeliveryItemId;
+    @SerializedName("productId")
     private int ProductId;
+    @SerializedName("productName")
     private String ProductName;
+    @SerializedName("quantity")
     private int Quantity;
+    @SerializedName("status")
     private String Status;
 
     public int getDeliveryItemId() {

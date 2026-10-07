@@ -24,9 +24,9 @@ public class DeliveryRepository {
                 filter.getPageCount(),
                 filter.getPageSize(),
                 filter.getSearch(),
-                filter.getFromBranchName(),
-                filter.getToBranchName(),
-                filter.getDeliveryStatus(),
+                filter.getFromBranch(),
+                filter.getToBranch(),
+                filter.getStatus(),
                 filter.getFromDate(),
                 filter.getToDate()
         );

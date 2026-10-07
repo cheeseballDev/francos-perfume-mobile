@@ -1,16 +1,17 @@
 package com.example.francosperfumemobile.backend.dtos.deliverydtos;
 
+import java.util.Date;
 import java.util.List;
 
 public class ReceiveDeliveryDTO {
-    private String ExpiryDate;
+    private Date ExpiryDate;
     private List<ReceiveDeliveryItemDTO> Items;
 
-    public String getExpiryDate() {
+    public Date getExpiryDate() {
         return ExpiryDate;
     }
 
-    public void setExpiryDate(String expiryDate) {
+    public void setExpiryDate(Date expiryDate) {
         ExpiryDate = expiryDate;
     }
 

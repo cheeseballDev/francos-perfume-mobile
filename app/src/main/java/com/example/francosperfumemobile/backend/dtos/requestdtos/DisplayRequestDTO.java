@@ -8,6 +8,8 @@ public class DisplayRequestDTO {
 
     @SerializedName("requestDisplayId")
     private String RequestDisplayId;
+    @SerializedName("deliveryDisplayId")
+    private String DeliveryDisplayId;
 
     @SerializedName("fromBranchId")
     private int FromBranchId;
@@ -23,12 +25,17 @@ public class DisplayRequestDTO {
 
     @SerializedName("employeeDisplayId")
     private String EmployeeDisplayId;
+    @SerializedName("employeeName")
+    private String EmployeeName;
 
     @SerializedName("requestStatus")
     private String RequestStatus;
 
     @SerializedName("requestStage")
     private String RequestStage;
+    @SerializedName("requestDirection")
+    private String RequestDirection;
+
 
     @SerializedName("requestMessage")
     private String RequestMessage;
@@ -57,6 +64,13 @@ public class DisplayRequestDTO {
 
     public void setRequestDisplayId(String requestDisplayId) {
         RequestDisplayId = requestDisplayId;
+    }
+    public String getDeliveryDisplayId() {
+        return DeliveryDisplayId;
+    }
+
+    public void setDeliveryDisplayId(String deliveryDisplayId) {
+        DeliveryDisplayId = deliveryDisplayId;
     }
 
     public int getFromBranchId() {
@@ -113,6 +127,13 @@ public class DisplayRequestDTO {
 
     public void setRequestStage(String requestStage) {
         RequestStage = requestStage;
+    }
+    public String getRequestDirection() {
+        return RequestDirection;
+    }
+
+    public void setRequestDirection(String requestDirection) {
+        RequestDirection = requestDirection;
     }
 
     public String getRequestMessage() {

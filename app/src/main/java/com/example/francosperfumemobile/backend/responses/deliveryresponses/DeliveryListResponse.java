@@ -2,14 +2,20 @@ package com.example.francosperfumemobile.backend.responses.deliveryresponses;
 
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.*;
 import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestDTO;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class DeliveryListResponse {
 
+    @SerializedName("totalDeliveries")
     private int totalDeliveries;
+    @SerializedName("totalDeliveryPages")
     private int totalDeliveryPages;
+    @SerializedName("pageCount")
     private int pageCount;
+    @SerializedName("pageSize")
+
     private int pageSize;
     public int getTotalDeliveries() {
         return totalDeliveries;
@@ -35,6 +41,8 @@ public class DeliveryListResponse {
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
     }
+    @SerializedName("data")
+
     private List<DisplayDeliveryDTO> data;
 
     public List<DisplayDeliveryDTO> getData() { return data; }
