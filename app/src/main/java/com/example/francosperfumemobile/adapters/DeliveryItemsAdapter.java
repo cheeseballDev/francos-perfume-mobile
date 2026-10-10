@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DeliveryItemDTO;
 import com.example.francosperfumemobile.components.DeliveryDetailsInboundViewHolder;
-import com.example.francosperfumemobile.components.DeliveryOutboundViewHolder;
+import com.example.francosperfumemobile.components.DeliveryDetailsOutboundViewHolder;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public class DeliveryItemsAdapter extends RecyclerView.Adapter<RecyclerView.View
             return new DeliveryDetailsInboundViewHolder(view);
         } else {
             View view = inflater.inflate(R.layout.card_delivery_outbound_items, parent, false);
-            return new DeliveryOutboundViewHolder(view);
+            return new DeliveryDetailsOutboundViewHolder(view);
         }
     }
 
@@ -59,8 +59,8 @@ public class DeliveryItemsAdapter extends RecyclerView.Adapter<RecyclerView.View
             DeliveryDetailsInboundViewHolder inboundViewHolder = (DeliveryDetailsInboundViewHolder) holder;
             inboundViewHolder.bind(item);
 
-        } else if (holder instanceof DeliveryOutboundViewHolder) {
-            DeliveryOutboundViewHolder outboundViewHolder = (DeliveryOutboundViewHolder) holder;
+        } else if (holder instanceof DeliveryDetailsOutboundViewHolder) {
+            DeliveryDetailsOutboundViewHolder outboundViewHolder = (DeliveryDetailsOutboundViewHolder) holder;
             outboundViewHolder.bind(item);
         }
     }

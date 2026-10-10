@@ -23,6 +23,10 @@ public class DeliveryDetailsInboundViewHolder extends RecyclerView.ViewHolder {
     private EditText editTextReceivedQuantity, editTextAdditionalRemarks;
     private Spinner dropdownRemarks;
 
+    public interface OnItemChangeListener {
+        void onItemChanged(DeliveryItemDTO item);
+    }
+
     public DeliveryDetailsInboundViewHolder(View view) {
         super(view);
         deliveryItemsProductName = view.findViewById(R.id.text_view_delivery_inbound_product_name);
@@ -34,23 +38,32 @@ public class DeliveryDetailsInboundViewHolder extends RecyclerView.ViewHolder {
         dropdownRemarks = view.findViewById(R.id.dropdown_delivery_inbound_remarks);
     }
 
-    public void bind(DeliveryItemDTO item) {
+    public void bind(DeliveryItemDTO item, OnItemChangeListener listener) {
         if (item == null) return;
 
         deliveryItemsProductName.setText(item.getProductName());
         deliveryItemsProductId.setText(item.getProductId());
         //todo: maybe getQuantity is different from requested quantity
         deliveryItemsRequestedQuantity.setText(item.getQuantity());
-
+        deliveryItemsRequestedQuantity.setText(0);
         // todo: if checkbox has one missing then mark the delivery as "partial"
         // todo: if editTextReceivedQuantity is different from requestedquantity then mark the delivery as "partial"
         checkBoxIsReceived.setOnCheckedChangeListener(null);
 
 
         checkBoxIsReceived.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // todo: add logic here
+            if (!isChecked) {
+                item.setQuantity(0);
+                editTextReceivedQuantity.setText(0);
+            } else {
+                item.setQuantity(Integer.parseInt(editTextReceivedQuantity.getText().toString()));
+                listener.onItemChanged(item);
+            }
+
+
         });
 
+        // is this automatic in the backend?
         // TODO: Determine if ONE checkbox is left uncheck
         // TODO: Determine if ONE EditText is DIFFERENT from the requested quantity
         // TODO: after that, mark the delivery as "partial"
@@ -58,7 +71,13 @@ public class DeliveryDetailsInboundViewHolder extends RecyclerView.ViewHolder {
         editTextReceivedQuantity.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-
+                try {
+                    int qty = Integer.parseInt(s.toString().trim());
+                    item.setQuantity(qty);
+                } catch (NumberFormatException e) {
+                    item.setQuantity(0);
+                }
+                if (listener != null) listener.onItemChanged(item);
             }
 
             @Override
