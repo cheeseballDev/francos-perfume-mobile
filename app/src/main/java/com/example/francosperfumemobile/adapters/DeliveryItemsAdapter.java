@@ -14,34 +14,37 @@ import com.example.francosperfumemobile.components.DeliveryDetailsOutboundViewHo
 
 import java.util.List;
 
-public class DeliveryItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class DeliveryItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public interface OnViewDeliveryItemsListener {
-        // TODO: Feel free to change the name of the variable of the DisplayInventoryBatchDTO to whatever suits it
-        void onViewProductBatches(DeliveryItemDTO selectedDeliveryItems);
+    public interface OnItemChangedListener {
+        void onItemChanged(DeliveryItemDTO item);
     }
+
     private List<DeliveryItemDTO> deliveryItems;
-    private final DeliveryItemsAdapter.OnViewDeliveryItemsListener listener;
+    private final boolean isInbound;
+    private OnItemChangedListener itemChangedListener;
 
     private static final int TYPE_INBOUND = 1;
     private static final int TYPE_OUTBOUND = 2;
-    private final String direction;
 
-    public DeliveryItemsAdapter(List<DeliveryItemDTO> data, String direction, OnViewDeliveryItemsListener listener) {
+    public DeliveryItemsAdapter(List<DeliveryItemDTO> data, boolean isInbound) {
         this.deliveryItems = data;
-        this.direction = direction;
-        this.listener = listener;
+        this.isInbound = isInbound;
     }
 
+    public void setOnItemChangedListener(OnItemChangedListener listener) {
+        this.itemChangedListener = listener;
+    }
+
+    @Override
     public int getItemViewType(int position) {
-        return direction.equals("INBOUND") ? TYPE_INBOUND : TYPE_OUTBOUND;
+        return isInbound ? TYPE_INBOUND : TYPE_OUTBOUND;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-
         if (viewType == TYPE_INBOUND) {
             View view = inflater.inflate(R.layout.card_delivery_inbound_items, parent, false);
             return new DeliveryDetailsInboundViewHolder(view);
@@ -56,12 +59,13 @@ public class DeliveryItemsAdapter extends RecyclerView.Adapter<RecyclerView.View
         DeliveryItemDTO item = deliveryItems.get(position);
 
         if (holder instanceof DeliveryDetailsInboundViewHolder) {
-            DeliveryDetailsInboundViewHolder inboundViewHolder = (DeliveryDetailsInboundViewHolder) holder;
-            inboundViewHolder.bind(item);
-
+            ((DeliveryDetailsInboundViewHolder) holder).bind(item, updatedItem -> {
+                if (itemChangedListener != null) {
+                    itemChangedListener.onItemChanged(updatedItem);
+                }
+            });
         } else if (holder instanceof DeliveryDetailsOutboundViewHolder) {
-            DeliveryDetailsOutboundViewHolder outboundViewHolder = (DeliveryDetailsOutboundViewHolder) holder;
-            outboundViewHolder.bind(item);
+            ((DeliveryDetailsOutboundViewHolder) holder).bind(item);
         }
     }
 
@@ -72,6 +76,6 @@ public class DeliveryItemsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public void updateData(List<DeliveryItemDTO> newData) {
         this.deliveryItems = newData;
-        //notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 }
