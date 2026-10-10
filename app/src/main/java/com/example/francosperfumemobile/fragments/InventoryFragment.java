@@ -145,13 +145,13 @@ public class InventoryFragment extends Fragment {
                     FilterManager.setupSpinner(requireContext(), dropdownGenderType, filterResponse.getProductGenders(), "All Genders");
                     FilterManager.setupSpinner(requireContext(), dropdownBranch, filterResponse.getBranches(), "All Branches");
 
-                    initializeSpinnerListeners();
+                    initializeSpinnerAndSearchListeners();
                 }
             }
         });
     }
 
-    private void initializeSpinnerListeners() {
+    private void initializeSpinnerAndSearchListeners() {
         dropdownPerfumeType.setOnItemSelectedListener(new FilterManager.SimpleItemSelectedListener() {
             @Override
             public void onSelected(int position, String value) {
@@ -185,6 +185,24 @@ public class InventoryFragment extends Fragment {
                     currentFilter.setBranch(selectedBranch);
                     resetPaginationAndFetch();
                 }
+            }
+        });
+
+        editTextSearch.addTextChangedListener(new android.text.TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(android.text.Editable s) {
+                String query = s.toString().trim();
+                currentFilter.setSearch(query.isEmpty() ? null : query);
+                currentFilter.setPageCount(1);
+                fetchInventory(currentFilter, true);
             }
         });
     }

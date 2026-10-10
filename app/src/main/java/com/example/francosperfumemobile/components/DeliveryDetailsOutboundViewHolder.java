@@ -26,7 +26,7 @@ public class DeliveryDetailsOutboundViewHolder extends RecyclerView.ViewHolder {
         if (item == null) return;
 
         deliveryItemsProductName.setText(item.getProductName());
-        deliveryItemsProductId.setText(item.getProductId());
+        deliveryItemsProductId.setText(String.valueOf(item.getProductId()));
         deliveryItemsUnitCount.setText(String.format("%d units", item.getQuantity()));
 
     }

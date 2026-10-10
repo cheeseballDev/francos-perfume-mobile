@@ -23,6 +23,7 @@ public class DisplayDeliveryDetailsDTO {
     private String CreatedAt;
     @SerializedName("createdBy")
     private String CreatedBy;
+    @SerializedName("items")
     private List<DeliveryItemDTO> Items;
 
     public int getDeliveryId() {

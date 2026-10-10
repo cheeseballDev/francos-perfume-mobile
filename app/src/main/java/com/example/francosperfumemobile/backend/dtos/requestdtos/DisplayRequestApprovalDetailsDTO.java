@@ -1,16 +1,27 @@
 package com.example.francosperfumemobile.backend.dtos.requestdtos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class DisplayRequestApprovalDetailsDTO {
+    @SerializedName("stage")
     private String Stage;
+    @SerializedName("status")
     private String Status;
+    @SerializedName("remarks")
     private String Remarks;
-    private Date ApprovedAt;
+    @SerializedName("approvedAt")
+    private String ApprovedAt;
+    @SerializedName("approver")
     private String Approver;
+    @SerializedName("requesterEmployeeId")
     public String RequesterEmployeeId;
+    @SerializedName("requesterEmployeeRole")
     public String RequesterEmployeeRole;
+    @SerializedName("fromBranchName")
     public String FromBranchName;
+    @SerializedName("toBranchName")
     public String ToBranchName;
 
     public String getStage() {
@@ -37,11 +48,11 @@ public class DisplayRequestApprovalDetailsDTO {
         Remarks = remarks;
     }
 
-    public Date getApprovedAt() {
+    public String getApprovedAt() {
         return ApprovedAt;
     }
 
-    public void setApprovedAt(Date approvedAt) {
+    public void setApprovedAt(String approvedAt) {
         ApprovedAt = approvedAt;
     }
 

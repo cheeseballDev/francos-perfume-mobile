@@ -31,8 +31,9 @@ public class DisplayRequestDetailsDTO {
     private String RequestComment;
     @SerializedName("requestDateSubmitted")
     private String RequestDateSubmitted;
-
+    @SerializedName("items")
     private List<DisplayRequestItemDetailsDTO> Items;
+    @SerializedName("approvals")
     private List<DisplayRequestApprovalDetailsDTO> Approvals;
 
     public int getRequestId() {

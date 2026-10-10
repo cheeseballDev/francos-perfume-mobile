@@ -84,6 +84,11 @@ public class RequestDetailsActivity extends AppCompatActivity {
                 String dateOnly = (rawDate != null && rawDate.contains("T"))
                         ? rawDate.split("T")[0]
                         : rawDate;
+                String requestStatus = detailResponse.getData().getRequestStatus();
+                if(requestStatus.equals("COMPLETED")){
+                    //TODO: add condition here that hides those yee yee ass buttons
+                    //TODO: also leave the checkmark permanently checked and approved qty grayed out
+                }
 
                 textViewDateSubmitted.setText(String.format("Date submitted: %s", dateOnly));
                 textViewRequestId.setText(detailResponse.getData().getRequestDisplayId());

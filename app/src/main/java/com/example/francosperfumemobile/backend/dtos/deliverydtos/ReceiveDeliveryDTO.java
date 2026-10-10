@@ -1,9 +1,12 @@
 package com.example.francosperfumemobile.backend.dtos.deliverydtos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 import java.util.List;
 
 public class ReceiveDeliveryDTO {
+    @SerializedName("expiryDate")
     private Date ExpiryDate;
     private List<ReceiveDeliveryItemDTO> Items;
 

@@ -1,6 +1,5 @@
 package com.example.francosperfumemobile.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,32 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.activities.DeliveryDetailsActivity;
-import com.example.francosperfumemobile.activities.InventoryBatchListActivity;
-import com.example.francosperfumemobile.activities.RequestDetailsActivity;
 import com.example.francosperfumemobile.adapters.DeliveryAdapter;
-import com.example.francosperfumemobile.adapters.InventoryAdapter;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DeliveryFilterDTO;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DisplayDeliveryDTO;
-import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
-import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestDTO;
-import com.example.francosperfumemobile.backend.dtos.requestdtos.RequestFilterDTO;
-import com.example.francosperfumemobile.backend.dtos.requestdtos.RequestProductFilterDTO;
 import com.example.francosperfumemobile.backend.repository.DeliveryRepository;
-import com.example.francosperfumemobile.backend.repository.InventoryRepository;
-import com.example.francosperfumemobile.backend.repository.RequestRepository;
 import com.example.francosperfumemobile.backend.responses.deliveryresponses.DeliveryFiltersResponse;
 import com.example.francosperfumemobile.backend.responses.deliveryresponses.DeliveryListResponse;
-import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryFilterResponse;
-import com.example.francosperfumemobile.backend.responses.requestresponses.RequestFiltersResponse;
-import com.example.francosperfumemobile.backend.responses.requestresponses.RequestListResponse;
 import com.example.francosperfumemobile.helpers.FilterManager;
 import com.example.francosperfumemobile.helpers.PaginationHelper;
 import com.example.francosperfumemobile.helpers.RecyclerViewHelper;
@@ -47,10 +34,6 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DeliveryFragment extends Fragment {
 
@@ -62,6 +45,7 @@ public class DeliveryFragment extends Fragment {
     private MaterialButton buttonAll, buttonInbound, buttonOutbound;
     private DeliveryAdapter deliveryAdapter;
     private ProgressBar progressBarDelivery, progressBarPagination;
+    private EditText editTextSearch;
     private int totalDeliveryCount = 0;
 
     public DeliveryFragment() {
@@ -130,12 +114,12 @@ public class DeliveryFragment extends Fragment {
                 FilterManager.setupSpinner(requireContext(), dropdownToBranch, filterResponse.getToBranches(), "All To Branch");
                 FilterManager.setupSpinner(requireContext(), dropdownStatus, filterResponse.getStatus(), "All From Branch");
 
-                initializeSpinnerListeners();
+                initializeSpinnerAndSearchListeners();
             }
         });
     }
 
-    private void initializeSpinnerListeners() {
+    private void initializeSpinnerAndSearchListeners() {
         dropdownFromBranch.setOnItemSelectedListener(new FilterManager.SimpleItemSelectedListener() {
             @Override
             public void onSelected(int position, String value) {
@@ -175,6 +159,24 @@ public class DeliveryFragment extends Fragment {
                 }
             }
         });
+
+        editTextSearch.addTextChangedListener(new android.text.TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(android.text.Editable s) {
+                String query = s.toString().trim();
+                currentFilter.setSearch(query.isEmpty() ? null : query);
+                currentFilter.setPageCount(1);
+                fetchDeliveries(currentFilter, true);
+            }
+        });
     }
 
     private void initializeUI(View view) {
@@ -193,6 +195,8 @@ public class DeliveryFragment extends Fragment {
 
         progressBarDelivery = view.findViewById(R.id.progress_bar_delivery);
         progressBarPagination = view.findViewById(R.id.progress_bar_delivery_pagination);
+
+        editTextSearch = view.findViewById(R.id.edit_text_search);
 
         initializeListeners();
     }
