@@ -3,6 +3,7 @@ package com.example.francosperfumemobile.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -11,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -19,18 +19,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.adapters.DeliveryItemsAdapter;
-import com.example.francosperfumemobile.backend.dtos.deliverydtos.DeliveryFilterDTO;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DeliveryItemDTO;
-import com.example.francosperfumemobile.backend.dtos.deliverydtos.DisplayDeliveryDTO;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DisplayDeliveryDetailsDTO;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.ReceiveDeliveryDTO;
+import com.example.francosperfumemobile.backend.dtos.deliverydtos.ReceiveDeliveryItemDTO;
 import com.example.francosperfumemobile.backend.repository.DeliveryRepository;
 import com.example.francosperfumemobile.backend.responses.deliveryresponses.CancelDeliveryResponse;
 import com.example.francosperfumemobile.backend.responses.deliveryresponses.DeliveryDetailResponse;
-import com.example.francosperfumemobile.backend.responses.deliveryresponses.DeliveryListResponse;
 import com.example.francosperfumemobile.backend.responses.deliveryresponses.DispatchDeliveryResponse;
 import com.example.francosperfumemobile.backend.responses.deliveryresponses.ReceiveDeliveryResponse;
-import com.example.francosperfumemobile.helpers.PaginationHelper;
 import com.example.francosperfumemobile.helpers.RecyclerViewHelper;
 import com.example.francosperfumemobile.helpers.SafeCallback;
 import com.google.android.material.button.MaterialButton;
@@ -40,10 +37,7 @@ import java.util.List;
 
 public class DeliveryDetailsActivity extends AppCompatActivity {
 
-
-    private final List<DisplayDeliveryDetailsDTO> deliveryDetailsList = new ArrayList<>();
     private static final String EXTRA_DELIVERY_ID = "DELIVERY_ID";
-    private final List<DeliveryItemDTO> deliveryItemList = new ArrayList<>();
     private TextView textViewDeliveryDetailsId, textViewDeliveryDetailsDateCreated, textViewDeliveryDetailsDirection,
             textViewDeliveryDetailsFromBranch, textViewDeliveryDetailsToBranch, textViewDeliveryDetailsCreatedBy;
     private LinearLayout layoutInboundActions, layoutOutboundActions;
@@ -53,8 +47,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
     private DeliveryItemsAdapter deliveryItemsAdapter;
     private String direction;
     private boolean isInbound;
-    private final List<DeliveryItemDTO> updatedItems = new ArrayList<>();
-
+    private final List<DeliveryItemDTO> deliveryItems = new ArrayList<>();
 
     public static Intent newIntent(Context context, int deliveryId) {
         Intent intent = new Intent(context, DeliveryDetailsActivity.class);
@@ -73,13 +66,11 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
             return insets;
         });
 
-        //todo: add intent here
-        // also, can add intent that gets the direction type so that it doesn't have to load the delivery details just to get the delivery type
-        // but idk
         int deliveryId = getIntent().getIntExtra(EXTRA_DELIVERY_ID, 0);
         initializeUI();
         fetchDeliveryDetails(deliveryId);
     }
+
     private void fetchDeliveryDetails(int deliveryId) {
         DeliveryRepository repository = new DeliveryRepository(this);
         repository.getDeliveryDetails(deliveryId).enqueue(new SafeCallback<DeliveryDetailResponse>(this, progressBarDeliveryDetails) {
@@ -90,10 +81,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
 
                 direction = deliveryDetails.getDirection();
                 isInbound = "INBOUND".equalsIgnoreCase(direction);
-
-                if (items != null && !items.isEmpty()) {
-                    deliveryItemsAdapter.updateData(items);
-                }
+                Log.d("direction", "Fetched direction: '" + direction + "' | Evaluated isInbound: " + isInbound);
 
                 String rawDate = response.getData().getCreatedAt();
                 String dateOnly = (rawDate != null && rawDate.contains("T"))
@@ -115,8 +103,12 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
                     layoutOutboundActions.setVisibility(View.VISIBLE);
                 }
 
-                initializeRecyclerView(items);
+                deliveryItems.clear();
+                if (items != null) {
+                    deliveryItems.addAll(items);
+                }
 
+                initializeRecyclerView(items);
             }
         });
     }
@@ -147,27 +139,21 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
 
         deliveryItemsAdapter = new DeliveryItemsAdapter(items, isInbound);
 
-        // this one is AI generated but basically it gets the updated items from the adapter and adds it into the list here in the activity
-        // and you use that list to push into the backend (I THINK)
-        // listen for item changes
         deliveryItemsAdapter.setOnItemChangedListener(updatedItem -> {
-            // update or add to updatedItems list
             boolean found = false;
-            for (int i = 0; i < updatedItems.size(); i++) {
-                if (updatedItems.get(i).getDeliveryItemId() == updatedItem.getDeliveryItemId()) {
-                    updatedItems.set(i, updatedItem);
+            for (int i = 0; i < deliveryItems.size(); i++) {
+                if (deliveryItems.get(i).getDeliveryItemId() == updatedItem.getDeliveryItemId()) {
+                    deliveryItems.set(i, updatedItem);
                     found = true;
                     break;
                 }
             }
-            if (!found) updatedItems.add(updatedItem);
+            if (!found) deliveryItems.add(updatedItem);
         });
 
         recyclerViewDeliveryItems.setAdapter(deliveryItemsAdapter);
         RecyclerViewHelper.setupVertical(this, recyclerViewDeliveryItems, deliveryItemsAdapter);
     }
-
-
 
     private void initializeListeners() {
         buttonConfirmDelivery.setOnClickListener(v -> handleConfirmDelivery());
@@ -176,21 +162,38 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
         buttonGoBack.setOnClickListener(v -> finish());
     }
 
-
     private void handleConfirmDelivery() {
-        if (updatedItems.isEmpty()) {
-            Toast.makeText(this, "No items modified", Toast.LENGTH_SHORT).show();
+        if (deliveryItems.isEmpty()) {
+            Toast.makeText(this, "No items found to receive", Toast.LENGTH_SHORT).show();
             return;
         }
-        ReceiveDeliveryDTO dto = new ReceiveDeliveryDTO();
 
         int deliveryId = getIntent().getIntExtra(EXTRA_DELIVERY_ID, 0);
-        DeliveryRepository repository = new DeliveryRepository(this);
+        if (deliveryId == 0) {
+            Toast.makeText(this, "Invalid Delivery ID", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        List<ReceiveDeliveryItemDTO> receiveItems = new ArrayList<>();
+        for (DeliveryItemDTO item : deliveryItems) {
+            ReceiveDeliveryItemDTO receiveItem = new ReceiveDeliveryItemDTO();
+
+            receiveItem.setRequestItemId(Integer.parseInt(item.getRequestItemId()));
+
+            receiveItem.setReceivedQty(item.getQuantity());
+            receiveItem.setRemarks(null);
+            receiveItems.add(receiveItem);
+        }
+
+        ReceiveDeliveryDTO dto = new ReceiveDeliveryDTO();
+        dto.setExpiryDate("2026-12-31T00:00:00Z");
+        dto.setItems(receiveItems);
+
+        DeliveryRepository repository = new DeliveryRepository(this);
         repository.receiveDelivery(deliveryId, dto).enqueue(new SafeCallback<ReceiveDeliveryResponse>(this, progressBarDeliveryDetails) {
             @Override
             public void onSuccess(ReceiveDeliveryResponse response) {
-                Toast.makeText(DeliveryDetailsActivity.this, "Delivery confirmed successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DeliveryDetailsActivity.this, "Delivery received successfully", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

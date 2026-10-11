@@ -43,17 +43,21 @@ public class DeliveryDetailsInboundViewHolder extends RecyclerView.ViewHolder {
         if (item == null) return;
 
         deliveryItemsProductName.setText(item.getProductName());
-        deliveryItemsProductId.setText(item.getProductId());
-        deliveryItemsRequestedQuantity.setText(item.getQuantity());
+        deliveryItemsProductId.setText(String.valueOf(item.getProductId()));
+        deliveryItemsRequestedQuantity.setText(String.valueOf(item.getQuantity()));
         checkBoxIsReceived.setOnCheckedChangeListener(null);
 
         checkBoxIsReceived.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked) {
                 item.setQuantity(0);
-                editTextReceivedQuantity.setText(0);
+                editTextReceivedQuantity.setText(String.valueOf(0));
             } else {
-                item.setQuantity(Integer.parseInt(editTextReceivedQuantity.getText().toString()));
-                listener.onItemChanged(item);
+                try {
+                    int qty = Integer.parseInt(editTextReceivedQuantity.getText().toString());
+                    item.setQuantity(qty);
+                } catch (NumberFormatException e) {
+                    item.setQuantity(0);
+                }
             }
 
             if (listener != null) listener.onItemChanged(item);

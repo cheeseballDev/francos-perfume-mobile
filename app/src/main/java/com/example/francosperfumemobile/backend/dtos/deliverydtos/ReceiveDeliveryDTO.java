@@ -7,14 +7,15 @@ import java.util.List;
 
 public class ReceiveDeliveryDTO {
     @SerializedName("expiryDate")
-    private Date ExpiryDate;
+    private String ExpiryDate;
+    @SerializedName("items")
     private List<ReceiveDeliveryItemDTO> Items;
 
-    public Date getExpiryDate() {
+    public String getExpiryDate() {
         return ExpiryDate;
     }
 
-    public void setExpiryDate(Date expiryDate) {
+    public void setExpiryDate(String expiryDate) {
         ExpiryDate = expiryDate;
     }
 

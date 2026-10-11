@@ -13,6 +13,8 @@ public class DeliveryItemDTO {
     private int Quantity;
     @SerializedName("status")
     private String Status;
+    @SerializedName("requestItemId")
+    private String RequestItemId;
 
     public int getDeliveryItemId() {
         return DeliveryItemId;
@@ -52,5 +54,12 @@ public class DeliveryItemDTO {
 
     public void setStatus(String status) {
         Status = status;
+    }
+    public String getRequestItemId() {
+        return RequestItemId;
+    }
+
+    public void setRequestItemId(String requestItemId) {
+        RequestItemId = requestItemId;
     }
 }

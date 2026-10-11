@@ -76,7 +76,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
         }
 
         initializeUI();
-        //initializeRecyclerViews();
+        initializeRecyclerViews();
         initializeListeners();
         fetchRequestDetails(requestId);
 
@@ -128,7 +128,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
                     requestApprovalAdapter.notifyDataSetChanged();
                 }
 
-                initializeRecyclerViews();
+                //initializeRecyclerViews();
             }
         });
     }
