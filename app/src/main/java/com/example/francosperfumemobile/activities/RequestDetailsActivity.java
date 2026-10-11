@@ -3,12 +3,15 @@ package com.example.francosperfumemobile.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -17,12 +20,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.adapters.RequestApprovalAdapter;
 import com.example.francosperfumemobile.adapters.RequestedItemsAdapter;
+import com.example.francosperfumemobile.backend.dtos.requestdtos.ApproveRequestDTO;
 import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestApprovalDetailsDTO;
 import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestItemDetailsDTO;
+import com.example.francosperfumemobile.backend.dtos.requestdtos.RejectRequestDTO;
 import com.example.francosperfumemobile.backend.repository.RequestRepository;
+import com.example.francosperfumemobile.backend.responses.requestresponses.ApprovalResponse;
+import com.example.francosperfumemobile.backend.responses.requestresponses.RejectResponse;
 import com.example.francosperfumemobile.backend.responses.requestresponses.RequestDetailResponse;
 import com.example.francosperfumemobile.helpers.RecyclerViewHelper;
 import com.example.francosperfumemobile.helpers.SafeCallback;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +45,9 @@ public class RequestDetailsActivity extends AppCompatActivity {
     private TextView textViewRequestId, textViewDateSubmitted, textViewDirection,
             textViewFromBranch, textViewToBranch, textViewCreatedBy;
     private ProgressBar progressBarMain;
+    private LinearLayout layoutRequestActions;
+    private AppCompatButton buttonApprove, buttonReject;
+    private MaterialButton buttonGoBack;
 
     private RequestApprovalAdapter requestApprovalAdapter;
     private RequestedItemsAdapter requestedItemsAdapter;
@@ -85,9 +96,17 @@ public class RequestDetailsActivity extends AppCompatActivity {
                         ? rawDate.split("T")[0]
                         : rawDate;
                 String requestStatus = detailResponse.getData().getRequestStatus();
-                if(requestStatus.equals("COMPLETED")){
-                    //TODO: add condition here that hides those yee yee ass buttons
-                    //TODO: also leave the checkmark permanently checked and approved qty grayed out
+                boolean isTerminal = "COMPLETED".equals(requestStatus) ||
+                        "REJECTED".equals(requestStatus) ||
+                        "CANCELLED".equals(requestStatus);
+
+                View bottomActionBar = findViewById(R.id.constraintLayout2);
+                if (bottomActionBar != null) {
+                    bottomActionBar.setVisibility(isTerminal ? View.GONE : View.VISIBLE);
+                }
+
+                if (requestedItemsAdapter != null) {
+                    requestedItemsAdapter.setReadOnly(isTerminal);
                 }
 
                 textViewDateSubmitted.setText(String.format("Date submitted: %s", dateOnly));
@@ -121,6 +140,10 @@ public class RequestDetailsActivity extends AppCompatActivity {
         textViewCreatedBy = findViewById(R.id.text_view_request_details_created_by);
 
         progressBarMain = findViewById(R.id.progress_bar_main);
+
+        buttonApprove = findViewById(R.id.button_accept);
+        buttonReject = findViewById(R.id.button_reject_cancel);
+        buttonGoBack = findViewById(R.id.button_request_details_go_back);
     }
 
     private void initializeRecyclerViews() {
@@ -135,7 +158,45 @@ public class RequestDetailsActivity extends AppCompatActivity {
     }
 
     private void initializeListeners() {
-        findViewById(R.id.button_request_details_go_back).setOnClickListener(v -> finish());
+        if (buttonGoBack != null) buttonGoBack.setOnClickListener(v -> finish());
+        if (buttonApprove != null) buttonApprove.setOnClickListener(v -> handleApproveRequest());
+        if (buttonReject != null) buttonReject.setOnClickListener(v -> handleRejectRequest());
     }
 
+    private void handleApproveRequest() {
+        int requestId = getIntent().getIntExtra(EXTRA_REQUEST_ID, -1);
+        if (requestId == -1) return;
+
+        List<ApproveRequestDTO> approvals = requestedItemsAdapter.getApprovalList();
+        if (approvals.isEmpty()) {
+            Toast.makeText(this, "No items to approve", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        RequestRepository repository = new RequestRepository(this);
+        repository.approveRequest(requestId, approvals).enqueue(new SafeCallback<ApprovalResponse>(this, progressBarMain) {
+            @Override
+            public void onSuccess(ApprovalResponse response) {
+                Toast.makeText(RequestDetailsActivity.this, "Request approved successfully", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+    }
+
+    private void handleRejectRequest() {
+        int requestId = getIntent().getIntExtra(EXTRA_REQUEST_ID, -1);
+        if (requestId == -1) return;
+
+        RejectRequestDTO dto = new RejectRequestDTO();
+        dto.setRemarks("Request rejected");
+
+        RequestRepository repository = new RequestRepository(this);
+        repository.rejectRequest(requestId, dto).enqueue(new SafeCallback<RejectResponse>(this, progressBarMain) {
+            @Override
+            public void onSuccess(RejectResponse response) {
+                Toast.makeText(RequestDetailsActivity.this, "Request rejected", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+    }
 }

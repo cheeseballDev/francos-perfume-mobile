@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,9 +23,13 @@ import com.example.francosperfumemobile.backend.dtos.deliverydtos.DeliveryFilter
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DeliveryItemDTO;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DisplayDeliveryDTO;
 import com.example.francosperfumemobile.backend.dtos.deliverydtos.DisplayDeliveryDetailsDTO;
+import com.example.francosperfumemobile.backend.dtos.deliverydtos.ReceiveDeliveryDTO;
 import com.example.francosperfumemobile.backend.repository.DeliveryRepository;
+import com.example.francosperfumemobile.backend.responses.deliveryresponses.CancelDeliveryResponse;
 import com.example.francosperfumemobile.backend.responses.deliveryresponses.DeliveryDetailResponse;
 import com.example.francosperfumemobile.backend.responses.deliveryresponses.DeliveryListResponse;
+import com.example.francosperfumemobile.backend.responses.deliveryresponses.DispatchDeliveryResponse;
+import com.example.francosperfumemobile.backend.responses.deliveryresponses.ReceiveDeliveryResponse;
 import com.example.francosperfumemobile.helpers.PaginationHelper;
 import com.example.francosperfumemobile.helpers.RecyclerViewHelper;
 import com.example.francosperfumemobile.helpers.SafeCallback;
@@ -173,18 +178,55 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
 
 
     private void handleConfirmDelivery() {
-        // this is if the updated items are empty to give you an idea
         if (updatedItems.isEmpty()) {
+            Toast.makeText(this, "No items modified", Toast.LENGTH_SHORT).show();
             return;
         }
+        ReceiveDeliveryDTO dto = new ReceiveDeliveryDTO();
 
+        int deliveryId = getIntent().getIntExtra(EXTRA_DELIVERY_ID, 0);
+        DeliveryRepository repository = new DeliveryRepository(this);
+
+        repository.receiveDelivery(deliveryId, dto).enqueue(new SafeCallback<ReceiveDeliveryResponse>(this, progressBarDeliveryDetails) {
+            @Override
+            public void onSuccess(ReceiveDeliveryResponse response) {
+                Toast.makeText(DeliveryDetailsActivity.this, "Delivery confirmed successfully", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
     }
 
     private void handleCancelRequest() {
+        int deliveryId = getIntent().getIntExtra(EXTRA_DELIVERY_ID, 0);
+        if (deliveryId == 0) {
+            Toast.makeText(this, "Invalid Delivery ID", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        DeliveryRepository repository = new DeliveryRepository(this);
+        repository.cancelDelivery(deliveryId).enqueue(new SafeCallback<CancelDeliveryResponse>(this, progressBarDeliveryDetails) {
+            @Override
+            public void onSuccess(CancelDeliveryResponse response) {
+                Toast.makeText(DeliveryDetailsActivity.this, "Delivery cancelled successfully", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
     }
 
     private void handleMarkInTransit() {
+        int deliveryId = getIntent().getIntExtra(EXTRA_DELIVERY_ID, 0);
+        if (deliveryId == 0) {
+            Toast.makeText(this, "Invalid Delivery ID", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        DeliveryRepository repository = new DeliveryRepository(this);
+        repository.dispatchDelivery(deliveryId).enqueue(new SafeCallback<DispatchDeliveryResponse>(this, progressBarDeliveryDetails) {
+            @Override
+            public void onSuccess(DispatchDeliveryResponse response) {
+                Toast.makeText(DeliveryDetailsActivity.this, "Delivery marked as in transit", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
     }
 }

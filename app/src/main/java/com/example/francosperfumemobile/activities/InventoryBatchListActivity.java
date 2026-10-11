@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -47,6 +48,7 @@ public class InventoryBatchListActivity extends AppCompatActivity {
     private static final String PRODUCT_ID = "PRODUCT_ID";
     private DrawerLayout drawerLayout;
     private View topToolbar;
+    private TextView productName;
     private ImageButton buttonMenu, buttonNotification;
     private AppCompatButton buttonLogout;
     private InventoryRepository inventoryRepository;
@@ -99,6 +101,7 @@ public class InventoryBatchListActivity extends AppCompatActivity {
         buttonNotification = topToolbar.findViewById(R.id.button_notification);
         drawerLayout = findViewById(R.id.drawerlayout_inventory_batch_list);
         buttonLogout = drawerLayout.findViewById(R.id.button_logout);
+        productName = findViewById(R.id.text_view_product_name);
     }
 
 
@@ -147,14 +150,20 @@ public class InventoryBatchListActivity extends AppCompatActivity {
             public void onSuccess(BatchResponse batchResponse) {
                 List<DisplayBatchDTO> batches = batchResponse.getBatches();
 
-                if (batches != null) {
-                    batchList.clear();
+                batchList.clear();
+                if (batches != null && !batches.isEmpty()) {
+                    String name = batches.get(0).getProductName();
+                    if (name != null) {
+                        productName.setText(name);
+                    }
                     batchList.addAll(batches);
-                    batchAdapter.notifyDataSetChanged();
+                } else {
+                    productName.setText("No Batches Available");
+                    Toast.makeText(InventoryBatchListActivity.this, "No batches found", Toast.LENGTH_SHORT).show();
                 }
-
-                // todo: add empty state
+                batchAdapter.notifyDataSetChanged();
             }
         });
     }
 }
+
