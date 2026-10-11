@@ -88,8 +88,6 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
                 DisplayDeliveryDetailsDTO deliveryDetails = response.getData();
                 List<DeliveryItemDTO> items = response.getData().getItems();
 
-                initializeRecyclerView(items);
-
                 direction = deliveryDetails.getDirection();
                 isInbound = "INBOUND".equalsIgnoreCase(direction);
 
@@ -116,6 +114,8 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
                     layoutInboundActions.setVisibility(View.GONE);
                     layoutOutboundActions.setVisibility(View.VISIBLE);
                 }
+
+                initializeRecyclerView(items);
 
             }
         });

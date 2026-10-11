@@ -41,7 +41,6 @@ public class RequestDetailsActivity extends AppCompatActivity {
 
     private final List<DisplayRequestItemDetailsDTO> listRequestedProducts = new ArrayList<>();
     private final List<DisplayRequestApprovalDetailsDTO> listRequestTimeline = new ArrayList<>();
-
     private TextView textViewRequestId, textViewDateSubmitted, textViewDirection,
             textViewFromBranch, textViewToBranch, textViewCreatedBy;
     private ProgressBar progressBarMain;
@@ -77,7 +76,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
         }
 
         initializeUI();
-        initializeRecyclerViews();
+        //initializeRecyclerViews();
         initializeListeners();
         fetchRequestDetails(requestId);
 
@@ -114,6 +113,7 @@ public class RequestDetailsActivity extends AppCompatActivity {
                 textViewFromBranch.setText(detailResponse.getData().getRequestedFrom());
                 textViewToBranch.setText(detailResponse.getData().getDeliveredTo());
                 textViewCreatedBy.setText(detailResponse.getData().getEmployeeName());
+
                 textViewDirection.setText(detailResponse.getData().getRequestDirection());
 
                 if (detailResponse.getData().getItems() != null) {
@@ -127,6 +127,8 @@ public class RequestDetailsActivity extends AppCompatActivity {
                     listRequestTimeline.addAll(detailResponse.getData().getApprovals());
                     requestApprovalAdapter.notifyDataSetChanged();
                 }
+
+                initializeRecyclerViews();
             }
         });
     }
