@@ -104,13 +104,13 @@ public class InventoryBatchListActivity extends AppCompatActivity {
         productName = findViewById(R.id.text_view_product_name);
     }
 
-
+    //selectedBatch -> {
+    //            EditBatchDialog dialog = EditBatchDialog.newInstance(selectedBatch);
+    //            dialog.show(getSupportFragmentManager(), "EditBatchDialog");
+    //        }
     private void initializeRecyclerView() {
         RecyclerView recyclerViewBatch = findViewById(R.id.recycler_view_batch);
-        batchAdapter = new BatchAdapter(batchList, selectedBatch -> {
-            EditBatchDialog dialog = EditBatchDialog.newInstance(selectedBatch);
-            dialog.show(getSupportFragmentManager(), "EditBatchDialog");
-        });
+        batchAdapter = new BatchAdapter(batchList);
         RecyclerViewHelper.setupVertical(this, recyclerViewBatch, batchAdapter);
     }
 

@@ -15,16 +15,20 @@ import java.util.List;
 
 public class BatchAdapter extends RecyclerView.Adapter<BatchViewHolder> {
 
+    /*
     public interface OnEditBatchListener {
         void onEditBatchClick(DisplayBatchDTO item);
     }
 
-    private List<DisplayBatchDTO> batchList;
-    private final OnEditBatchListener listener;
+     */
 
-    public BatchAdapter(List<DisplayBatchDTO> data, OnEditBatchListener listener) {
+    private List<DisplayBatchDTO> batchList;
+    //private final OnEditBatchListener listener;
+
+    //OnEditBatchListener listener
+    public BatchAdapter(List<DisplayBatchDTO> data ) {
         this.batchList = data;
-        this.listener = listener;
+        //this.listener = listener;
     }
 
     @NonNull
@@ -37,7 +41,7 @@ public class BatchAdapter extends RecyclerView.Adapter<BatchViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull BatchViewHolder holder, int position) {
         DisplayBatchDTO item = batchList.get(position);
-        holder.bind(item, listener);
+        holder.bind(item);
     }
 
     @Override

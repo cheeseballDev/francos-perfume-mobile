@@ -53,10 +53,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/sample_date_received"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/edit_text_batch_date_received"
             app:layout_constraintTop_toBottomOf="@+id/edit_text_batch_date_received" />
 
+        <!--
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_edit_batch"
             android:layout_width="0dp"
@@ -69,6 +72,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_batch_target_date" />
+
+        -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
