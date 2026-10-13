@@ -15,7 +15,8 @@ public class RetrofitClient {
 
     // TODO: Remove upon production
     //private static final String BASE_URL = "http://192.168.254.195:5000/";
-    private static final String BASE_URL = "http://10.0.2.2:5000/";
+    //private static final String BASE_URL = "http://10.0.2.2:5000/";
+    private static final String BASE_URL = "https://inventorysystembackend-production-16a2.up.railway.app/";
 
     public static Retrofit getInstance(Context context) {
         SessionManager sm = new SessionManager(context);

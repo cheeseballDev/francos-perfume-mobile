@@ -95,6 +95,19 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
                 textViewDeliveryDetailsToBranch.setText(deliveryDetails.getToBranchName());
                 textViewDeliveryDetailsDirection.setText(direction);
 
+                String deliveryStatus = response.getData().getDeliveryStatus();
+                boolean isCompleted = "COMPLETED".equalsIgnoreCase(deliveryStatus);
+
+                if (isCompleted || "CANCELLED".equalsIgnoreCase(deliveryStatus)) {
+                    buttonConfirmDelivery.setVisibility(View.GONE);
+                    buttonMarkInTransit.setVisibility(View.GONE);
+                    buttonCancelRequest.setVisibility(View.GONE);
+                } else {
+                    buttonConfirmDelivery.setVisibility(View.VISIBLE);
+                    buttonMarkInTransit.setVisibility(View.VISIBLE);
+                    buttonCancelRequest.setVisibility(View.VISIBLE);
+                }
+
                 if (isInbound) {
                     layoutInboundActions.setVisibility(View.VISIBLE);
                     layoutOutboundActions.setVisibility(View.GONE);
@@ -108,6 +121,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
                     deliveryItems.addAll(items);
                 }
 
+                deliveryItemsAdapter = new DeliveryItemsAdapter(items, isInbound, isCompleted);
                 initializeRecyclerView(items);
             }
         });
@@ -136,8 +150,6 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
 
     private void initializeRecyclerView(List<DeliveryItemDTO> items) {
         recyclerViewDeliveryItems = findViewById(R.id.recycler_view_delivery_items);
-
-        deliveryItemsAdapter = new DeliveryItemsAdapter(items, isInbound);
 
         deliveryItemsAdapter.setOnItemChangedListener(updatedItem -> {
             boolean found = false;

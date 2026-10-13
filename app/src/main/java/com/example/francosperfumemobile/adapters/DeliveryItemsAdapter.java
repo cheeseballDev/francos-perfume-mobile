@@ -22,14 +22,16 @@ public class DeliveryItemsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private List<DeliveryItemDTO> deliveryItems;
     private final boolean isInbound;
+    private final boolean isCompleted;
     private OnItemChangedListener itemChangedListener;
 
     private static final int TYPE_INBOUND = 1;
     private static final int TYPE_OUTBOUND = 2;
 
-    public DeliveryItemsAdapter(List<DeliveryItemDTO> data, boolean isInbound) {
+    public DeliveryItemsAdapter(List<DeliveryItemDTO> data, boolean isInbound, boolean isCompleted) {
         this.deliveryItems = data;
         this.isInbound = isInbound;
+        this.isCompleted = isCompleted;
     }
 
     public void setOnItemChangedListener(OnItemChangedListener listener) {
@@ -59,7 +61,7 @@ public class DeliveryItemsAdapter extends RecyclerView.Adapter<RecyclerView.View
         DeliveryItemDTO item = deliveryItems.get(position);
 
         if (holder instanceof DeliveryDetailsInboundViewHolder) {
-            ((DeliveryDetailsInboundViewHolder) holder).bind(item, updatedItem -> {
+            ((DeliveryDetailsInboundViewHolder) holder).bind(item, isCompleted, updatedItem -> {
                 if (itemChangedListener != null) {
                     itemChangedListener.onItemChanged(updatedItem);
                 }

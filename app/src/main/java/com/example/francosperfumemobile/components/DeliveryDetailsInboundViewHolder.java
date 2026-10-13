@@ -39,13 +39,27 @@ public class DeliveryDetailsInboundViewHolder extends RecyclerView.ViewHolder {
     }
 
     // TODO: revolve the checkbox && receivedqty logic around here for error checking
-    public void bind(DeliveryItemDTO item, OnItemChangeListener listener) {
+    public void bind(DeliveryItemDTO item, boolean isCompleted, OnItemChangeListener listener) {
         if (item == null) return;
 
         deliveryItemsProductName.setText(item.getProductName());
         deliveryItemsProductId.setText(String.valueOf(item.getProductId()));
         deliveryItemsRequestedQuantity.setText(String.valueOf(item.getQuantity()));
+
+        checkBoxIsReceived.setChecked(true);
+        checkBoxIsReceived.setEnabled(!isCompleted);
+        checkBoxIsReceived.setClickable(!isCompleted);
+
+        editTextReceivedQuantity.setText(String.valueOf(item.getQuantity()));
+        editTextReceivedQuantity.setEnabled(!isCompleted);
+        editTextReceivedQuantity.setFocusable(!isCompleted);
+        editTextReceivedQuantity.setFocusableInTouchMode(!isCompleted);
+
         checkBoxIsReceived.setOnCheckedChangeListener(null);
+
+        if (isCompleted) {
+            return;
+        }
 
         checkBoxIsReceived.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked) {
