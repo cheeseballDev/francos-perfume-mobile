@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class InventoryFilterResponse {
-    @SerializedName("productTypes")
+    @SerializedName("productType")
     private List<String> productTypes;
-    @SerializedName("productGenders")
+    @SerializedName("productGender")
     private List<String> productGenders;
-    @SerializedName("branches")
+    @SerializedName("branch")
     private List<String> branches;
 
     public List<String> getProductTypes() {
