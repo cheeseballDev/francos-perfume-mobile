@@ -35,15 +35,6 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_text_search">
 
         <Spinner
-            android:id="@+id/dropdown_direction"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            android:background="@drawable/dropdown_design"
-            android:minHeight="48dp" />
-
-        <Spinner
             android:id="@+id/dropdown_status"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

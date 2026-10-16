@@ -41,7 +41,7 @@ public class RequestFragment extends Fragment {
     private final RequestFilterDTO currentFilter = new RequestFilterDTO();
     private RequestAdapter requestAdapter;
 
-    private Spinner dropdownDirection, dropdownStatus, dropdownStage;
+    private Spinner dropdownStatus, dropdownStage;
     private MaterialButton buttonAll, buttonInbound, buttonOutbound;
     private TextView textViewPagination;
     private EditText editTextSearch;
@@ -109,8 +109,6 @@ public class RequestFragment extends Fragment {
                         }
                     }
                 }
-
-                FilterManager.setupSpinner(requireContext(), dropdownDirection, productNames, "All products");
                 FilterManager.setupSpinner(requireContext(), dropdownStatus, filterResponse.getRequestStatus(), "All status");
                 FilterManager.setupSpinner(requireContext(), dropdownStage, filterResponse.getStages(), "All stages");
 
@@ -146,19 +144,6 @@ public class RequestFragment extends Fragment {
             }
         });
 
-        dropdownDirection.setOnItemSelectedListener(new FilterManager.SimpleItemSelectedListener() {
-            @Override
-            public void onSelected(int position, String value) {
-                String selectedDirection = (position == 0) ? null : value;
-
-                if (!Objects.equals(currentFilter.getDirection(), selectedDirection)) {
-                    currentFilter.setDirection(selectedDirection);
-                    currentFilter.setPageCount(1);
-                    fetchRequests(currentFilter, true);
-                }
-            }
-        });
-
         editTextSearch.addTextChangedListener(new android.text.TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -178,16 +163,7 @@ public class RequestFragment extends Fragment {
         });
     }
 
-    private void initializeRecyclerView(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_request);
-        requestAdapter = new RequestAdapter(requestList, request -> {
-            startActivity(RequestDetailsActivity.newIntent(requireContext(), request.getRequestId()));
-        });
-        RecyclerViewHelper.setupVertical(requireContext(), recyclerView, requestAdapter);
-    }
-
     private void initializeUI(View view) {
-        dropdownDirection = view.findViewById(R.id.dropdown_direction);
         dropdownStage = view.findViewById(R.id.dropdown_stage);
         dropdownStatus = view.findViewById(R.id.dropdown_status);
 
@@ -204,5 +180,53 @@ public class RequestFragment extends Fragment {
         progressBarPagination = view.findViewById(R.id.progress_bar_request_pagination);
 
         textViewPagination = view.findViewById(R.id.text_view_request_pagination);
+
+        initializeListeners();
     }
+
+    private void initializeListeners() {
+        buttonAll.setOnClickListener(v -> {
+            updateActiveButton(buttonAll);
+            currentFilter.setDirection(null);
+            currentFilter.setPageCount(1);
+            fetchRequests(currentFilter, true);
+        });
+        buttonInbound.setOnClickListener(v -> {
+            updateActiveButton(buttonInbound);
+            currentFilter.setDirection("INBOUND");
+            currentFilter.setPageCount(1);
+            fetchRequests(currentFilter, true);
+        });
+
+        buttonOutbound.setOnClickListener(v -> {
+            updateActiveButton(buttonOutbound);
+            currentFilter.setDirection("OUTBOUND");
+            currentFilter.setPageCount(1);
+            fetchRequests(currentFilter, true);
+        });
+    }
+
+    private void updateActiveButton(MaterialButton selectedButton) {
+        MaterialButton[] buttons = {buttonAll, buttonInbound, buttonOutbound};
+
+        for (MaterialButton btn : buttons) {
+            if (btn == selectedButton) {
+                btn.setBackgroundTintList(androidx.core.content.ContextCompat.getColorStateList(requireContext(), R.color.yellow_primary));
+                btn.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.white));
+            } else {
+                btn.setBackgroundTintList(androidx.core.content.ContextCompat.getColorStateList(requireContext(), R.color.gray));
+                btn.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.text_secondary));
+            }
+        }
+    }
+
+    private void initializeRecyclerView(View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_request);
+        requestAdapter = new RequestAdapter(requestList, request -> {
+            startActivity(RequestDetailsActivity.newIntent(requireContext(), request.getRequestId()));
+        });
+        RecyclerViewHelper.setupVertical(requireContext(), recyclerView, requestAdapter);
+    }
+
+
 }

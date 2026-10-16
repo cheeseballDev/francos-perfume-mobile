@@ -70,8 +70,6 @@ public class DeliveryFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedBundleInstance) {
-        // TODO: delivery
-
         initializeUI(view);
         initializeRecyclerView(view);
         initializeDropdowns();
@@ -125,7 +123,6 @@ public class DeliveryFragment extends Fragment {
             public void onSelected(int position, String value) {
                 String selectedFromBranch = (position == 0) ? null : value;
 
-                // todo: change into branchname instead of branchid
                 if (!Objects.equals(currentFilter.getFromBranch(), selectedFromBranch)) {
                     currentFilter.setFromBranch(selectedFromBranch);
                     currentFilter.setPageCount(1);
@@ -150,10 +147,10 @@ public class DeliveryFragment extends Fragment {
         dropdownToBranch.setOnItemSelectedListener(new FilterManager.SimpleItemSelectedListener() {
             @Override
             public void onSelected(int position, String value) {
-                String selectedDirection = (position == 0) ? null : value;
+                String selectedToBranch = (position == 0) ? null : value;
 
-                if (!Objects.equals(currentFilter.getToBranch(), selectedDirection)) {
-                    currentFilter.setToBranch(selectedDirection);
+                if (!Objects.equals(currentFilter.getToBranch(), selectedToBranch)) {
+                    currentFilter.setToBranch(selectedToBranch);
                     currentFilter.setPageCount(1);
                     fetchDeliveries(currentFilter, true);
                 }
@@ -202,7 +199,39 @@ public class DeliveryFragment extends Fragment {
     }
 
     private void initializeListeners() {
-        // todo: add buttons & functionalities here
+        buttonAll.setOnClickListener(v -> {
+            updateActiveButton(buttonAll);
+            currentFilter.setDirection(null);
+            currentFilter.setPageCount(1);
+            fetchDeliveries(currentFilter, true);
+        });
+        buttonInbound.setOnClickListener(v -> {
+            updateActiveButton(buttonInbound);
+            currentFilter.setDirection("INBOUND");
+            currentFilter.setPageCount(1);
+            fetchDeliveries(currentFilter, true);
+        });
+
+        buttonOutbound.setOnClickListener(v -> {
+            updateActiveButton(buttonOutbound);
+            currentFilter.setDirection("OUTBOUND");
+            currentFilter.setPageCount(1);
+            fetchDeliveries(currentFilter, true);
+        });
+    }
+
+    private void updateActiveButton(MaterialButton selectedButton) {
+        MaterialButton[] buttons = {buttonAll, buttonInbound, buttonOutbound};
+
+        for (MaterialButton btn : buttons) {
+            if (btn == selectedButton) {
+                btn.setBackgroundTintList(androidx.core.content.ContextCompat.getColorStateList(requireContext(), R.color.yellow_primary));
+                btn.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.white));
+            } else {
+                btn.setBackgroundTintList(androidx.core.content.ContextCompat.getColorStateList(requireContext(), R.color.gray));
+                btn.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), R.color.text_secondary));
+            }
+        }
     }
 
     private void initializeRecyclerView(View view) {
