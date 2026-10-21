@@ -37,6 +37,12 @@ public class LoginResponse {
     public void setRole(String role) {
         this.role = role;
     }
+    public String getBranchLocation() {
+        return branchLocation;
+    }
+    public void setBranchLocation(String branchLocation) {
+        this.branchLocation = branchLocation;
+    }
     public String getEmail() {
         return email;
     }
@@ -60,13 +66,5 @@ public class LoginResponse {
     }
     public void setRequiresOTP(boolean requiresOTP) {
         this.requiresOtp = requiresOTP;
-    }
-
-    public String getBranchLocation() {
-        return branchLocation;
-    }
-
-    public void setBranchLocation(String branchLocation) {
-        this.branchLocation = branchLocation;
     }
 }

@@ -7,6 +7,7 @@ import com.example.francosperfumemobile.backend.dtos.logindtos.OTPDTO;
 import com.example.francosperfumemobile.backend.endpoints.AuthAPIEndpoints;
 import com.example.francosperfumemobile.backend.endpoints.InventoryAPIEndpoints;
 import com.example.francosperfumemobile.backend.responses.loginresponses.LoginResponse;
+import com.example.francosperfumemobile.backend.responses.loginresponses.LoginResultResponse;
 import com.example.francosperfumemobile.backend.retrofit.RetrofitClient;
 import retrofit2.Call;
 
@@ -16,7 +17,7 @@ public class AuthRepository {
         this.authApi = RetrofitClient.getInstance(context).create(AuthAPIEndpoints.class);
     }
 
-    public Call<LoginResponse> login(LoginDTO dto) {
+    public Call<LoginResultResponse<LoginResponse>> login(LoginDTO dto) {
         return authApi.login(dto);
     }
 

@@ -17,6 +17,7 @@ import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.dtos.logindtos.LoginDTO;
 import com.example.francosperfumemobile.backend.repository.AuthRepository;
 import com.example.francosperfumemobile.backend.responses.loginresponses.LoginResponse;
+import com.example.francosperfumemobile.backend.responses.loginresponses.LoginResultResponse;
 import com.example.francosperfumemobile.backend.retrofit.SessionManager;
 
 import retrofit2.Call;
@@ -82,26 +83,24 @@ public class LoginActivity extends AppCompatActivity {
 
         AuthRepository repository = new AuthRepository(this);
 
-        repository.login(dto).enqueue(new Callback<LoginResponse>() {
+        repository.login(dto).enqueue(new Callback<LoginResultResponse<LoginResponse>>() {
 
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-
+            public void onResponse(Call<LoginResultResponse<LoginResponse>> call, Response<LoginResultResponse<LoginResponse>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    LoginResponse login = response.body();
+                    LoginResultResponse<LoginResponse> login = response.body();
                     SessionManager sessionManager = new SessionManager(LoginActivity.this);
 
                     sessionManager.createSession(
-                            login.getEmployeeId(),
-                            login.getEmail(),
-                            login.getAccessToken(),
-                            login.getRole(),
-                            login.getBranchId(),
-                            login.isRequiresPasswordChange(),
-                            login.isRequiresOTP(),
-                            login.getBranchLocation()
+                            login.getData().getEmployeeId(),
+                            login.getData().getEmail(),
+                            login.getData().getAccessToken(),
+                            login.getData().getRole(),
+                            login.getData().getBranchId(),
+                            login.getData().getBranchLocation(),
+                            login.getData().isRequiresPasswordChange(),
+                            login.getData().isRequiresOTP()
                     );
-
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 }
@@ -111,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(Call<LoginResultResponse<LoginResponse>> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.d("login", "Network error: " + t.getMessage());
             }

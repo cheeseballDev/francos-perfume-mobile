@@ -9,26 +9,27 @@ public class SessionManager {
     private static final String KEY_EMPLOYEE_ID = "employee_id";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_BRANCH_ID = "branch_id";
+    private static final String KEY_BRANCH_LOCATION = "branch_location";
+
     private static final String KEY_ROLE = "role";
     private static final String KEY_REQUIRES_PW_CHANGE = "requires_pw_change";
     private static final String KEY_REQUIRES_OTP = "requires_otp";
-    private static final String KEY_BRANCH_LOCATION = "branch_location";
     private final SharedPreferences sharedPrefs;
 
     public SessionManager(Context context){
         sharedPrefs = context.getSharedPreferences(PREFS_NAME, context.MODE_PRIVATE);
     }
 
-    public void createSession(int employeeId, String email, String accessToken, String role, int branchId, boolean passwordChange, boolean otp, String branchLocation){
+    public void createSession(int employeeId, String email, String accessToken, String role, int branchId, String branchLocation, boolean passwordChange, boolean otp){
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putInt(KEY_EMPLOYEE_ID, employeeId);
         editor.putString(KEY_EMAIL, email);
         editor.putString(KEY_ACCESS_TOKEN, accessToken);
         editor.putString(KEY_ROLE, role);
         editor.putInt(KEY_BRANCH_ID, branchId);
+        editor.putString(KEY_BRANCH_LOCATION, branchLocation);
         editor.putBoolean(KEY_REQUIRES_PW_CHANGE, passwordChange);
         editor.putBoolean(KEY_REQUIRES_OTP, otp);
-        editor.putString(KEY_BRANCH_LOCATION, branchLocation);
         boolean success = editor.commit();
     }
 
@@ -60,10 +61,6 @@ public class SessionManager {
         return sharedPrefs.getString(KEY_ROLE, null);
     }
 
-    public String getBranchLocation() {
-        return sharedPrefs.getString(KEY_BRANCH_LOCATION, null);
-    }
-
     public boolean getRequiresPwChange() {
         boolean result = sharedPrefs.getBoolean(KEY_REQUIRES_PW_CHANGE, false);
         return result;
@@ -73,5 +70,9 @@ public class SessionManager {
         String token = getAccessToken();
         boolean result = token != null && !token.isEmpty();
         return result;
+    }
+
+    public String getBranchLocation() {
+        return sharedPrefs.getString(KEY_BRANCH_LOCATION, null);
     }
 }
