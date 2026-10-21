@@ -29,7 +29,7 @@ public class RequestApprovalViewHolder extends RecyclerView.ViewHolder {
 
         String approvalStatus = approvalRequest.getStatus();
         String approvalStage = approvalRequest.getStage();
-        String approvedBy = approvalRequest.getApprover();
+        String approvedBy = approvalRequest.getApproverName();
 
         setTimelineIcon(approvalStatus);
 

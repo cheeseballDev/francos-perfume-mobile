@@ -13,8 +13,10 @@ public class DisplayRequestApprovalDetailsDTO {
     private String Remarks;
     @SerializedName("approvedAt")
     private String ApprovedAt;
-    @SerializedName("approver")
-    private String Approver;
+    @SerializedName("approverId")
+    private String ApproverId;
+    @SerializedName("approverName")
+    private String ApproverName;
     @SerializedName("requesterEmployeeId")
     public String RequesterEmployeeId;
     @SerializedName("requesterEmployeeRole")
@@ -56,13 +58,21 @@ public class DisplayRequestApprovalDetailsDTO {
         ApprovedAt = approvedAt;
     }
 
-    public String getApprover() {
-        return Approver;
+    public String getApproverId() {
+        return ApproverId;
     }
 
-    public void setApprover(String approver) {
-        Approver = approver;
+    public void setApproverId(String approverId) {
+        ApproverId = approverId;
     }
+    public String getApproverName() {
+        return ApproverName;
+    }
+
+    public void setApproverName(String approverName) {
+        ApproverName = approverName;
+    }
+
 
     public String getRequesterEmployeeId() {
         return RequesterEmployeeId;
