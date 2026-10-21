@@ -2,6 +2,7 @@ package com.example.francosperfumemobile.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -23,13 +24,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.francosperfumemobile.R;
+import com.example.francosperfumemobile.backend.repository.AuthRepository;
 import com.example.francosperfumemobile.backend.retrofit.SessionManager;
 import com.example.francosperfumemobile.fragments.DashboardFragment;
 import com.example.francosperfumemobile.fragments.DeliveryFragment;
 import com.example.francosperfumemobile.fragments.InventoryFragment;
 import com.example.francosperfumemobile.fragments.RequestFragment;
 import com.example.francosperfumemobile.helpers.NavigationHelper;
+import com.example.francosperfumemobile.helpers.SafeCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends BaseActivity {
 
@@ -58,6 +62,20 @@ public class MainActivity extends BaseActivity {
                 loadFragment(new DashboardFragment());
             }
         }
+
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                String fcmToken = task.getResult();
+
+                AuthRepository authRepository = new AuthRepository(this);
+                authRepository.registerToken(fcmToken).enqueue(new SafeCallback<Void>(this, null) {
+                    @Override
+                    public void onSuccess(Void response) {
+                        Log.d("FCM", "FCM token successfully registered");
+                    }
+                });
+            }
+        });
 
         initializeUI();
     }

@@ -48,9 +48,15 @@ public abstract class SafeCallback<T> implements Callback<T> {
 
         hideProgressBar();
 
-        if (response.isSuccessful() && response.body() != null) {
-            onSuccess(response.body());
-        } else {
+        if (response.isSuccessful()) {
+            T body = response.body();
+
+            if (body != null) {
+                onSuccess(body);
+            }
+
+            return;
+        }
             String errorMsg = "HTTP " + response.code();
             try {
                 if (response.errorBody() != null) {
@@ -59,7 +65,6 @@ public abstract class SafeCallback<T> implements Callback<T> {
             } catch (Exception ignored) {}
 
             showToast("Operation failed (" + errorMsg + ")");
-        }
     }
 
     @Override

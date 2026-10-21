@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1094991755915",
+    "project_id": "onefranco-3000e",
+    "storage_bucket": "onefranco-3000e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094991755915:android:8a665f23c70a7d3456328e",
+        "android_client_info": {
+          "package_name": "com.example.francosperfumemobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi1AzghDbmYULUIrpOG0UaOjfKWuSchBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

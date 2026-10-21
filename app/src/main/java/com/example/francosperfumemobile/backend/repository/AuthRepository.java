@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.example.francosperfumemobile.backend.dtos.logindtos.LoginDTO;
 import com.example.francosperfumemobile.backend.dtos.logindtos.OTPDTO;
+import com.example.francosperfumemobile.backend.dtos.logindtos.RegisterTokenDTO;
 import com.example.francosperfumemobile.backend.endpoints.AuthAPIEndpoints;
-import com.example.francosperfumemobile.backend.endpoints.InventoryAPIEndpoints;
 import com.example.francosperfumemobile.backend.responses.loginresponses.LoginResponse;
 import com.example.francosperfumemobile.backend.responses.loginresponses.LoginResultResponse;
 import com.example.francosperfumemobile.backend.retrofit.RetrofitClient;
@@ -21,7 +21,12 @@ public class AuthRepository {
         return authApi.login(dto);
     }
 
-    public Call<LoginResponse> OTP(OTPDTO dto) {
+    public Call<LoginResultResponse<LoginResponse>> OTP(OTPDTO dto) {
         return authApi.OTP(dto);
+    }
+
+    public Call<Void> registerToken(String token){
+        RegisterTokenDTO dto = new RegisterTokenDTO(token);
+        return authApi.registerToken(dto);
     }
 }
