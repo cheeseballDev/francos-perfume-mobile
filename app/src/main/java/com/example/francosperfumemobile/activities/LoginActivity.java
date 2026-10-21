@@ -98,8 +98,10 @@ public class LoginActivity extends AppCompatActivity {
                             login.getRole(),
                             login.getBranchId(),
                             login.isRequiresPasswordChange(),
-                            login.isRequiresOTP()
+                            login.isRequiresOTP(),
+                            login.getBranchLocation()
                     );
+
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 }

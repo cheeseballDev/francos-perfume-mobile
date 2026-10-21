@@ -12,13 +12,14 @@ public class SessionManager {
     private static final String KEY_ROLE = "role";
     private static final String KEY_REQUIRES_PW_CHANGE = "requires_pw_change";
     private static final String KEY_REQUIRES_OTP = "requires_otp";
+    private static final String KEY_BRANCH_LOCATION = "branch_location";
     private final SharedPreferences sharedPrefs;
 
     public SessionManager(Context context){
         sharedPrefs = context.getSharedPreferences(PREFS_NAME, context.MODE_PRIVATE);
     }
 
-    public void createSession(int employeeId, String email, String accessToken, String role, int branchId, boolean passwordChange, boolean otp){
+    public void createSession(int employeeId, String email, String accessToken, String role, int branchId, boolean passwordChange, boolean otp, String branchLocation){
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.putInt(KEY_EMPLOYEE_ID, employeeId);
         editor.putString(KEY_EMAIL, email);
@@ -27,6 +28,7 @@ public class SessionManager {
         editor.putInt(KEY_BRANCH_ID, branchId);
         editor.putBoolean(KEY_REQUIRES_PW_CHANGE, passwordChange);
         editor.putBoolean(KEY_REQUIRES_OTP, otp);
+        editor.putString(KEY_BRANCH_LOCATION, branchLocation);
         boolean success = editor.commit();
     }
 
@@ -56,6 +58,10 @@ public class SessionManager {
 
     public String getRole() {
         return sharedPrefs.getString(KEY_ROLE, null);
+    }
+
+    public String getBranchLocation() {
+        return sharedPrefs.getString(KEY_BRANCH_LOCATION, null);
     }
 
     public boolean getRequiresPwChange() {

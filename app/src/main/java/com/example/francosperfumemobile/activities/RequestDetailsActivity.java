@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
@@ -28,6 +29,7 @@ import com.example.francosperfumemobile.backend.repository.RequestRepository;
 import com.example.francosperfumemobile.backend.responses.requestresponses.ApprovalResponse;
 import com.example.francosperfumemobile.backend.responses.requestresponses.RejectResponse;
 import com.example.francosperfumemobile.backend.responses.requestresponses.RequestDetailResponse;
+import com.example.francosperfumemobile.dialogs.MessageDialog;
 import com.example.francosperfumemobile.helpers.RecyclerViewHelper;
 import com.example.francosperfumemobile.helpers.SafeCallback;
 import com.google.android.material.button.MaterialButton;
@@ -35,7 +37,7 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestDetailsActivity extends AppCompatActivity {
+public class RequestDetailsActivity extends BaseActivity {
 
     private static final String EXTRA_REQUEST_ID = "REQUEST_ID";
 
@@ -45,11 +47,11 @@ public class RequestDetailsActivity extends AppCompatActivity {
             textViewFromBranch, textViewToBranch, textViewCreatedBy;
     private ProgressBar progressBarMain;
     private LinearLayout layoutRequestActions;
-    private AppCompatButton buttonApprove, buttonReject;
+    private AppCompatButton buttonApprove, buttonReject, buttonOpenMessage;
     private MaterialButton buttonGoBack;
-
     private RequestApprovalAdapter requestApprovalAdapter;
     private RequestedItemsAdapter requestedItemsAdapter;
+    private DrawerLayout drawerLayout;
 
     public static Intent newIntent(Context context, int requestId) {
         Intent intent = new Intent(context, RequestDetailsActivity.class);
@@ -146,6 +148,11 @@ public class RequestDetailsActivity extends AppCompatActivity {
         buttonApprove = findViewById(R.id.button_accept);
         buttonReject = findViewById(R.id.button_reject_cancel);
         buttonGoBack = findViewById(R.id.button_request_details_go_back);
+        buttonOpenMessage = findViewById(R.id.button_open_message);
+
+        drawerLayout = findViewById(R.id.drawerlayout_request_details);
+        setupDrawer(drawerLayout);
+
     }
 
     private void initializeRecyclerViews() {
@@ -160,9 +167,15 @@ public class RequestDetailsActivity extends AppCompatActivity {
     }
 
     private void initializeListeners() {
-        if (buttonGoBack != null) buttonGoBack.setOnClickListener(v -> finish());
-        if (buttonApprove != null) buttonApprove.setOnClickListener(v -> handleApproveRequest());
-        if (buttonReject != null) buttonReject.setOnClickListener(v -> handleRejectRequest());
+        buttonGoBack.setOnClickListener(v -> finish());
+        buttonApprove.setOnClickListener(v -> handleApproveRequest());
+        buttonReject.setOnClickListener(v -> handleRejectRequest());
+        buttonOpenMessage.setOnClickListener(v -> handleOpenMessage());
+    }
+
+    private void handleOpenMessage() {
+        MessageDialog messageDialog = MessageDialog.newInstance("Your message details here");
+        messageDialog.show(getSupportFragmentManager(), "MessageDialogTag");
     }
 
     private void handleApproveRequest() {

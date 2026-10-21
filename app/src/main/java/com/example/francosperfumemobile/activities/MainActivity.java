@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,7 +16,9 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
@@ -28,22 +31,19 @@ import com.example.francosperfumemobile.fragments.RequestFragment;
 import com.example.francosperfumemobile.helpers.NavigationHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private BottomNavigationView bottomNavigationView;
     private DrawerLayout drawerLayout;
     private View topToolbar;
     private ImageButton buttonMenu, buttonNotification;
-    private AppCompatButton buttonLogout;
-    private TextView textViewBranch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        //TODO: Ask opinion how the hiding of systemUI would look like
-        //hideSystemUI();
+        hideSystemUI();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawerlayout_main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -102,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
         topToolbar = findViewById(R.id.top_navigation_bar_main);
         buttonMenu = topToolbar.findViewById(R.id.button_menu);
         buttonNotification = topToolbar.findViewById(R.id.button_notification);
-        buttonLogout = drawerLayout.findViewById(R.id.button_logout);
-        textViewBranch = drawerLayout.findViewById(R.id.text_view_drawer_branch);
+
+        setupDrawer(drawerLayout);
 
         initializeListeners();
     }
@@ -132,19 +132,9 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "To be implemented", Toast.LENGTH_SHORT).show();
         });
 
-        buttonLogout.setOnClickListener(v -> {
-            SessionManager sm = new SessionManager(this);
-            sm.clearSession();
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-        });
-
         NavigationHelper.setupDrawerBackButton(this, drawerLayout);
     }
 
-    /*
-
-    TODO: TIGNAN MUNA KUNG NEED
 
     private void hideSystemUI() {
         // Tell the window to layout content edge-to-edge behind the bars
@@ -161,5 +151,5 @@ public class MainActivity extends AppCompatActivity {
                 WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         );
     }
-    */
+
 }

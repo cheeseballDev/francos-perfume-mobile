@@ -17,18 +17,15 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.adapters.BatchAdapter;
-import com.example.francosperfumemobile.adapters.RequestAdapter;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayBatchDTO;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.SendInventoryBatchRequestDTO;
 import com.example.francosperfumemobile.backend.repository.InventoryRepository;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.BatchResponse;
 import com.example.francosperfumemobile.backend.retrofit.SessionManager;
-import com.example.francosperfumemobile.dialogs.EditBatchDialog;
 import com.example.francosperfumemobile.helpers.NavigationHelper;
 import com.example.francosperfumemobile.helpers.RecyclerViewHelper;
 import com.example.francosperfumemobile.helpers.SafeCallback;
@@ -37,11 +34,7 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class InventoryBatchListActivity extends AppCompatActivity {
+public class InventoryBatchListActivity extends BaseActivity {
 
     private MaterialButton backButton;
     private final List<DisplayBatchDTO> batchList = new ArrayList<>();
@@ -99,9 +92,11 @@ public class InventoryBatchListActivity extends AppCompatActivity {
         topToolbar = findViewById(R.id.top_navigation_bar_inventory_batch);
         buttonMenu = topToolbar.findViewById(R.id.button_menu);
         buttonNotification = topToolbar.findViewById(R.id.button_notification);
-        drawerLayout = findViewById(R.id.drawerlayout_inventory_batch_list);
-        buttonLogout = drawerLayout.findViewById(R.id.button_logout);
         productName = findViewById(R.id.text_view_product_name);
+
+        drawerLayout = findViewById(R.id.drawerlayout_inventory_batch_list);
+        setupDrawer(drawerLayout);
+
     }
 
     //selectedBatch -> {

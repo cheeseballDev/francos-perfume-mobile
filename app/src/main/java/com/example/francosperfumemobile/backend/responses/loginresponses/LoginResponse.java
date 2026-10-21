@@ -7,6 +7,8 @@ public class LoginResponse {
     private int employeeId;
     @SerializedName("branchId")
     private int branchId;
+    @SerializedName("branchLocation")
+    private String branchLocation;
     @SerializedName("role")
     private String role;
     @SerializedName("email")
@@ -58,5 +60,13 @@ public class LoginResponse {
     }
     public void setRequiresOTP(boolean requiresOTP) {
         this.requiresOtp = requiresOTP;
+    }
+
+    public String getBranchLocation() {
+        return branchLocation;
+    }
+
+    public void setBranchLocation(String branchLocation) {
+        this.branchLocation = branchLocation;
     }
 }

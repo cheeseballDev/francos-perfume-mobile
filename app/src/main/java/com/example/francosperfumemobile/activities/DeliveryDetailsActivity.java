@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
@@ -35,7 +36,7 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeliveryDetailsActivity extends AppCompatActivity {
+public class DeliveryDetailsActivity extends BaseActivity {
 
     private static final String EXTRA_DELIVERY_ID = "DELIVERY_ID";
     private TextView textViewDeliveryDetailsId, textViewDeliveryDetailsDateCreated, textViewDeliveryDetailsDirection,
@@ -48,6 +49,7 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
     private String direction;
     private boolean isInbound;
     private final List<DeliveryItemDTO> deliveryItems = new ArrayList<>();
+    private DrawerLayout drawerLayout;
 
     public static Intent newIntent(Context context, int deliveryId) {
         Intent intent = new Intent(context, DeliveryDetailsActivity.class);
@@ -144,6 +146,9 @@ public class DeliveryDetailsActivity extends AppCompatActivity {
         buttonCancelRequest = findViewById(R.id.button_cancel_request);
         buttonMarkInTransit = findViewById(R.id.button_mark_in_transit);
         buttonGoBack = findViewById(R.id.button_delivery_details_go_back);
+
+        drawerLayout = findViewById(R.id.drawerlayout_delivery_details);
+        setupDrawer(drawerLayout);
 
         initializeListeners();
     }
