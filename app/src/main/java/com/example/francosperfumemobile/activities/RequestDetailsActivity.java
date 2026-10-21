@@ -97,9 +97,19 @@ public class RequestDetailsActivity extends BaseActivity {
                         ? rawDate.split("T")[0]
                         : rawDate;
                 String requestStatus = detailResponse.getData().getRequestStatus();
+                List<DisplayRequestApprovalDetailsDTO> approvals = detailResponse.getData().getApprovals();
+
+                String recentRequestStage = null;
+                if (approvals != null && !approvals.isEmpty()) {
+                    recentRequestStage = approvals.get(approvals.size() - 1).getStage();
+                }
                 boolean isTerminal = "COMPLETED".equals(requestStatus) ||
                         "REJECTED".equals(requestStatus) ||
-                        "CANCELLED".equals(requestStatus);
+                        "CANCELLED".equals(requestStatus) ||
+                        "IN TRANSIT".equals(requestStatus) ||
+                        "DISPATCH".equals(recentRequestStage) ||
+                        "DISPATCHED".equals(requestStatus) ||
+                        "TRANSIT".equals(recentRequestStage);
 
                 View bottomActionBar = findViewById(R.id.constraintLayout2);
                 if (bottomActionBar != null) {
