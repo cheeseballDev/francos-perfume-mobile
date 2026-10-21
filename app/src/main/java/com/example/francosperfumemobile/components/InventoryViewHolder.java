@@ -41,12 +41,18 @@ public class InventoryViewHolder extends RecyclerView.ViewHolder {
             listener.onViewProductBatches(display);
         });
 
-        // TODO: Add images
         /*
+        dependencies {
+            // ... your other dependencies
+            implementation 'com.github.bumptech.glide:glide:4.16.0'
+            annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+        }
+
         Glide.with(itemView.getContext())
                 .load(item.getProductImageUrl())
                 .placeholder(R.drawable.francos_perfume_logo)
                 .into(imagePerfumeIcon);
+
          */
     }
 }
