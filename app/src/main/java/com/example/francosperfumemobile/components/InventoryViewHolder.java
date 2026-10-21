@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.adapters.InventoryAdapter;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
@@ -41,18 +42,17 @@ public class InventoryViewHolder extends RecyclerView.ViewHolder {
             listener.onViewProductBatches(display);
         });
 
-        /*
-        dependencies {
-            // ... your other dependencies
-            implementation 'com.github.bumptech.glide:glide:4.16.0'
-            annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+        String imageUrl = display.getProductImageUrl();
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            Glide.with(itemView.getContext())
+                    .load(imageUrl)
+                    .placeholder(R.drawable.francos_perfume_logo)
+                    .error(R.drawable.francos_perfume_logo)
+                    .centerCrop()
+                    .into(imagePerfumeIcon);
+        } else {
+            imagePerfumeIcon.setImageResource(R.drawable.francos_perfume_logo);
         }
 
-        Glide.with(itemView.getContext())
-                .load(item.getProductImageUrl())
-                .placeholder(R.drawable.francos_perfume_logo)
-                .into(imagePerfumeIcon);
-
-         */
     }
 }

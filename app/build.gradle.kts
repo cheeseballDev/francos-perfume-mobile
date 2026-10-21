@@ -14,6 +14,7 @@ android {
     defaultConfig {
         applicationId = "com.example.francosperfumemobile"
         minSdk = 24
+        //noinspection OldTargetApi
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -51,4 +52,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
+    implementation(libs.glide)
+    annotationProcessor(libs.glide.compiler)
 }

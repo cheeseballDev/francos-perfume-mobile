@@ -1,6 +1,8 @@
 [versions]
-agp = "9.2.1"
+agp = "9.3.3"
+compiler = "4.16.0"
 converterGson = "2.11.0"
+glide = "4.16.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
@@ -17,6 +19,8 @@ firebaseMessaging = "26.0.0"
 
 [libraries]
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
