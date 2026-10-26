@@ -3,11 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Android 13+: needed to show push notifications (asked once in MainActivity) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-
-
+    <!--
+        allowBackup="false": the session token must not be copied to backups or new phones.
+        No usesCleartextTraffic: the backend is HTTPS. For a local http:// backend during
+        development, add a network security config for that address instead.
+    -->
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/francos_perfume_logo"
@@ -15,11 +20,23 @@
         android:roundIcon="@mipmap/francos_perfume_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.FrancosPerfumeMobile"
-        android:usesCleartextTraffic="true">
+        tools:targetApi="31">
+
+        <!-- Look of notifications Android shows itself while the app is closed -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_notification" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/fp_destructive" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="requests_deliveries" />
+
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,26 +44,49 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.OtpVerificationActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".activities.ChangeTemporaryPasswordActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.ForgotPasswordActivity"
             android:exported="false"
-            android:theme="@style/Theme.FrancosPerfumeMobile"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.InventoryBatchListActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.RequestDetailsActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.DeliveryDetailsActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".activities.CreateRequestActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".activities.NotificationActivity"
+            android:exported="false" />
+
+        <service
+            android:name=".services.FrancoFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

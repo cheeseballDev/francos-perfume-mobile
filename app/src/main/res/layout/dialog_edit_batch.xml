@@ -1,195 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Edit batch (website: EditBatchModal) -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="16dp"
-    >
+    android:padding="20dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/text_view_batch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="@string/edit_batch_colon_text"
-            android:textColor="@color/text_primary"
-            android:textSize="@dimen/font_xl"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/button_close"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="end"
-        android:backgroundTint="@color/transparent"
-        android:importantForAccessibility="no"
-        android:src="@drawable/icon_close"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-        <GridLayout
-            android:id="@+id/grid_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alignmentMode="alignBounds"
-            android:columnCount="2"
-            android:padding="8dp"
-            android:useDefaultMargins="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_close">
-
-            <!-- Row 1: Selected Perfume -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center_vertical"
-                android:layout_marginTop="8dp"
-                android:text="@string/selected_perfume_text"
-                android:textColor="@color/text_secondary"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/text_view_batch_selected_product_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill_horizontal|center_vertical"
-                android:text="@string/inventory_sample_name"
-                android:textSize="18sp"
-                android:textColor="@color/text_primary"
-                android:textStyle="bold" />
-
-            <!-- Row 2: Target Date -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center_vertical"
-                android:text="@string/target_date_text"
-                android:textColor="@color/text_secondary"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/edit_text_batch_target_date"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill_horizontal|center_vertical"
-                android:background="@drawable/text_field_design"
-                android:clickable="true"
-                android:drawableEnd="@drawable/icon_edit_calendar"
-                android:focusable="true"
-                android:hint="@string/hint_date"
-                android:paddingHorizontal="12dp"
-                android:textSize="14sp" />
-
-            <!-- Row 3: Stock Adjustment -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center_vertical"
-                android:text="@string/stock_adjustment_text"
-                android:textColor="@color/text_secondary"
-                android:textSize="16sp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill_horizontal|center_vertical"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/button_plus"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="@color/yellow_primary"
-                    android:src="@drawable/icon_plus" />
-
-                <EditText
-                    android:id="@+id/edit_text_batch_stock"
-                    android:layout_width="0dp"
-                    android:layout_height="44dp"
-                    android:layout_marginHorizontal="6dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/text_field_design"
-                    android:gravity="center"
-                    android:hint="@string/quantity_sample"
-                    android:inputType="number"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                    android:id="@+id/button_minus"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="@color/yellow_primary"
-                    android:src="@drawable/icon_minus" />
-            </LinearLayout>
-
-            <!-- Row 4: Reason for edit -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center_vertical"
-                android:text="@string/reason_for_edit_text"
-                android:textColor="@color/text_secondary"
-                android:textSize="16sp" />
-
-            <Spinner
-                android:id="@+id/dropdown_reason"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill_horizontal|center_vertical"
-                android:background="@drawable/dropdown_design"
-                android:paddingHorizontal="12dp" />
-
-        </GridLayout>
-
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/grid_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        >
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:background="@drawable/button_design"
-            android:backgroundTint="@color/yellow_primary"
-            android:text="@string/save_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/grid_layout" />
+        app:cardCornerRadius="16dp">
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:background="@drawable/button_design"
-            android:backgroundTint="@color/muted"
-            android:text="@string/cancel_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/grid_layout" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text_view_batch"
+                        style="@style/Text.FP.SectionTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        tools:text="Edit batch BAT-0007" />
+
+                    <ImageButton
+                        android:id="@+id/button_close"
+                        style="@style/Widget.FP.IconButton"
+                        android:contentDescription="@string/close_text"
+                        android:src="@drawable/ic_x" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text_view_batch_selected_product_name"
+                    style="@style/Text.FP.Muted"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Bleu de Franco · Sta. Lucia" />
+
+                <TextView
+                    android:id="@+id/text_view_batch_date_received_dialog"
+                    style="@style/Text.FP.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    tools:text="Received Oct 1, 2026" />
+
+                <TextView
+                    style="@style/Text.FP.Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="@string/label_expiry_date" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout_batch_target_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:endIconDrawable="@drawable/ic_calendar"
+                    app:endIconMode="custom"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_batch_target_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:hint="@string/hint_pick_date"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    style="@style/Text.FP.Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="@string/stock_adjustment_text" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_minus"
+                        style="@style/Widget.FP.Button.Outlined"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:contentDescription="@string/cd_decrease"
+                        android:padding="0dp"
+                        app:icon="@drawable/ic_minus"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout_batch_stock"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_text_batch_stock"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:importantForAutofill="no"
+                            android:inputType="number"
+                            android:maxLength="5"
+                            android:textStyle="bold" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_plus"
+                        style="@style/Widget.FP.Button.Outlined"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:contentDescription="@string/cd_increase"
+                        android:padding="0dp"
+                        app:icon="@drawable/ic_plus"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Text.FP.Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="@string/reason_for_edit_text" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout_reason"
+                    style="@style/Widget.FP.TextInputLayout.Dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/dropdown_reason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/reason_select"
+                        android:inputType="none"
+                        android:minHeight="48dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/text_view_edit_batch_error"
+                    style="@style/Text.FP.Error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:visibility="gone"
+                    tools:text="Pick a reason for the edit."
+                    tools:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_cancel_edit_batch"
+                        style="@style/Widget.FP.Button.Outlined"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        android:text="@string/cancel_text" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_save_edit_batch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:text="@string/save_changes" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>

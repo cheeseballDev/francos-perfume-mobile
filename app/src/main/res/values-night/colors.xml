@@ -1,13 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- UI COMPONENTS -->
+    <!-- Dark tokens. Same values as the website's .dark theme (src/index.css). -->
+    <color name="fp_background">#141414</color>
+    <color name="fp_foreground">#F6F5FF</color>
+    <color name="fp_card">#1C1C1C</color>
+    <color name="fp_primary">#E1D4C1</color>
+    <color name="fp_primary_pressed">#D4C3AB</color>
+    <color name="fp_on_primary">#1C1C1C</color>
+    <color name="fp_accent">#2B2B2B</color>
+    <color name="fp_muted">#292929</color>
+    <color name="fp_muted_foreground">#999999</color>
+    <color name="fp_border">#333333</color>
+    <color name="fp_destructive">#9D1A3D</color>
+    <color name="fp_on_destructive">#F6F5FF</color>
+    <color name="fp_ring">#A960BE</color>
+    <color name="fp_scrim">#B3000000</color>
 
-    <color name="bg_app">#121212</color>
-    <color name="bg_card">#1E1E1E</color>
-    <color name="text_primary">#F6F5FF</color>
-    <color name="text_secondary">#B0B0B0</color>
-    <color name="status_warning">#FF6B81</color> <!-- Lighter red for high contrast on dark surfaces -->
-    <color name="border_stroke">#333333</color>
-    <color name="nav_background">#000000</color>
-    <color name="inactive">#F6F5FF</color>
+    <!-- Status tones (website: dark:bg-*-500/15 dark:text-*-300 dark:border-*-500/30) -->
+    <color name="tone_success_bg">#2610B981</color>
+    <color name="tone_success_text">#6EE7B7</color>
+    <color name="tone_success_border">#4D10B981</color>
+    <color name="tone_progress_bg">#263B82F6</color>
+    <color name="tone_progress_text">#93C5FD</color>
+    <color name="tone_progress_border">#4D3B82F6</color>
+    <color name="tone_pending_bg">#26F59E0B</color>
+    <color name="tone_pending_text">#FCD34D</color>
+    <color name="tone_pending_border">#4DF59E0B</color>
+    <color name="tone_partial_bg">#26F97316</color>
+    <color name="tone_partial_text">#FDBA74</color>
+    <color name="tone_partial_border">#4DF97316</color>
+    <color name="tone_danger_bg">#26EF4444</color>
+    <color name="tone_danger_text">#FCA5A5</color>
+    <color name="tone_danger_border">#4DEF4444</color>
+    <color name="tone_outbound_bg">#26A855F7</color>
+    <color name="tone_outbound_text">#D8B4FE</color>
+    <color name="tone_outbound_border">#4DA855F7</color>
+    <color name="tone_neutral_bg">#2B2B2B</color>
+    <color name="tone_neutral_text">#F6F5FF</color>
+    <color name="tone_neutral_border">#333333</color>
 </resources>

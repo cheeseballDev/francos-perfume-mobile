@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Previous / page label / Next. IDs are set by the including layout's <include android:id>. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_top_border"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingTop="9dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="8dp">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_page_previous"
+        style="@style/Widget.FP.Button.Outlined.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/previous_page"
+        android:text="@string/previous"
+        app:icon="@drawable/ic_chevron_left"
+        app:iconPadding="4dp" />
+
+    <TextView
+        android:id="@+id/text_view_page_label"
+        style="@style/Text.FP.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:maxLines="2"
+        tools:text="Page 1 of 5 · 92 results" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_page_next"
+        style="@style/Widget.FP.Button.Outlined.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/next_page"
+        android:text="@string/next"
+        app:icon="@drawable/ic_chevron_right"
+        app:iconGravity="end"
+        app:iconPadding="4dp" />
+</LinearLayout>

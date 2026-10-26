@@ -5,30 +5,34 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayBatchDTO;
 import com.example.francosperfumemobile.components.BatchViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BatchAdapter extends RecyclerView.Adapter<BatchViewHolder> {
 
-    /*
     public interface OnEditBatchListener {
         void onEditBatchClick(DisplayBatchDTO item);
     }
 
-     */
+    private final List<DisplayBatchDTO> batchList = new ArrayList<>();
+    @Nullable
+    private final OnEditBatchListener listener;
 
-    private List<DisplayBatchDTO> batchList;
-    //private final OnEditBatchListener listener;
+    public BatchAdapter(List<DisplayBatchDTO> data) {
+        this(data, null);
+    }
 
-    //OnEditBatchListener listener
-    public BatchAdapter(List<DisplayBatchDTO> data ) {
-        this.batchList = data;
-        //this.listener = listener;
+    /** @param listener null hides the Edit button */
+    public BatchAdapter(List<DisplayBatchDTO> data, @Nullable OnEditBatchListener listener) {
+        if (data != null) batchList.addAll(data);
+        this.listener = listener;
     }
 
     @NonNull
@@ -40,17 +44,17 @@ public class BatchAdapter extends RecyclerView.Adapter<BatchViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull BatchViewHolder holder, int position) {
-        DisplayBatchDTO item = batchList.get(position);
-        holder.bind(item);
+        holder.bind(batchList.get(position), listener);
     }
 
     @Override
     public int getItemCount() {
-        return batchList != null ? batchList.size() : 0;
+        return batchList.size();
     }
 
     public void updateData(List<DisplayBatchDTO> newData) {
-        this.batchList = newData;
-        //notifyDataSetChanged();
+        batchList.clear();
+        if (newData != null) batchList.addAll(newData);
+        notifyDataSetChanged();
     }
 }

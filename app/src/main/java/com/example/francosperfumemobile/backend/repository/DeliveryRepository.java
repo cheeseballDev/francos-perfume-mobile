@@ -27,6 +27,7 @@ public class DeliveryRepository {
                 filter.getFromBranch(),
                 filter.getToBranch(),
                 filter.getStatus(),
+                filter.getDirection(),
                 filter.getFromDate(),
                 filter.getToDate()
         );

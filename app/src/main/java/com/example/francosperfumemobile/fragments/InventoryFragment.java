@@ -2,21 +2,18 @@ package com.example.francosperfumemobile.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.TextView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.activities.InventoryBatchListActivity;
@@ -26,26 +23,31 @@ import com.example.francosperfumemobile.backend.dtos.inventorydtos.InventorySear
 import com.example.francosperfumemobile.backend.repository.InventoryRepository;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryFilterResponse;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.InventoryResponse;
+import com.example.francosperfumemobile.helpers.DebouncedTextWatcher;
 import com.example.francosperfumemobile.helpers.FilterManager;
+import com.example.francosperfumemobile.helpers.ListScreenState;
+import com.example.francosperfumemobile.helpers.PaginationHelper;
 import com.example.francosperfumemobile.helpers.SafeCallback;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
+import retrofit2.Call;
+
+/**
+ * Inventory list with search, filters and page-by-page navigation.
+ * Previous/Next replace the list (no more duplicated rows), taps are ignored while a page loads,
+ * and search waits until typing stops.
+ */
 public class InventoryFragment extends Fragment {
 
-    private final List<DisplayInventoryDTO> inventoryList = new ArrayList<>();
-    private Spinner dropdownPerfumeType, dropdownGenderType, dropdownBranch;
-    private EditText editTextSearch;
-    private TextView textViewPagination;
-    private ImageButton buttonNextPage, buttonLastPage;
-    private InventoryAdapter inventoryAdapter;
     private final InventorySearchFilterDTO currentFilter = new InventorySearchFilterDTO();
-    private ProgressBar progressBarMain, progressBarPagination;
-    private int totalItemCount = 0;
-    private boolean isLoading;
+    private InventoryAdapter inventoryAdapter;
+    private PaginationHelper pagination;
+    private ListScreenState listState;
+    private DebouncedTextWatcher searchWatcher;
+    private AutoCompleteTextView dropdownPerfumeType, dropdownGenderType, dropdownBranch;
+    private Call<InventoryResponse> currentCall;
 
     public InventoryFragment() {
         // Required empty public constructor
@@ -53,11 +55,6 @@ public class InventoryFragment extends Fragment {
 
     public static InventoryFragment newInstance() {
         return new InventoryFragment();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -70,195 +67,122 @@ public class InventoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initializeUI(view);
-        initializeRecyclerView(view);
-        initializeListeners();
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_inventory);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        inventoryAdapter = new InventoryAdapter(new ArrayList<>(), this::openInventoryBatchList);
+        recyclerView.setAdapter(inventoryAdapter);
+
+        SwipeRefreshLayout swipe = view.findViewById(R.id.swipe_refresh_inventory);
+        listState = new ListScreenState(swipe, view.findViewById(R.id.progress_bar_inventory),
+                view.findViewById(R.id.layout_empty_inventory), recyclerView);
+        listState.setEmptyIcon(R.drawable.ic_boxes);
+        listState.setOnRefresh(() -> fetchInventory(currentFilter.getPageCount()));
+
+        View pager = view.findViewById(R.id.layout_pagination);
+        pagination = new PaginationHelper(pager.findViewById(R.id.button_page_previous),
+                pager.findViewById(R.id.button_page_next),
+                pager.findViewById(R.id.text_view_page_label),
+                this::fetchInventory);
+
+        EditText editTextSearch = view.findViewById(R.id.edit_text_search);
+        searchWatcher = new DebouncedTextWatcher(query -> {
+            currentFilter.setSearch(query.isEmpty() ? null : query);
+            fetchInventory(1);
+        });
+        searchWatcher.setLastQuery("");
+        editTextSearch.addTextChangedListener(searchWatcher);
+
+        dropdownPerfumeType = dropdown(view, R.id.dropdown_perfume_type);
+        dropdownGenderType = dropdown(view, R.id.dropdown_gender_type);
+        dropdownBranch = dropdown(view, R.id.dropdown_branch);
+        dropdownPerfumeType.setText(getString(R.string.filter_all_types), false);
+        dropdownGenderType.setText(getString(R.string.filter_all_genders), false);
+        dropdownBranch.setText(getString(R.string.filter_all_branches), false);
+
         initializeDropdowns();
-        fetchInventory(currentFilter, true);
+        fetchInventory(1);
     }
 
-    private void fetchInventory(InventorySearchFilterDTO filter, boolean isInitialFetch) {
-        setLoadingState(isInitialFetch, true);
+    @Override
+    public void onDestroyView() {
+        if (searchWatcher != null) searchWatcher.cancel();
+        if (currentCall != null) currentCall.cancel();
+        super.onDestroyView();
+    }
 
-        ProgressBar activeProgressBar = isInitialFetch ? progressBarMain : progressBarPagination;
+    static AutoCompleteTextView dropdown(View root, int includeId) {
+        return root.findViewById(includeId).findViewById(R.id.dropdown_filter);
+    }
 
-        InventoryRepository repository = new InventoryRepository(requireContext());
-        repository.displayInventory(filter).enqueue(new SafeCallback<InventoryResponse>(this, activeProgressBar) {
+    private void fetchInventory(int page) {
+        if (currentCall != null) currentCall.cancel(); // only the latest search/page counts
+        currentFilter.setPageCount(page);
+        pagination.setLoading(true);
+        listState.showLoading(inventoryAdapter.getItemCount() > 0);
+
+        currentCall = new InventoryRepository(requireContext()).displayInventory(currentFilter);
+        currentCall.enqueue(new SafeCallback<InventoryResponse>(this) {
             @Override
-            public void onSuccess(InventoryResponse response) {
-                setLoadingState(isInitialFetch, false);
+            public void onSuccess(@Nullable InventoryResponse response) {
+                List<DisplayInventoryDTO> items = response != null ? response.getData() : null;
+                inventoryAdapter.setItems(items);
+                int total = response != null ? response.getTotalInventories() : 0;
+                int pages = response != null ? response.getTotalInventoriesPages() : 0;
+                pagination.onPageLoaded(page, pages, total, currentFilter.getPageSize());
+                listState.showResult(inventoryAdapter.getItemCount(), hasFilters());
+            }
 
-                if (response != null) {
-                    List<DisplayInventoryDTO> items = response.getData();
-                    totalItemCount = response.getTotalInventories();
-
-                    if (isInitialFetch) {
-                        inventoryAdapter.updateData(items != null ? items : new ArrayList<>());
-                    } else if (items != null && !items.isEmpty()) {
-                        inventoryAdapter.addData(items);
-                    }
-
-                    updateResultCounterAndButton();
+            @Override
+            public void onError(@NonNull String message, int code) {
+                pagination.setLoading(false);
+                if (code == 401) {
+                    listState.stopLoading();
+                    return;
+                }
+                if (!listState.showError(message, inventoryAdapter.getItemCount() > 0, () -> fetchInventory(page))) {
+                    super.onError(message, code);
                 }
             }
         });
     }
 
-    private void initializeUI(View view) {
-        editTextSearch = view.findViewById(R.id.edit_text_search);
-        dropdownPerfumeType = view.findViewById(R.id.dropdown_perfume_type);
-        dropdownGenderType = view.findViewById(R.id.dropdown_gender_type);
-        dropdownBranch = view.findViewById(R.id.dropdown_branch);
-
-        progressBarMain = view.findViewById(R.id.progress_bar_inventory);
-        progressBarPagination = view.findViewById(R.id.progress_bar_inventory_pagination);
-
-        buttonNextPage = view.findViewById(R.id.button_inventory_next_page);
-        buttonLastPage = view.findViewById(R.id.button_inventory_last_page);
-        textViewPagination = view.findViewById(R.id.text_view_inventory_pagination);
+    private boolean hasFilters() {
+        return currentFilter.getSearch() != null || currentFilter.getProductType() != null
+                || currentFilter.getProductGender() != null || currentFilter.getBranch() != null;
     }
 
-    private void initializeRecyclerView(View view) {
-        RecyclerView recyclerViewInventory = view.findViewById(R.id.recycler_view_inventory);
-        recyclerViewInventory.setLayoutManager(new LinearLayoutManager(requireContext()));
-
-        inventoryAdapter = new InventoryAdapter(inventoryList, selectedProduct -> {
-            openInventoryBatchList(selectedProduct.getProductId());
-        });
-        recyclerViewInventory.setAdapter(inventoryAdapter);
-    }
-
-    private void openInventoryBatchList(int productId) {
-        Intent intent = new Intent(requireContext(), InventoryBatchListActivity.class);
-        intent.putExtra("PRODUCT_ID", productId);
+    private void openInventoryBatchList(DisplayInventoryDTO product) {
+        // Pass the row's branch, so an Owner sees the batches of the branch they tapped
+        Intent intent = InventoryBatchListActivity.newIntent(requireContext(), product);
         startActivity(intent);
     }
 
-    public void initializeDropdowns() {
-        InventoryRepository repository = new InventoryRepository(requireContext());
-
-        repository.getInventoryFilters().enqueue(new SafeCallback<InventoryFilterResponse>(this) {
+    private void initializeDropdowns() {
+        new InventoryRepository(requireContext()).getInventoryFilters().enqueue(new SafeCallback<InventoryFilterResponse>(this) {
             @Override
-            public void onSuccess(InventoryFilterResponse filterResponse) {
-                if (filterResponse != null) {
-                    FilterManager.setupSpinner(requireContext(), dropdownPerfumeType, filterResponse.getProductTypes(), "All Types");
-                    FilterManager.setupSpinner(requireContext(), dropdownGenderType, filterResponse.getProductGenders(), "All Genders");
-                    FilterManager.setupSpinner(requireContext(), dropdownBranch, filterResponse.getBranches(), "All Branches");
-
-                    initializeSpinnerAndSearchListeners();
-                }
-            }
-        });
-    }
-
-    private void initializeSpinnerAndSearchListeners() {
-        dropdownPerfumeType.setOnItemSelectedListener(new FilterManager.SimpleItemSelectedListener() {
-            @Override
-            public void onSelected(int position, String value) {
-                String selectedType = (position == 0) ? null : value;
-
-                if (!Objects.equals(currentFilter.getProductType(), selectedType)) {
-                    currentFilter.setProductType(selectedType);
-                    resetPaginationAndFetch();
-                }
-            }
-        });
-
-        dropdownGenderType.setOnItemSelectedListener(new FilterManager.SimpleItemSelectedListener() {
-            @Override
-            public void onSelected(int position, String value) {
-                String selectedGender = (position == 0) ? null : value;
-
-                if (!Objects.equals(currentFilter.getProductGender(), selectedGender)) {
-                    currentFilter.setProductGender(selectedGender);
-                    resetPaginationAndFetch();
-                }
-            }
-        });
-
-        dropdownBranch.setOnItemSelectedListener(new FilterManager.SimpleItemSelectedListener() {
-            @Override
-            public void onSelected(int position, String value) {
-                String selectedBranch = (position == 0) ? null : value;
-
-                if (!Objects.equals(currentFilter.getBranch(), selectedBranch)) {
-                    currentFilter.setBranch(selectedBranch);
-                    resetPaginationAndFetch();
-                }
-            }
-        });
-
-        editTextSearch.addTextChangedListener(new android.text.TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onSuccess(@Nullable InventoryFilterResponse filters) {
+                if (filters == null) return;
+                FilterManager.setupDropdown(requireContext(), dropdownPerfumeType, filters.getProductTypes(),
+                        getString(R.string.filter_all_types), value -> {
+                            currentFilter.setProductType(value);
+                            fetchInventory(1);
+                        });
+                FilterManager.setupDropdown(requireContext(), dropdownGenderType, filters.getProductGenders(),
+                        getString(R.string.filter_all_genders), value -> {
+                            currentFilter.setProductGender(value);
+                            fetchInventory(1);
+                        });
+                FilterManager.setupDropdown(requireContext(), dropdownBranch, filters.getBranches(),
+                        getString(R.string.filter_all_branches), value -> {
+                            currentFilter.setBranch(value);
+                            fetchInventory(1);
+                        });
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(android.text.Editable s) {
-                String query = s.toString().trim();
-                currentFilter.setSearch(query.isEmpty() ? null : query);
-                currentFilter.setPageCount(1);
-                fetchInventory(currentFilter, true);
+            public void onError(@NonNull String message, int code) {
+                // The list still works without filters; don't show a second error
             }
         });
-    }
-
-    private void initializeListeners() {
-        buttonNextPage.setOnClickListener(v -> {
-            currentFilter.setPageCount(currentFilter.getPageCount() + 1);
-            fetchInventory(currentFilter, false);
-        });
-
-        buttonLastPage.setOnClickListener(v -> {
-            if (currentFilter.getPageCount() > 1) {
-                currentFilter.setPageCount(currentFilter.getPageCount() - 1);
-                fetchInventory(currentFilter, false);
-            }
-        });
-    }
-
-    private void resetPaginationAndFetch() {
-        currentFilter.setPageCount(1);
-        fetchInventory(currentFilter, true);
-    }
-
-    private void updateResultCounterAndButton() {
-        int loadedCount = inventoryAdapter.getItemCount();
-
-        if (totalItemCount > 0) {
-            String countText = String.format(Locale.getDefault(), "Showing %d of %d items", loadedCount, totalItemCount);
-            textViewPagination.setText(countText);
-            textViewPagination.setVisibility(View.VISIBLE);
-        } else {
-            textViewPagination.setText("No items found");
-            textViewPagination.setVisibility(View.VISIBLE);
-        }
-
-        if (loadedCount >= totalItemCount || loadedCount == 0) {
-            buttonNextPage.setVisibility(View.GONE);
-        } else {
-            buttonNextPage.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void setLoadingState(boolean isInitialFetch, boolean isLoading) {
-        this.isLoading = isLoading && !isInitialFetch;
-
-        if (isInitialFetch) {
-            if (progressBarMain != null) {
-                progressBarMain.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-            }
-        } else {
-            if (progressBarPagination != null) {
-                progressBarPagination.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-            }
-            if (buttonNextPage != null) {
-                buttonNextPage.setVisibility(isLoading ? View.GONE : View.VISIBLE);
-            }
-        }
     }
 }

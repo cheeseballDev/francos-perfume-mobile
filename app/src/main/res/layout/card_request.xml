@@ -1,153 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:tools="http://schemas.android.com/tools"
+<!-- Request row (website: RequestTable row) -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    app:cardBackgroundColor="@color/bg_card"
-    app:cardCornerRadius="16dp"
-    app:strokeColor="@color/border_stroke"
-    app:strokeWidth="1dp"
-    android:layout_marginTop="8dp"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:clickable="true"
+    android:focusable="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
 
-        <TextView
-            android:id="@+id/text_view_request_id"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/sample_request_id"
-            android:textSize="@dimen/font_l"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/text_view_request_unit_count"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/text_view_request_id"
+                style="@style/Text.FP.CardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="REQ-0012" />
+
+            <TextView
+                android:id="@+id/text_view_request_direction"
+                style="@style/Widget.FP.StatusBadge"
+                android:layout_marginStart="8dp"
+                tools:text="Inbound" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/text_view_request_status"
+                style="@style/Widget.FP.StatusBadge"
+                tools:text="Pending" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:text="@string/inventory_sample_unit_count"
-            android:textSize="@dimen/font_m"
-            app:layout_constraintBottom_toBottomOf="@+id/text_view_request_id"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/text_view_request_from_branch"
+                style="@style/Text.FP.Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="Sta. Lucia" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_arrow_right"
+                app:tint="@color/fp_muted_foreground" />
+
+            <TextView
+                android:id="@+id/text_view_request_to_branch"
+                style="@style/Text.FP.Value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="end"
+                android:maxLines="1"
+                tools:text="Riverbanks" />
+        </LinearLayout>
+
+        <View
+            style="@style/Widget.FP.Divider"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_view_request_stage"
+                style="@style/Text.FP.Caption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="6dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                app:drawableStartCompat="@drawable/ic_clock"
+                app:drawableTint="@color/fp_muted_foreground"
+                tools:text="Owner review" />
+
+            <TextView
+                android:id="@+id/text_view_request_unit_count"
+                style="@style/Text.FP.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                app:drawableStartCompat="@drawable/ic_package"
+                app:drawableTint="@color/fp_muted_foreground"
+                tools:text="3 items" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_view_request_date"
+                style="@style/Text.FP.Caption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                app:drawableStartCompat="@drawable/ic_calendar"
+                app:drawableTint="@color/fp_muted_foreground"
+                tools:text="Oct 26, 2026" />
+
+            <TextView
+                android:id="@+id/text_view_request_delivery_id"
+                style="@style/Text.FP.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                app:drawableStartCompat="@drawable/ic_truck"
+                app:drawableTint="@color/fp_muted_foreground"
+                tools:text="DEL-0003" />
+        </LinearLayout>
+
+        <!-- Kept for older code; same as unit count -->
         <TextView
             android:id="@+id/text_view_request_batch_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/inventory_sample_batch_count"
-            android:textSize="@dimen/font_m"
-            app:layout_constraintEnd_toEndOf="@+id/text_view_request_unit_count"
-            app:layout_constraintTop_toBottomOf="@id/text_view_request_unit_count" />
-
-        <TextView
-            android:id="@+id/text_view_request_delivery_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sample_delivery_id"
-            android:textSize="@dimen/font_m"
-            app:layout_constraintStart_toStartOf="@+id/text_view_request_id"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_request_id" />
-
-        <TextView
-            android:id="@+id/text_view_request_from_branch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/request_sample_from_branch"
-            app:layout_constraintStart_toStartOf="@+id/text_view_request_delivery_id"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_request_delivery_id" />
-
-        <TextView
-            android:id="@+id/text_view_request_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/badge_design"
-            android:backgroundTint="@color/darker_blue"
-            android:padding="4dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-
-            android:text="@string/request_sample_status"
-            android:textColor="@color/blue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/text_view_request_delivery_id" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="@string/to_text"
-            app:layout_constraintBottom_toBottomOf="@+id/text_view_request_from_branch"
-            app:layout_constraintStart_toEndOf="@+id/text_view_request_from_branch"
-            app:layout_constraintTop_toTopOf="@+id/text_view_request_from_branch" />
-
-        <TextView
-            android:id="@+id/text_view_request_to_branch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="@string/request_sample_to_branch"
-            app:layout_constraintBottom_toBottomOf="@+id/textView2"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
-            app:layout_constraintTop_toTopOf="@+id/textView2" />
-
-        <TextView
-            android:id="@+id/text_view_request_stage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/badge_design"
-            android:backgroundTint="@color/darker_magenta"
-            android:padding="4dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="@string/request_sample_stage"
-
-            android:textColor="@color/magenta"
-            app:layout_constraintBottom_toBottomOf="@+id/text_view_request_status"
-            app:layout_constraintStart_toEndOf="@+id/text_view_request_status"
-            app:layout_constraintTop_toTopOf="@+id/text_view_request_status" />
-
-        <TextView
-            android:id="@+id/text_view_request_direction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/badge_design"
-            android:backgroundTint="@color/yellow_primary"
-            android:padding="4dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="@string/inbound_text"
-
-            android:textColor="@color/yellow_secondary"
-            app:layout_constraintBottom_toBottomOf="@+id/text_view_request_stage"
-            app:layout_constraintStart_toEndOf="@+id/text_view_request_stage"
-            app:layout_constraintTop_toTopOf="@+id/text_view_request_stage" />
-
-
-        <ImageButton
-            android:id="@+id/text_view_request_view_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            android:padding="8dp"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/icon_chevron_right" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone" />
+    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

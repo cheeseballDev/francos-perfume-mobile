@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Soft beige glow at the top of the login / password screens -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:startColor="@color/fp_accent"
+        android:endColor="@color/fp_background"
+        android:type="linear" />
+</shape>

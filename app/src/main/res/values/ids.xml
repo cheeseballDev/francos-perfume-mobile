@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- View tags used by ButtonLoading -->
+    <item name="tag_button_idle_text" type="id" />
+    <item name="tag_button_idle_icon" type="id" />
+    <!-- View tags used by list view holders to remember their listeners -->
+    <item name="tag_text_watcher" type="id" />
+</resources>

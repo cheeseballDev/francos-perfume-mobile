@@ -13,6 +13,10 @@ public class LoginResponse {
     private String role;
     @SerializedName("email")
     private String email;
+    @SerializedName("firstName")
+    private String firstName;
+    @SerializedName("lastName")
+    private String lastName;
     @SerializedName("accessToken")
     private String accessToken;
     @SerializedName("requiresPasswordChange")
@@ -49,6 +53,22 @@ public class LoginResponse {
     public void setEmail(String email) {
         this.email = email;
     }
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getAccessToken() {
         return accessToken;
     }

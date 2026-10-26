@@ -16,6 +16,11 @@ public class DeliveryItemDTO {
     @SerializedName("requestItemId")
     private String RequestItemId;
 
+    // Filled in on the phone while receiving; transient = never sent or read by Gson
+    private transient Integer receivedQty;
+    private transient String receiveRemark;
+    private transient boolean receivedChecked = true;
+
     public int getDeliveryItemId() {
         return DeliveryItemId;
     }
@@ -61,5 +66,40 @@ public class DeliveryItemDTO {
 
     public void setRequestItemId(String requestItemId) {
         RequestItemId = requestItemId;
+    }
+
+    /** Received amount typed by the user; starts at the requested quantity. */
+    public int getReceivedQty() {
+        return receivedQty != null ? receivedQty : Quantity;
+    }
+
+    public void setReceivedQty(int receivedQty) {
+        this.receivedQty = receivedQty;
+    }
+
+    public String getReceiveRemark() {
+        return receiveRemark;
+    }
+
+    public void setReceiveRemark(String receiveRemark) {
+        this.receiveRemark = receiveRemark;
+    }
+
+    public boolean isReceivedChecked() {
+        return receivedChecked;
+    }
+
+    public void setReceivedChecked(boolean receivedChecked) {
+        this.receivedChecked = receivedChecked;
+    }
+
+    /** requestItemId as a number, or null when the backend didn't send one. */
+    public Integer getRequestItemIdAsInt() {
+        if (RequestItemId == null) return null;
+        try {
+            return Integer.parseInt(RequestItemId.trim());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }

@@ -1,57 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<!-- Dashboard (website: HomePage). Pull down to refresh. -->
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh_dashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_app"
+    android:background="@color/fp_background"
     tools:context=".fragments.DashboardFragment">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:clipToPadding="false"
+        android:paddingBottom="24dp">
 
-        <com.example.francosperfumemobile.components.DashboardCardView
-            android:id="@+id/dashboard_inventory_card"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <com.example.francosperfumemobile.components.DashboardCardView
-            android:id="@+id/dashboard_requests_card"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            />
+            <TextView
+                android:id="@+id/text_view_dashboard_greeting"
+                style="@style/Text.FP.PageTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Good afternoon, Kevin" />
 
-        <com.example.francosperfumemobile.components.DashboardCardView
-            android:id="@+id/dashboard_dispatch_card"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            />
+            <TextView
+                android:id="@+id/text_view_dashboard_subtitle"
+                style="@style/Text.FP.PageSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                tools:text="An overview for Sta. Lucia" />
 
-        <com.example.francosperfumemobile.components.DashboardCardView
-            android:id="@+id/dashboard_delivery_card"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
-    </LinearLayout>
-</FrameLayout>
+                <com.example.francosperfumemobile.components.DashboardCardView
+                    android:id="@+id/dashboard_inventory_card"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1" />
+
+                <com.example.francosperfumemobile.components.DashboardCardView
+                    android:id="@+id/dashboard_requests_card"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <com.example.francosperfumemobile.components.DashboardCardView
+                    android:id="@+id/dashboard_dispatch_card"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1" />
+
+                <com.example.francosperfumemobile.components.DashboardCardView
+                    android:id="@+id/dashboard_delivery_card"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/panel_pending_requests"
+                layout="@layout/view_dashboard_panel" />
+
+            <include
+                android:id="@+id/panel_pending_deliveries"
+                layout="@layout/view_dashboard_panel" />
+
+            <include
+                android:id="@+id/panel_low_stock"
+                layout="@layout/view_dashboard_panel" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

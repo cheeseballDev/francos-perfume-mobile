@@ -1,11 +1,22 @@
 package com.example.francosperfumemobile.backend.dtos.requestdtos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
+/**
+ * Body of POST api/request. Same shape the website sends:
+ * {fromBranch: "Sta. Lucia", toBranch: "Riverbanks", requestMessage, items: [{productId, requestedQty}]}
+ * (branches are sent by name, not id).
+ */
 public class CreateRequestDTO {
+    @SerializedName("requestMessage")
     private String RequestMessage;
-    private int FromBranch;
-    private int ToBranch;
+    @SerializedName("fromBranch")
+    private String FromBranch;
+    @SerializedName("toBranch")
+    private String ToBranch;
+    @SerializedName("items")
     private List<CreateRequestItemDTO> Items;
 
     public String getRequestMessage() {
@@ -16,19 +27,19 @@ public class CreateRequestDTO {
         RequestMessage = requestMessage;
     }
 
-    public int getFromBranch() {
+    public String getFromBranch() {
         return FromBranch;
     }
 
-    public void setFromBranch(int fromBranch) {
+    public void setFromBranch(String fromBranch) {
         FromBranch = fromBranch;
     }
 
-    public int getToBranch() {
+    public String getToBranch() {
         return ToBranch;
     }
 
-    public void setToBranch(int toBranch) {
+    public void setToBranch(String toBranch) {
         ToBranch = toBranch;
     }
 

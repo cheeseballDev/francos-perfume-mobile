@@ -12,6 +12,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface InventoryAPIEndpoints {
@@ -29,7 +30,7 @@ public interface InventoryAPIEndpoints {
     );
 
     @GET("api/Inventory/{productId}")
-    Call<DisplayInventoryDTO> getInventoryItemDetails(@Query("productId") int productId);
+    Call<DisplayInventoryDTO> getInventoryItemDetails(@Path("productId") int productId);
 
     @GET("api/Inventory/batch")
     Call<BatchResponse> getInventoryBatches(
@@ -39,7 +40,7 @@ public interface InventoryAPIEndpoints {
 
     @PATCH("api/Inventory/batch/{batchId}")
     Call<Void> updateInventoryBatch(
-            @Query("batchId") int batchId,
+            @Path("batchId") int batchId,
             @Body EditBatchDTO dto
     );
 

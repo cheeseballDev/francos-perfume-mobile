@@ -11,20 +11,20 @@ import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
 import com.example.francosperfumemobile.components.InventoryViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryViewHolder> {
 
     public interface OnViewProductBatchesListener {
-        // TODO: Feel free to change the name of the variable of the DisplayInventoryBatchDTO to whatever suits it
         void onViewProductBatches(DisplayInventoryDTO selectedProduct);
     }
-    private List<DisplayInventoryDTO> inventoryList;
 
+    private final List<DisplayInventoryDTO> inventoryList = new ArrayList<>();
     private final OnViewProductBatchesListener listener;
 
     public InventoryAdapter(List<DisplayInventoryDTO> data, OnViewProductBatchesListener listener) {
-        this.inventoryList = data;
+        if (data != null) inventoryList.addAll(data);
         this.listener = listener;
     }
 
@@ -37,24 +37,31 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull InventoryViewHolder holder, int position) {
-        DisplayInventoryDTO display = inventoryList.get(position);
-        holder.bind(display, listener);
+        holder.bind(inventoryList.get(position), listener);
     }
 
     @Override
     public int getItemCount() {
-        return inventoryList != null ? inventoryList.size() : 0;
+        return inventoryList.size();
+    }
+
+    /** Replaces the list with one page of results. */
+    public void setItems(List<DisplayInventoryDTO> newData) {
+        inventoryList.clear();
+        if (newData != null) inventoryList.addAll(newData);
+        notifyDataSetChanged();
+    }
+
+    /** Same as setItems (kept for older callers). */
+    public void updateData(List<DisplayInventoryDTO> newData) {
+        setItems(newData);
     }
 
     public void addData(List<DisplayInventoryDTO> newData) {
         if (newData != null && !newData.isEmpty()) {
-            int startPosition = this.inventoryList.size();
-            this.inventoryList.addAll(newData);
-            notifyItemRangeInserted(startPosition, newData.size());
+            int start = inventoryList.size();
+            inventoryList.addAll(newData);
+            notifyItemRangeInserted(start, newData.size());
         }
-    }
-    public void updateData(List<DisplayInventoryDTO> newData) {
-        this.inventoryList = newData;
-        notifyDataSetChanged();
     }
 }

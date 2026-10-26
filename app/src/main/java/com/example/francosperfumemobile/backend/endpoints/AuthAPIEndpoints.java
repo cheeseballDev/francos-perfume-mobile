@@ -23,6 +23,9 @@ public interface AuthAPIEndpoints {
     @POST("api/auth/otp")
     Call<LoginResultResponse<LoginResponse>> OTP(@Body OTPDTO dto);
 
+    @POST("api/auth/resend-otp")
+    Call<ResponseBody> resendOtp(@Body EmailDTO dto);
+
     @POST("api/auth/register-token")
     Call<Void> registerToken(@Body RegisterTokenDTO dto);
 
