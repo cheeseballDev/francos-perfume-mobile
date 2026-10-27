@@ -1,15 +1,11 @@
 package com.example.francosperfumemobile.adapters;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
@@ -22,20 +18,63 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Products in a request. When the user may approve, each row has an "approve" checkbox and an
+ * approved quantity (website: requestedProductsColumns + handleApproveToggle/handleQtyChange):
+ *  - unticking sets the quantity to 0, ticking sets it back to the requested amount
+ *  - the quantity is kept between 0 and the requested amount; 0 unticks the row
+ * State is kept per requestItemId, so recycled rows never write into the wrong item.
+ */
 public class RequestedItemsAdapter extends RecyclerView.Adapter<RequestedItemsViewHolder> {
 
-    private final List<DisplayRequestItemDetailsDTO> requestedItems;
-    private final Map<Integer, Integer> modifiedQuantities = new HashMap<>();
-    private final Map<Integer, Boolean> approvalStatusMap = new HashMap<>();
-    private boolean isReadOnly = false;
+    /** Approval choice for one product. */
+    public static final class ItemApproval {
+        public boolean approved = true;
+        public int quantity;
+
+        ItemApproval(int quantity) {
+            this.quantity = quantity;
+        }
+    }
+
+    public interface OnApprovalsChanged {
+        void onApprovalsChanged();
+    }
+
+    private final List<DisplayRequestItemDetailsDTO> requestedItems = new ArrayList<>();
+    private final Map<Integer, ItemApproval> approvals = new HashMap<>();
+    private boolean isReadOnly = true;
+    @Nullable
+    private OnApprovalsChanged changeListener;
 
     public RequestedItemsAdapter(List<DisplayRequestItemDetailsDTO> requestedItems) {
-        this.requestedItems = requestedItems;
+        if (requestedItems != null) setItems(requestedItems);
+    }
+
+    public void setOnApprovalsChanged(@Nullable OnApprovalsChanged listener) {
+        this.changeListener = listener;
+    }
+
+    /** New data from the server: start every product as "approve the full amount". */
+    public void setItems(List<DisplayRequestItemDetailsDTO> items) {
+        requestedItems.clear();
+        approvals.clear();
+        if (items != null) {
+            requestedItems.addAll(items);
+            for (DisplayRequestItemDetailsDTO item : items) {
+                approvals.put(item.getRequestItemId(), new ItemApproval(item.getRequestedQty()));
+            }
+        }
+        notifyDataSetChanged();
     }
 
     public void setReadOnly(boolean readOnly) {
         this.isReadOnly = readOnly;
         notifyDataSetChanged();
+    }
+
+    public boolean isReadOnly() {
+        return isReadOnly;
     }
 
     @NonNull
@@ -48,100 +87,60 @@ public class RequestedItemsAdapter extends RecyclerView.Adapter<RequestedItemsVi
     @Override
     public void onBindViewHolder(@NonNull RequestedItemsViewHolder holder, int position) {
         DisplayRequestItemDetailsDTO item = requestedItems.get(position);
-        holder.bind(item);
-
-        TextView textRequestedQty = holder.itemView.findViewById(R.id.text_view_requested_amount);
-        TextView textProductName = holder.itemView.findViewById(R.id.text_view_requested_product_name);
-        TextView textProductId = holder.itemView.findViewById(R.id.text_view_inventory_product_id);
-        CheckBox checkBoxApprove = holder.itemView.findViewById(R.id.check_box_requested_product_approve);
-        EditText editTextQty = holder.itemView.findViewById(R.id.edit_text_requested_products_approved_quantity_amount);
-
-        if (textProductName != null) textProductName.setText(item.getProductName());
-        if (textProductId != null) textProductId.setText(item.getProductDisplayId());
-        if (textRequestedQty != null) textRequestedQty.setText(String.valueOf(item.getRequestedQty()));
-
-        boolean isApproved = approvalStatusMap.containsKey(item.getRequestItemId())
-                ? approvalStatusMap.get(item.getRequestItemId())
-                : true;
-
-        if (checkBoxApprove != null) {
-            checkBoxApprove.setChecked(isReadOnly ? true : isApproved);
-            checkBoxApprove.setEnabled(!isReadOnly);
-            checkBoxApprove.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if (!isReadOnly) {
-                    approvalStatusMap.put(item.getRequestItemId(), isChecked);
-                }
-            });
+        ItemApproval state = approvals.get(item.getRequestItemId());
+        if (state == null) {
+            state = new ItemApproval(item.getRequestedQty());
+            approvals.put(item.getRequestItemId(), state);
         }
-
-        if (editTextQty != null) {
-            if (editTextQty.getTag() instanceof TextWatcher) {
-                editTextQty.removeTextChangedListener((TextWatcher) editTextQty.getTag());
-            }
-
-            int currentQty = modifiedQuantities.containsKey(item.getRequestItemId())
-                    ? modifiedQuantities.get(item.getRequestItemId())
-                    : item.getRequestedQty();
-
-            editTextQty.setText(String.valueOf(currentQty));
-            editTextQty.setEnabled(!isReadOnly);
-            editTextQty.setFocusable(!isReadOnly);
-            editTextQty.setFocusableInTouchMode(!isReadOnly);
-
-            if (!isReadOnly) {
-                TextWatcher textWatcher = new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        try {
-                            int qty = s.length() > 0 ? Integer.parseInt(s.toString()) : 0;
-                            modifiedQuantities.put(item.getRequestItemId(), qty);
-                        } catch (NumberFormatException e) {
-                            modifiedQuantities.put(item.getRequestItemId(), 0);
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {}
-                };
-
-                editTextQty.addTextChangedListener(textWatcher);
-                editTextQty.setTag(textWatcher);
-            }
-        }
+        holder.bind(item, state, isReadOnly, () -> {
+            if (changeListener != null) changeListener.onApprovalsChanged();
+        });
     }
 
     @Override
     public int getItemCount() {
-        return requestedItems != null ? requestedItems.size() : 0;
+        return requestedItems.size();
     }
 
-    public List<ApproveRequestDTO> getApprovalList() {
-        List<ApproveRequestDTO> approvals = new ArrayList<>();
-        if (requestedItems != null) {
-            for (DisplayRequestItemDetailsDTO item : requestedItems) {
-                ApproveRequestDTO dto = new ApproveRequestDTO();
-
-                dto.setProductId(item.getProductId());
-                dto.setRequestedItemId(item.getRequestItemId());
-
-                boolean isApproved = approvalStatusMap.containsKey(item.getRequestItemId())
-                        ? approvalStatusMap.get(item.getRequestItemId())
-                        : true;
-                dto.setIsApproved(isApproved);
-
-                int qtyToApprove = modifiedQuantities.containsKey(item.getRequestItemId())
-                        ? modifiedQuantities.get(item.getRequestItemId())
-                        : item.getRequestedQty();
-
-                dto.setRequestedItemQty(qtyToApprove);
-                dto.setRemarks(null);
-
-                approvals.add(dto);
-            }
+    public int getApprovedCount() {
+        int count = 0;
+        for (DisplayRequestItemDetailsDTO item : requestedItems) {
+            ItemApproval state = approvals.get(item.getRequestItemId());
+            if (state == null || (state.approved && state.quantity > 0)) count++;
         }
-        return approvals;
+        return count;
+    }
+
+    public boolean allFullyApproved() {
+        for (DisplayRequestItemDetailsDTO item : requestedItems) {
+            ItemApproval state = approvals.get(item.getRequestItemId());
+            if (state != null && (!state.approved || state.quantity != item.getRequestedQty())) return false;
+        }
+        return true;
+    }
+
+    /** Payload for PATCH api/request/{id}/approve (same fields as the website). */
+    public List<ApproveRequestDTO> getApprovalList(@Nullable String remarks) {
+        List<ApproveRequestDTO> list = new ArrayList<>();
+        String safeRemarks = remarks == null || remarks.trim().isEmpty() ? "N/A" : remarks.trim();
+        for (DisplayRequestItemDetailsDTO item : requestedItems) {
+            ItemApproval state = approvals.get(item.getRequestItemId());
+            boolean approved = state == null || (state.approved && state.quantity > 0);
+            int qty = state == null ? item.getRequestedQty() : Math.max(0, Math.min(state.quantity, item.getRequestedQty()));
+
+            ApproveRequestDTO dto = new ApproveRequestDTO();
+            dto.setProductId(item.getProductId());
+            dto.setRequestedItemId(item.getRequestItemId());
+            dto.setIsApproved(approved);
+            dto.setRequestedItemQty(approved ? qty : 0);
+            dto.setRemarks(safeRemarks);
+            list.add(dto);
+        }
+        return list;
+    }
+
+    /** Kept for older callers. */
+    public List<ApproveRequestDTO> getApprovalList() {
+        return getApprovalList(null);
     }
 }

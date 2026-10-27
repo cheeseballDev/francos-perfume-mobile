@@ -1,75 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<!-- Batches of one product at one branch (website: InventoryTable expanded row) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerlayout_inventory_batch_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fp_background"
+    android:orientation="vertical"
     tools:context=".activities.InventoryBatchListActivity">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
     <include
         android:id="@+id/top_navigation_bar_inventory_batch"
-        layout="@layout/top_toolbar"
+        layout="@layout/top_bar_detail" />
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_inventory_batch_go_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@color/transparent"
-        android:text="@string/go_back_text"
-        android:textColor="@color/text_secondary"
-        app:icon="@drawable/icon_chevron_left"
-        app:iconGravity="textStart"
-        app:iconPadding="0dp"
-        app:iconSize="24dp"
-        app:iconTint="@color/text_secondary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_navigation_bar_inventory_batch"
-        app:srcCompat="@drawable/icon_chevron_left" />
-
-    <TextView
-        android:id="@+id/text_view_product_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/sample_product_name_batch_list"
-        android:textSize="@dimen/font_l"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_inventory_batch_go_back" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_batch"
-        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_product_name"
-        tools:listitem="@layout/card_batches" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_weight="1">
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_batches"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <!-- First row is the product summary (header_batch_list), then one card per batch -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_batch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="16dp"
+                tools:listitem="@layout/card_batches" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+        <include
+            android:id="@+id/layout_empty_batches"
+            layout="@layout/view_empty_state" />
 
-</androidx.drawerlayout.widget.DrawerLayout>
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_bar_batches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

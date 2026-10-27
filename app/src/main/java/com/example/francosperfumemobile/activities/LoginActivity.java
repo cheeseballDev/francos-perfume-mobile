@@ -2,118 +2,190 @@ package com.example.francosperfumemobile.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.text.Editable;
+import android.util.Patterns;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.francosperfumemobile.R;
-import com.example.francosperfumemobile.backend.dtos.logindtos.LoginDTO;
 import com.example.francosperfumemobile.backend.repository.AuthRepository;
 import com.example.francosperfumemobile.backend.responses.loginresponses.LoginResponse;
 import com.example.francosperfumemobile.backend.responses.loginresponses.LoginResultResponse;
 import com.example.francosperfumemobile.backend.retrofit.SessionManager;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.francosperfumemobile.helpers.AccessRules;
+import com.example.francosperfumemobile.helpers.ButtonLoading;
+import com.example.francosperfumemobile.helpers.DebouncedTextWatcher;
+import com.example.francosperfumemobile.helpers.InsetsHelper;
+import com.example.francosperfumemobile.helpers.LoginFlow;
+import com.example.francosperfumemobile.helpers.SafeCallback;
+import com.example.francosperfumemobile.helpers.SessionEvents;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button loginButton, forgotPasswordButton;
-    private EditText emailTextField, passwordTextField;
+    public static final String EXTRA_NOTICE = "LOGIN_NOTICE";
+
+    private MaterialButton loginButton, forgotPasswordButton;
+    private TextInputEditText emailTextField, passwordTextField;
+    private TextInputLayout emailLayout, passwordLayout;
+    private TextView textViewMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.login), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        InsetsHelper.applySystemBarsAndIme(findViewById(R.id.login));
 
-        SessionManager sm = new SessionManager(this);
-
-        if (sm.isLoggedIn()) {
-            if (sm.getRequiresPwChange()) {
-                Toast.makeText(this, "Change your password", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this, ForgotPasswordActivity.class));
-            } else {
-                startActivity(new Intent(this, MainActivity.class));
+        SessionManager sessionManager = new SessionManager(this);
+        if (sessionManager.isLoggedIn()) {
+            if (AccessRules.canUseMobileApp(sessionManager.getRole())) {
+                Intent intent = new Intent(this, MainActivity.class);
+                if (getIntent() != null && getIntent().getExtras() != null) {
+                    intent.putExtras(getIntent().getExtras()); // keep notification extras
+                }
+                startActivity(intent);
+                finish();
+                return;
             }
-            finish();
-            return;
+            sessionManager.clearSession();
         }
 
         initializeUI();
-
-        //TODO: LOGIN LOGIC HERE
+        showIntentMessage(getIntent());
     }
+
+    @Override
+    protected void onNewIntent(@NonNull Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        showIntentMessage(intent);
+    }
+
     private void initializeUI() {
         loginButton = findViewById(R.id.button_login);
         forgotPasswordButton = findViewById(R.id.button_forgot_password);
         emailTextField = findViewById(R.id.edit_text_email);
         passwordTextField = findViewById(R.id.edit_text_password);
+        emailLayout = findViewById(R.id.text_input_layout_email);
+        passwordLayout = findViewById(R.id.text_input_layout_password);
+        textViewMessage = findViewById(R.id.text_view_login_error);
 
-        setListeners();
-    }
-
-    private void setListeners() {
         forgotPasswordButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, ForgotPasswordActivity.class));
+            Intent intent = new Intent(this, ForgotPasswordActivity.class);
+            intent.putExtra(LoginFlow.EXTRA_EMAIL, textOf(emailTextField));
+            startActivity(intent);
         });
 
-        loginButton.setOnClickListener(v -> {
-            login();
+        loginButton.setOnClickListener(v -> login());
+
+        passwordTextField.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                login();
+                return true;
+            }
+            return false;
+        });
+
+        DebouncedTextWatcher.Simple clearErrors = new DebouncedTextWatcher.Simple() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                emailLayout.setError(null);
+                passwordLayout.setError(null);
+                hideMessage();
+            }
+        };
+        emailTextField.addTextChangedListener(clearErrors);
+        passwordTextField.addTextChangedListener(clearErrors);
+    }
+
+    private void showIntentMessage(@Nullable Intent intent) {
+        if (intent == null || textViewMessage == null) return;
+        if (intent.getBooleanExtra(SessionEvents.EXTRA_SESSION_EXPIRED, false)) {
+            showMessage(getString(R.string.error_session_expired), true);
+            intent.removeExtra(SessionEvents.EXTRA_SESSION_EXPIRED);
+        } else if (intent.hasExtra(EXTRA_NOTICE)) {
+            showMessage(intent.getStringExtra(EXTRA_NOTICE), false);
+            intent.removeExtra(EXTRA_NOTICE);
+        }
+        String email = intent.getStringExtra(LoginFlow.EXTRA_EMAIL);
+        if (email != null && !email.isEmpty() && emailTextField != null && textOf(emailTextField).isEmpty()) {
+            emailTextField.setText(email);
+        }
+    }
+
+    private void login() {
+        if (ButtonLoading.isLoading(loginButton)) return;
+
+        String email = textOf(emailTextField);
+        String password = passwordTextField.getText() == null ? "" : passwordTextField.getText().toString();
+
+        boolean valid = true;
+        if (email.isEmpty()) {
+            emailLayout.setError(getString(R.string.error_email_required));
+            valid = false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailLayout.setError(getString(R.string.error_email_invalid));
+            valid = false;
+        }
+        if (password.trim().isEmpty()) {
+            passwordLayout.setError(getString(R.string.error_password_required));
+            valid = false;
+        }
+        if (!valid) return;
+
+        hideMessage();
+        ButtonLoading.start(loginButton, getString(R.string.logging_in));
+
+        new AuthRepository(this).login(email, password).enqueue(new SafeCallback<LoginResultResponse<LoginResponse>>(this) {
+            @Override
+            public void onFinish() {
+                ButtonLoading.stop(loginButton);
+            }
+
+            @Override
+            public void onSuccess(@Nullable LoginResultResponse<LoginResponse> body) {
+                LoginResponse data = body != null ? body.getData() : null;
+                if (data == null) {
+                    String message = body != null && body.getMessage() != null ? body.getMessage() : getString(R.string.error_login_generic);
+                    showMessage(message, true);
+                    return;
+                }
+                String error = LoginFlow.continueLogin(LoginActivity.this, data, email, password);
+                if (error != null) {
+                    showMessage(error, true);
+                } else {
+                    passwordTextField.setText("");
+                }
+            }
+
+            @Override
+            public void onError(@NonNull String message, int code) {
+                showMessage(code == 401 && message.startsWith("Your session") ? getString(R.string.error_invalid_credentials) : message, true);
+            }
         });
     }
 
-    private void login(){
-        LoginDTO dto = new LoginDTO();
-        dto.setEmail(emailTextField.getText().toString().trim());
-        dto.setPassword(passwordTextField.getText().toString());
+    private void showMessage(String message, boolean isError) {
+        textViewMessage.setText(message);
+        textViewMessage.setTextColor(ContextCompat.getColor(this, isError ? R.color.fp_destructive : R.color.tone_success_text));
+        textViewMessage.setVisibility(View.VISIBLE);
+    }
 
-        AuthRepository repository = new AuthRepository(this);
+    private void hideMessage() {
+        if (textViewMessage != null) textViewMessage.setVisibility(View.GONE);
+    }
 
-        repository.login(dto).enqueue(new Callback<LoginResultResponse<LoginResponse>>() {
-
-            @Override
-            public void onResponse(Call<LoginResultResponse<LoginResponse>> call, Response<LoginResultResponse<LoginResponse>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    LoginResultResponse<LoginResponse> login = response.body();
-                    SessionManager sessionManager = new SessionManager(LoginActivity.this);
-
-                    sessionManager.createSession(
-                            login.getData().getEmployeeId(),
-                            login.getData().getEmail(),
-                            login.getData().getAccessToken(),
-                            login.getData().getRole(),
-                            login.getData().getBranchId(),
-                            login.getData().getBranchLocation(),
-                            login.getData().isRequiresPasswordChange(),
-                            login.getData().isRequiresOTP()
-                    );
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
-                }
-                else{
-                    Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginResultResponse<LoginResponse>> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.d("login", "Network error: " + t.getMessage());
-            }
-        });
+    private static String textOf(TextInputEditText field) {
+        return field.getText() == null ? "" : field.getText().toString().trim();
     }
 }

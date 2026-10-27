@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
+import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.InventorySearchFilterDTO;
 
 import java.util.ArrayList;
@@ -59,12 +61,83 @@ public class FilterManager<T> {
         List<String> updatedList = new ArrayList<>();
         updatedList.add(defaultLabel);
         if (originalList != null) {
-            updatedList.addAll(originalList);
+            for (String item : originalList) {
+                if (item != null && !item.trim().isEmpty() && !updatedList.contains(item)) {
+                    updatedList.add(item);
+                }
+            }
         }
         return updatedList;
     }
 
-    // this - for activity, requireContext() - for fragments. For first argument (context)
+    // ----------------------------------------------------------- dropdown filters
+
+    /** Value picked in a filter dropdown; null means the "All ..." option. */
+    public interface OnFilterSelected {
+        void onSelected(String valueOrNull);
+    }
+
+    /**
+     * Fills an exposed dropdown (MaterialAutoCompleteTextView inside a TextInputLayout)
+     * with "All ..." + the given values. The listener only fires when the user picks something.
+     */
+    public static void setupDropdown(Context context, AutoCompleteTextView dropdown, List<String> items,
+                                     String allLabel, OnFilterSelected listener) {
+        if (context == null || dropdown == null) return;
+
+        List<String> options = addDefaultOption(items, allLabel);
+        dropdown.setAdapter(new NoFilterAdapter(context, options));
+        dropdown.setText(allLabel, false);
+
+        dropdown.setOnItemClickListener((parent, view, position, id) -> {
+            String value = position == 0 ? null : options.get(position);
+            if (listener != null) listener.onSelected(value);
+        });
+    }
+
+    /**
+     * ArrayAdapter that never filters. A normal one filters by the text in the box,
+     * so after picking "Unisex" the list would only show "Unisex" next time.
+     */
+    public static class NoFilterAdapter extends ArrayAdapter<String> {
+        private final List<String> items;
+
+        public NoFilterAdapter(Context context, List<String> items) {
+            super(context, R.layout.item_dropdown, new ArrayList<>(items));
+            this.items = new ArrayList<>(items);
+        }
+
+        @Override
+        public android.widget.Filter getFilter() {
+            return new android.widget.Filter() {
+                @Override
+                protected FilterResults performFiltering(CharSequence constraint) {
+                    FilterResults results = new FilterResults();
+                    results.values = items;
+                    results.count = items.size();
+                    return results;
+                }
+
+                @Override
+                protected void publishResults(CharSequence constraint, FilterResults results) {
+                    notifyDataSetChanged();
+                }
+
+                @Override
+                public CharSequence convertResultToString(Object resultValue) {
+                    return resultValue == null ? "" : resultValue.toString();
+                }
+            };
+        }
+    }
+
+    /** Puts a dropdown back on its "All ..." option without firing the listener. */
+    public static void resetDropdown(AutoCompleteTextView dropdown, String allLabel) {
+        if (dropdown != null) dropdown.setText(allLabel, false);
+    }
+
+    // ------------------------------------------------- old Spinner API (still works)
+
     public static void setupSpinner(Context context, Spinner spinner, List<String> items, String defaultLabel) {
         if (context == null || spinner == null) return;
 
@@ -93,5 +166,4 @@ public class FilterManager<T> {
             // Unused, but required by AdapterView.OnItemSelectedListener
         }
     }
-
 }

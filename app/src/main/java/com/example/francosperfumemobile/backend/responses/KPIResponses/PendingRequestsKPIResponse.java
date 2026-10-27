@@ -1,18 +1,19 @@
 package com.example.francosperfumemobile.backend.responses.KPIResponses;
 
-import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestDTO;
+import com.example.francosperfumemobile.backend.dtos.requestdtos.PendingApprovalDTO;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public class PendingRequestsKPIResponse {
-    @SerializedName("pendingApporvalsList")
-    private List<DisplayRequestDTO> pendingApporvalsList;
+    // Was "pendingApporvalsList" (typo), so the list was always null
+    @SerializedName("pendingApprovalsList")
+    private List<PendingApprovalDTO> pendingApprovalsList;
     @SerializedName("pendingApprovalsCount")
     private int pendingApprovalsCount;
 
-    public List<DisplayRequestDTO> getPendingApporvalsList() {
-        return pendingApporvalsList;
+    public List<PendingApprovalDTO> getPendingApprovalsList() {
+        return pendingApprovalsList;
     }
 
     public int getPendingApprovalsCount() {

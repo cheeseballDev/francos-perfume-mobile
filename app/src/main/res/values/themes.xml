@@ -1,12 +1,511 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- =================================================================
+         App theme. Colours come from colors.xml (light) and
+         values-night/colors.xml (dark), so this one theme covers both.
+         ================================================================= -->
     <style name="Base.Theme.FrancosPerfumeMobile" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Brand -->
+        <item name="colorPrimary">@color/fp_ring</item>
+        <item name="colorOnPrimary">@color/fp_on_destructive</item>
+        <item name="colorPrimaryContainer">@color/fp_primary</item>
+        <item name="colorOnPrimaryContainer">@color/fp_on_primary</item>
+        <item name="colorSecondary">@color/fp_muted_foreground</item>
+        <item name="colorOnSecondary">@color/fp_card</item>
+        <item name="colorSecondaryContainer">@color/fp_accent</item>
+        <item name="colorOnSecondaryContainer">@color/fp_foreground</item>
+        <item name="colorTertiary">@color/fp_primary</item>
+        <item name="colorError">@color/fp_destructive</item>
+        <item name="colorOnError">@color/fp_on_destructive</item>
+
+        <!-- Surfaces -->
+        <item name="android:colorBackground">@color/fp_background</item>
+        <item name="colorOnBackground">@color/fp_foreground</item>
+        <item name="colorSurface">@color/fp_card</item>
+        <item name="colorOnSurface">@color/fp_foreground</item>
+        <item name="colorSurfaceVariant">@color/fp_muted</item>
+        <item name="colorOnSurfaceVariant">@color/fp_muted_foreground</item>
+        <item name="colorSurfaceContainerLowest">@color/fp_card</item>
+        <item name="colorSurfaceContainerLow">@color/fp_card</item>
+        <item name="colorSurfaceContainer">@color/fp_card</item>
+        <item name="colorSurfaceContainerHigh">@color/fp_card</item>
+        <item name="colorSurfaceContainerHighest">@color/fp_muted</item>
+        <item name="colorOutline">@color/fp_border</item>
+        <item name="colorOutlineVariant">@color/fp_border</item>
+        <item name="android:windowBackground">@color/fp_background</item>
+        <item name="android:textColorPrimary">@color/fp_foreground</item>
+        <item name="android:textColorSecondary">@color/fp_muted_foreground</item>
+        <item name="android:textColorHint">@color/fp_muted_foreground</item>
+        <item name="android:textColorLink">@color/fp_ring</item>
+
+        <!-- Montserrat everywhere, same as the website -->
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.FP.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.FP.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.FP.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.FP.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.FP.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.FP.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.FP.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.FP.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.FP.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.FP.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.FP.LabelSmall</item>
+
+        <!-- Default component styles -->
+        <item name="materialButtonStyle">@style/Widget.FP.Button</item>
+        <item name="materialCardViewStyle">@style/Widget.FP.Card</item>
+        <item name="textInputStyle">@style/Widget.FP.TextInputLayout</item>
+        <item name="chipStyle">@style/Widget.FP.Chip.Filter</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.FP.AlertDialog</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.FP.BottomSheet</item>
+        <item name="checkboxStyle">@style/Widget.FP.CheckBox</item>
+        <item name="circularProgressIndicatorStyle">@style/Widget.FP.Progress</item>
+
+        <!-- Shapes: website radius is 0.625rem (10dp) -->
+        <item name="shapeAppearanceCornerSmall">@style/ShapeAppearance.FP.Small</item>
+        <item name="shapeAppearanceCornerMedium">@style/ShapeAppearance.FP.Medium</item>
+        <item name="shapeAppearanceCornerLarge">@style/ShapeAppearance.FP.Large</item>
     </style>
 
+    <style name="Theme.FrancosPerfumeMobile" parent="Base.Theme.FrancosPerfumeMobile" />
 
-    <!-- for the fonts. have to manually do this 面倒くさい-->
+    <!-- ============================== Shapes ============================== -->
+    <style name="ShapeAppearance.FP.Small" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+    <style name="ShapeAppearance.FP.Medium" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+    <style name="ShapeAppearance.FP.Large" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <!-- ============================ Typography ============================ -->
+    <style name="TextAppearance.FP.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+    <style name="TextAppearance.FP.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+    <style name="TextAppearance.FP.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="TextAppearance.FP.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="TextAppearance.FP.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextAppearance.FP.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="TextAppearance.FP.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextAppearance.FP.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="TextAppearance.FP.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+    <style name="TextAppearance.FP.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="TextAppearance.FP.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <!-- Text styles used directly in layouts -->
+    <style name="Text.FP" parent="">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/fp_foreground</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="Text.FP.PageTitle">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+    <style name="Text.FP.PageSubtitle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/fp_muted_foreground</item>
+    </style>
+    <style name="Text.FP.SectionTitle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Text.FP.CardTitle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Text.FP.Body" />
+    <style name="Text.FP.Muted">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/fp_muted_foreground</item>
+    </style>
+    <style name="Text.FP.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/fp_muted_foreground</item>
+    </style>
+    <style name="Text.FP.Label">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.06</item>
+        <item name="android:textColor">@color/fp_muted_foreground</item>
+    </style>
+    <style name="Text.FP.Value">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Text.FP.Metric">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+    <style name="Text.FP.Error">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/fp_destructive</item>
+    </style>
+
+    <!-- Status badge (website: StatusBadge). Colours are set in code by StatusStyle. -->
+    <style name="Widget.FP.StatusBadge" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">4dp</item>
+    </style>
+
+    <!-- ============================= Buttons ============================= -->
+    <!-- Filled beige button, like the website's primary <Button> -->
+    <style name="Widget.FP.Button" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/button_primary_bg</item>
+        <item name="android:textColor">@color/button_on_primary_text</item>
+        <item name="iconTint">@color/button_on_primary_text</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="android:minHeight">50dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.FP.LabelLarge</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="rippleColor">@color/fp_primary_pressed</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+
+    <style name="Widget.FP.Button.Destructive">
+        <item name="backgroundTint">@color/button_destructive_bg</item>
+        <item name="android:textColor">@color/fp_on_destructive</item>
+        <item name="iconTint">@color/fp_on_destructive</item>
+        <item name="rippleColor">@color/fp_scrim</item>
+    </style>
+
+    <style name="Widget.FP.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@color/button_outline_text</item>
+        <item name="iconTint">@color/button_outline_text</item>
+        <item name="strokeColor">@color/fp_border</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="android:minHeight">50dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.FP.LabelLarge</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="rippleColor">@color/fp_muted</item>
+    </style>
+
+    <style name="Widget.FP.Button.Outlined.Destructive">
+        <item name="android:textColor">@color/fp_destructive</item>
+        <item name="iconTint">@color/fp_destructive</item>
+        <item name="strokeColor">@color/fp_destructive</item>
+    </style>
+
+    <style name="Widget.FP.Button.Outlined.Small">
+        <item name="android:minHeight">40dp</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="Widget.FP.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/button_outline_text</item>
+        <item name="iconTint">@color/button_outline_text</item>
+        <item name="android:textAppearance">@style/TextAppearance.FP.LabelLarge</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:minHeight">44dp</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="rippleColor">@color/fp_muted</item>
+    </style>
+
+    <style name="Widget.FP.Button.Text.Muted">
+        <item name="android:textColor">@color/fp_muted_foreground</item>
+        <item name="iconTint">@color/fp_muted_foreground</item>
+    </style>
+
+    <style name="Widget.FP.Button.Text.Link">
+        <item name="android:textColor">@color/fp_foreground</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:minWidth">0dp</item>
+    </style>
+
+    <!-- Round icon button for toolbars -->
+    <style name="Widget.FP.IconButton" parent="">
+        <item name="android:layout_width">44dp</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:scaleType">center</item>
+        <item name="tint">@color/fp_foreground</item>
+    </style>
+
+    <!-- Floating "New request" button in the brand beige -->
+    <style name="Widget.FP.ExtendedFab" parent="Widget.Material3.ExtendedFloatingActionButton.Icon.Primary">
+        <item name="backgroundTint">@color/fp_primary</item>
+        <item name="android:textColor">@color/fp_on_primary</item>
+        <item name="iconTint">@color/fp_on_primary</item>
+        <item name="android:textAppearance">@style/TextAppearance.FP.LabelLarge</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="rippleColor">@color/fp_primary_pressed</item>
+    </style>
+
+    <!-- ============================== Cards ============================== -->
+    <style name="Widget.FP.Card" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardBackgroundColor">@color/fp_card</item>
+        <item name="strokeColor">@color/fp_border</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardCornerRadius">14dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="rippleColor">@color/fp_muted</item>
+    </style>
+
+    <style name="Widget.FP.Card.Muted">
+        <item name="cardBackgroundColor">@color/fp_muted</item>
+        <item name="strokeColor">@color/fp_border</item>
+        <item name="cardCornerRadius">10dp</item>
+    </style>
+
+    <!-- ============================== Inputs ============================== -->
+    <style name="Widget.FP.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/input_stroke_color</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxBackgroundColor">@color/fp_card</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="hintTextColor">@color/fp_ring</item>
+        <item name="android:textColorHint">@color/fp_muted_foreground</item>
+        <item name="startIconTint">@color/fp_muted_foreground</item>
+        <item name="endIconTint">@color/fp_muted_foreground</item>
+        <item name="errorTextColor">@color/fp_destructive</item>
+        <item name="boxStrokeErrorColor">@color/fp_destructive</item>
+        <item name="errorIconTint">@color/fp_destructive</item>
+        <item name="hintTextAppearance">@style/TextAppearance.FP.BodySmall</item>
+        <item name="helperTextTextAppearance">@style/TextAppearance.FP.BodySmall</item>
+        <item name="errorTextAppearance">@style/TextAppearance.FP.BodySmall</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.FP.TextInput</item>
+    </style>
+
+    <!-- Same box, but holds an exposed dropdown (MaterialAutoCompleteTextView) -->
+    <style name="Widget.FP.TextInputLayout.Dropdown" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/input_stroke_color</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
+        <item name="boxBackgroundColor">@color/fp_card</item>
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="endIconTint">@color/fp_muted_foreground</item>
+        <item name="hintEnabled">false</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.FP.TextInput.Dropdown</item>
+    </style>
+
+    <style name="ThemeOverlay.FP.TextInput" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
+        <item name="editTextStyle">@style/Widget.FP.EditText</item>
+        <item name="colorControlActivated">@color/fp_ring</item>
+    </style>
+
+    <style name="ThemeOverlay.FP.TextInput.Dropdown" parent="ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox">
+        <item name="autoCompleteTextViewStyle">@style/Widget.FP.Dropdown</item>
+    </style>
+
+    <style name="Widget.FP.EditText" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/fp_foreground</item>
+    </style>
+
+    <style name="Widget.FP.Dropdown" parent="Widget.Material3.AutoCompleteTextView.OutlinedBox">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/fp_foreground</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:inputType">none</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="simpleItemLayout">@layout/item_dropdown</item>
+        <item name="dropDownBackgroundTint">@color/fp_card</item>
+    </style>
+
+    <!-- ============================== Chips =============================== -->
+    <style name="Widget.FP.Chip.Filter" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/button_filter_color</item>
+        <item name="chipStrokeColor">@color/stroke_filter_color</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="android:textColor">@color/text_filter_color</item>
+        <item name="chipCornerRadius">999dp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="chipMinHeight">36dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.FP.LabelMedium</item>
+        <item name="ensureMinTouchTargetSize">false</item>
+    </style>
+
+    <!-- ============================= Others ============================== -->
+    <style name="Widget.FP.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/fp_ring</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="Widget.FP.Progress" parent="Widget.Material3.CircularProgressIndicator">
+        <item name="indicatorColor">@color/fp_foreground</item>
+        <item name="trackColor">@color/fp_border</item>
+        <item name="indicatorSize">36dp</item>
+        <item name="trackThickness">3dp</item>
+    </style>
+
+    <style name="Widget.FP.Progress.Small" parent="Widget.Material3.CircularProgressIndicator.ExtraSmall">
+        <item name="indicatorColor">@color/fp_on_primary</item>
+        <item name="trackColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Widget.FP.Divider" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/fp_border</item>
+    </style>
+
+    <style name="Widget.FP.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:background">@color/fp_card</item>
+        <item name="backgroundTint">@color/fp_card</item>
+        <item name="itemIconTint">@color/nav_item_color</item>
+        <item name="itemTextColor">@color/nav_item_color</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.FP.BottomNavigation.Indicator</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.FP.LabelMedium</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.FP.LabelMedium</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+
+    <style name="Widget.FP.BottomNavigation.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/fp_primary</item>
+    </style>
+
+    <!-- Dialogs -->
+    <style name="ThemeOverlay.FP.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorSurface">@color/fp_card</item>
+        <item name="colorSurfaceContainerHigh">@color/fp_card</item>
+        <item name="colorPrimary">@color/fp_foreground</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.FP.Large</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/Text.FP.DialogTitle</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/Text.FP.DialogBody</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.FP.Button.Text</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.FP.Button.Text.Muted</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.FP.Button.Text.Muted</item>
+    </style>
+
+    <style name="ThemeOverlay.FP.AlertDialog.Destructive">
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.FP.Button.Text.Destructive</item>
+    </style>
+
+    <style name="Widget.FP.Button.Text.Destructive">
+        <item name="android:textColor">@color/fp_destructive</item>
+        <item name="iconTint">@color/fp_destructive</item>
+    </style>
+
+    <style name="Text.FP.DialogTitle" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/fp_foreground</item>
+    </style>
+
+    <style name="Text.FP.DialogBody" parent="MaterialAlertDialog.Material3.Body.Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/fp_muted_foreground</item>
+    </style>
+
+    <!-- Full-width dialogs built from our own layouts (MessageDialog, EditBatchDialog) -->
+    <style name="ThemeOverlay.FP.Dialog" parent="ThemeOverlay.Material3.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
+
+    <style name="ThemeOverlay.FP.BottomSheet" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.FP.BottomSheet</item>
+    </style>
+
+    <style name="Widget.FP.BottomSheet" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="backgroundTint">@color/fp_card</item>
+    </style>
+
+    <!-- Old styles kept for compatibility -->
     <style name="MontserratTextViewStyle" parent="android:Widget.TextView">
         <item name="fontFamily">@font/montserrat</item>
     </style>
@@ -14,6 +513,4 @@
     <style name="MontserratEditTextStyle" parent="android:Widget.EditText">
         <item name="fontFamily">@font/montserrat</item>
     </style>
-
-    <style name="Theme.FrancosPerfumeMobile" parent="Base.Theme.FrancosPerfumeMobile" />
 </resources>

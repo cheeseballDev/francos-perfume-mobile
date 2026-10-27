@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Bottom navigation icon + label -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="true" android:color="@color/yellow_primary" />
-    <item android:state_checked="false" android:color="@color/white" />
+    <item android:state_checked="true" android:color="@color/fp_foreground" />
+    <item android:color="@color/fp_muted_foreground" />
 </selector>

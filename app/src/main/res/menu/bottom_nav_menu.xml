@@ -3,29 +3,22 @@
 
     <item
         android:id="@+id/dashboard"
-        android:title="@string/dashboard_text"
-        android:icon="@drawable/icon_dashboard"
-        />
-
+        android:icon="@drawable/ic_layout_dashboard"
+        android:title="@string/dashboard_text" />
 
     <item
         android:id="@+id/inventory"
-        android:title="@string/inventory_text"
-        android:icon="@drawable/icon_inventory"
-        />
-
+        android:icon="@drawable/ic_boxes"
+        android:title="@string/inventory_text" />
 
     <item
         android:id="@+id/request"
-        android:title="@string/request_text"
-        android:icon="@drawable/icon_request"
-        />
-
+        android:icon="@drawable/ic_file_text"
+        android:title="@string/requests_text" />
 
     <item
         android:id="@+id/delivery"
-        android:title="@string/delivery_text"
-        android:icon="@drawable/icon_delivery"
-        />
+        android:icon="@drawable/ic_truck"
+        android:title="@string/deliveries_text" />
 
 </menu>

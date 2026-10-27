@@ -13,12 +13,13 @@ import com.example.francosperfumemobile.components.RequestApprovalViewHolder;
 
 import java.util.List;
 
-// THIS CLASS IS BASICALLY FOR THE TIMELINE
+// The request timeline
 public class RequestApprovalAdapter extends RecyclerView.Adapter<RequestApprovalViewHolder> {
 
     List<DisplayRequestApprovalDetailsDTO> approvalRequestList;
+
     public RequestApprovalAdapter(List<DisplayRequestApprovalDetailsDTO> approvalRequestList) {
-        this.approvalRequestList =  approvalRequestList;
+        this.approvalRequestList = approvalRequestList;
     }
 
     @NonNull
@@ -30,13 +31,11 @@ public class RequestApprovalAdapter extends RecyclerView.Adapter<RequestApproval
 
     @Override
     public void onBindViewHolder(@NonNull RequestApprovalViewHolder holder, int position) {
-        DisplayRequestApprovalDetailsDTO approvalRequest = approvalRequestList.get(position);
-        holder.bind(approvalRequest);
+        holder.bind(approvalRequestList.get(position), position == getItemCount() - 1);
     }
 
     @Override
     public int getItemCount() {
         return approvalRequestList != null ? approvalRequestList.size() : 0;
     }
-
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A product added to a new request -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/bg_panel_muted"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingTop="6dp"
+    android:paddingEnd="4dp"
+    android:paddingBottom="6dp">
+
+    <TextView
+        android:id="@+id/text_view_line_name"
+        style="@style/Text.FP.Value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="2"
+        tools:text="Bleu de Franco" />
+
+    <TextView
+        android:id="@+id/text_view_line_quantity"
+        style="@style/Widget.FP.StatusBadge"
+        android:layout_marginStart="8dp"
+        tools:text="10 units" />
+
+    <ImageButton
+        android:id="@+id/button_line_remove"
+        style="@style/Widget.FP.IconButton"
+        android:contentDescription="@string/cd_remove_product"
+        android:src="@drawable/ic_x"
+        app:tint="@color/fp_destructive" />
+</LinearLayout>

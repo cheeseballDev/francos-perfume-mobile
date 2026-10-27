@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Product summary shown above its batches -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_view_batch_product"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@color/fp_muted"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                android:src="@drawable/francos_perfume_logo"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.FP.Medium" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_view_product_name"
+                    style="@style/Text.FP.SectionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    tools:text="Bleu de Franco" />
+
+                <TextView
+                    android:id="@+id/text_view_batch_product_id"
+                    style="@style/Text.FP.Caption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    tools:text="PROD-001" />
+
+                <TextView
+                    android:id="@+id/text_view_batch_branch"
+                    style="@style/Widget.FP.StatusBadge"
+                    android:layout_marginTop="6dp"
+                    tools:text="Sta. Lucia" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            style="@style/Widget.FP.Divider"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/info_batch_total_units"
+                layout="@layout/item_info_row" />
+
+            <include
+                android:id="@+id/info_batch_count"
+                layout="@layout/item_info_row" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

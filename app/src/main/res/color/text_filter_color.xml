@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Filter chip text -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Text color when active -->
-    <item android:state_checked="true" android:color="@android:color/black" />
-    <!-- Text color when inactive -->
-    <item android:color="@android:color/darker_gray" />
+    <item android:state_checked="true" android:color="@color/fp_on_primary" />
+    <item android:color="@color/fp_muted_foreground" />
 </selector>

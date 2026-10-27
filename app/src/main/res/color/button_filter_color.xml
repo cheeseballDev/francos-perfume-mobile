@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Filter chip background: beige when selected, card colour otherwise -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Active / Checked state -->
-    <item android:state_checked="true" android:color="@color/yellow_primary" />
-    <!-- Inactive / Unchecked state -->
-    <item android:color="@color/inactive" />
+    <item android:state_checked="true" android:color="@color/fp_primary" />
+    <item android:color="@color/fp_card" />
 </selector>

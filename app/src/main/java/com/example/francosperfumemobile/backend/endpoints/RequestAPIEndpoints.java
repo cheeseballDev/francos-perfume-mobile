@@ -55,6 +55,10 @@ public interface RequestAPIEndpoints {
     @GET("api/request/filters")
     Call<RequestFiltersResponse> getRequestFilters();
 
+    /** Same filters, plus the products (with quantities) available at this branch. */
+    @GET("api/request/filters")
+    Call<RequestFiltersResponse> getRequestFilters(@Query("branchId") int branchId);
+
     @GET("api/request/{requestId}/summary")
     Call<RequestSummaryResponse> getRequestSummary(
             @Path("requestId") int requestId

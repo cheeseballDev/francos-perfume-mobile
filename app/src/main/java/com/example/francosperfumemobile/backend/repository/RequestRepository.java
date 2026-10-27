@@ -55,6 +55,10 @@ public class RequestRepository {
         return api.getRequestFilters();
     }
 
+    public Call<RequestFiltersResponse> getProductsForBranch(int branchId) {
+        return api.getRequestFilters(branchId);
+    }
+
     public Call<RequestSummaryResponse> getRequestSummary(int requestId) {
         return api.getRequestSummary(requestId);
     }

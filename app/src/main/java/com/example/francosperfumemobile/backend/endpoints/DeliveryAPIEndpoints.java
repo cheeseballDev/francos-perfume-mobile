@@ -12,16 +12,16 @@ public interface DeliveryAPIEndpoints {
 
     @GET("api/deliveries")
     Call<DeliveryListResponse> getDeliveries(
-            @Query("PageNumber") int pageNumber,
+            @Query("PageCount") int pageCount,
             @Query("PageSize") int pageSize,
             @Query("Search") String search,
-            @Query("FromBranch") String fromBranch,
-            @Query("ToBranch") String toBranch,
+            @Query("FromBranches") String fromBranch,
+            @Query("ToBranches") String toBranch,
             @Query("Status") String deliveryStatus,
+            @Query("Direction") String direction,
             @Query("FromDate") String fromDate,
             @Query("ToDate") String toDate
     );
-
 
     @POST("api/deliveries/{deliveryId}/dispatch")
     Call<DispatchDeliveryResponse> dispatchDelivery(@Path("deliveryId") int deliveryId);

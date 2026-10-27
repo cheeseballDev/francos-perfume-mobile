@@ -1,5 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- ============================================================
+         Design tokens. Same values as the website (src/index.css), so
+         the app and the web dashboard look like one product.
+         Dark versions live in values-night/colors.xml.
+         ============================================================ -->
+    <color name="fp_background">#F6F5FF</color>
+    <color name="fp_foreground">#1C1C1C</color>
+    <color name="fp_card">#FFFFFF</color>
+    <color name="fp_primary">#E1D4C1</color>
+    <color name="fp_primary_pressed">#D4C3AB</color>
+    <color name="fp_on_primary">#1C1C1C</color>
+    <color name="fp_accent">#F1EBE2</color>
+    <color name="fp_muted">#F0F0F0</color>
+    <color name="fp_muted_foreground">#878787</color>
+    <color name="fp_border">#DBDBDB</color>
+    <color name="fp_destructive">#7E102C</color>
+    <color name="fp_on_destructive">#F6F5FF</color>
+    <color name="fp_ring">#424E9E</color>
+    <color name="fp_scrim">#99000000</color>
+
+    <!-- Status tones (website: src/utils/statusUtils.js TONES) -->
+    <color name="tone_success_bg">#D1FAE5</color>
+    <color name="tone_success_text">#065F46</color>
+    <color name="tone_success_border">#A7F3D0</color>
+    <color name="tone_progress_bg">#DBEAFE</color>
+    <color name="tone_progress_text">#1E40AF</color>
+    <color name="tone_progress_border">#BFDBFE</color>
+    <color name="tone_pending_bg">#FEF3C7</color>
+    <color name="tone_pending_text">#92400E</color>
+    <color name="tone_pending_border">#FDE68A</color>
+    <color name="tone_partial_bg">#FFEDD5</color>
+    <color name="tone_partial_text">#9A3412</color>
+    <color name="tone_partial_border">#FED7AA</color>
+    <color name="tone_danger_bg">#FEE2E2</color>
+    <color name="tone_danger_text">#991B1B</color>
+    <color name="tone_danger_border">#FECACA</color>
+    <color name="tone_outbound_bg">#F3E8FF</color>
+    <color name="tone_outbound_text">#6B21A8</color>
+    <color name="tone_outbound_border">#E9D5FF</color>
+    <color name="tone_neutral_bg">#EDEDED</color>
+    <color name="tone_neutral_text">#1C1C1C</color>
+    <color name="tone_neutral_border">#DBDBDB</color>
+
+    <!-- Icon accents for KPI cards (website: text-emerald-500 / text-blue-500 / text-amber-500) -->
+    <color name="icon_green">#10B981</color>
+    <color name="icon_blue">#3B82F6</color>
+    <color name="icon_amber">#F59E0B</color>
+    <color name="icon_red">#EF4444</color>
+
+    <!-- ============================================================
+         Old names, kept so nothing else breaks. They now point at the
+         tokens above.
+         ============================================================ -->
     <color name="black">#1C1C1C</color>
     <color name="white">#F6F5FF</color>
     <color name="red">#7E102C</color>
@@ -15,30 +68,25 @@
     <color name="magenta">#AA59BE</color>
     <color name="darker_magenta">#70AA59BE</color>
     <color name="gray">#878787</color>
-    <color name="muted">#EFEFEF</color>
+    <color name="muted">@color/fp_muted</color>
     <color name="darker_yellow_primary">#B8AD9E</color>
     <color name="darker_yellow_secondary">#B48C34</color>
 
-    <color name="status_approved_bg">#20509C54</color>
-    <color name="status_approved_text">#509C54</color>
+    <color name="status_approved_bg">@color/tone_success_bg</color>
+    <color name="status_approved_text">@color/tone_success_text</color>
+    <color name="status_pending_bg">@color/tone_pending_bg</color>
+    <color name="status_pending_text">@color/tone_pending_text</color>
+    <color name="status_dispatched_bg">@color/tone_progress_bg</color>
+    <color name="status_dispatched_text">@color/tone_progress_text</color>
+    <color name="status_rejected_bg">@color/tone_danger_bg</color>
+    <color name="status_rejected_text">@color/tone_danger_text</color>
 
-    <color name="status_pending_bg">#25FFBC2B</color>
-    <color name="status_pending_text">#B48C34</color>
-
-    <color name="status_dispatched_bg">#20424E9E</color>
-    <color name="status_dispatched_text">#424E9E</color>
-
-    <color name="status_rejected_bg">#207E102C</color>
-    <color name="status_rejected_text">#7E102C</color>
-
-
-    <!-- UI COMPONENTS -->
-    <color name="bg_app">#F6F5FF</color>
-    <color name="bg_card">#FFFFFF</color>
-    <color name="text_primary">#1C1C1C</color>
-    <color name="text_secondary">#555555</color>
-    <color name="status_warning">#7E102C</color>
-    <color name="border_stroke">#1c1c1c</color>
-    <color name="nav_background">#1C1C1C</color>
-    <color name="inactive">#F6F5FF</color>
+    <color name="bg_app">@color/fp_background</color>
+    <color name="bg_card">@color/fp_card</color>
+    <color name="text_primary">@color/fp_foreground</color>
+    <color name="text_secondary">@color/fp_muted_foreground</color>
+    <color name="status_warning">@color/fp_destructive</color>
+    <color name="border_stroke">@color/fp_border</color>
+    <color name="nav_background">@color/fp_card</color>
+    <color name="inactive">@color/fp_muted_foreground</color>
 </resources>

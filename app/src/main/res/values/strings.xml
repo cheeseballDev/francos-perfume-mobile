@@ -1,55 +1,18 @@
 <resources>
-    <string name="app_name">FrancosPerfumeMobile</string>
+    <string name="app_name">Franco\'s Perfume</string>
     <string name="title">OneFrancoScentHub</string>
-    <string name="hint_enter_your_email">Enter your email</string>
+    <string name="hint_enter_your_email">name@example.com</string>
     <string name="hint_enter_your_password">Enter your password</string>
     <string name="text_application_logo">Application Logo</string>
-    <string name="text_login">Login</string>
+    <string name="text_login">Log in</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="forgot_password">Forgot Password</string>
+    <string name="forgot_password">Forgot password</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-    <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
-        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
-        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
-        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
-        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
-        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
-        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
-        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
-        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
-        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
-        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
-        bibendum, vel congue leo egestas.\n\n
-        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
-        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
-        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
-        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
-        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
-        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
-        est.\n\n
-        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
-        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
-        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
-        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
-        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
-        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
-        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
-        convallis.\n\n
-        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
-        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
-        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
-        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
-        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
-        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
-        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
-    </string>
     <string name="dashboard_text">Dashboard</string>
     <string name="inventory_text">Inventory</string>
     <string name="request_text">Request</string>
@@ -57,7 +20,7 @@
     <string name="dashboard_title_text">Dashboard Title</string>
     <string name="warning_text">Warning</string>
     <string name="sample_number">0000</string>
-    <string name="hint_search_inventory">Search perfume name or id...</string>
+    <string name="hint_search_inventory">Search perfume name or ID…</string>
     <string name="inventory_sample_name">Product Name</string>
     <string name="inventory_sample_unit_count">1 unit</string>
     <string name="inventory_sample_batch_count">5 batches</string>
@@ -71,7 +34,7 @@
     <string name="request_sample_status">Pending</string>
     <string name="request_sample_stage">Owner Review</string>
     <string name="request_sample_from_branch">Sta. Lucia</string>
-    <string name="hint_request_search">Search for request by id...</string>
+    <string name="hint_request_search">Search request ID…</string>
     <string name="inbound_text">Inbound</string>
     <string name="outbound_text">Outbound</string>
     <string name="all_requests_text">All</string>
@@ -79,10 +42,10 @@
     <string name="sample_product_name_batch_list">Sample Product Name - Batch List</string>
     <string name="sample_batch_id">BAT-###</string>
     <string name="sample_date_received">Date Received: 01/31/2026</string>
-    <string name="edit_batch_text">Edit Batch</string>
-    <string name="reason_for_edit_text">Reason for edit:</string>
+    <string name="edit_batch_text">Edit batch</string>
+    <string name="reason_for_edit_text">Reason for edit</string>
     <string name="quantity_sample">10</string>
-    <string name="stock_adjustment_text">Stock Adjustment:</string>
+    <string name="stock_adjustment_text">Quantity</string>
     <string name="hint_date">YYYY/MM/DD</string>
     <string name="edit_batch_colon_text">Edit Batch:</string>
     <string name="selected_perfume_text">Selected Perfume:</string>
@@ -93,31 +56,355 @@
     <string name="to_text">to</string>
     <string name="request_sample_to_branch">Riverbanks</string>
     <string name="drawer_sample_text">BRANCH: STA. LUCIA</string>
-    <string name="logout_text">Logout</string>
-    <string name="from_branch_text">From Branch</string>
-    <string name="to_branch_text">To Branch</string>
-    <string name="created_by_text">Created By</string>
+    <string name="logout_text">Log out</string>
+    <string name="from_branch_text">From</string>
+    <string name="to_branch_text">To</string>
+    <string name="created_by_text">Created by</string>
     <string name="sample_name">Sample Name</string>
-    <string name="open_message_text">Open Message</string>
+    <string name="open_message_text">View message</string>
     <string name="available_text">Available</string>
-    <string name="requested_qty_text">Requested Qty</string>
-    <string name="approve_request_question_text">Approve Request?</string>
+    <string name="requested_qty_text">Requested</string>
+    <string name="approve_request_question_text">Approve this product</string>
     <string name="approved_quantity_colon_text">Approved Quantity:</string>
     <string name="enter_custom_approved_qty_here_hint">Enter custom approved qty here...</string>
     <string name="timeline_step_text">Timeline Step</string>
     <string name="timeline_subtitle_text">Timeline subtitle</string>
-    <string name="requested_products_text">Requested Products</string>
+    <string name="requested_products_text">Requested products</string>
     <string name="timeline_text">Timeline</string>
     <string name="approve_text">Approve</string>
     <string name="deny_text">Reject</string>
-    <string name="received_question_mark_text">Received?</string>
+    <string name="received_question_mark_text">Received</string>
     <string name="close_text">Close</string>
     <string name="no_message_text">No message</string>
     <string name="message_text">Message</string>
-    <string name="received_quantity_text">Received Quantity</string>
-    <string name="remarks_text">Remarks</string>
+    <string name="received_quantity_text">Received</string>
+    <string name="remarks_text">Reason</string>
     <string name="additional_information_hint">Enter additional information here</string>
-    <string name="confirm_delivery">Confirm Delivery</string>
-    <string name="back_to_login">Back to Login</string>
-    <string name="send_reset_instructions">Send Reset Instructions</string>
+    <string name="confirm_delivery">Confirm delivery</string>
+    <string name="back_to_login">Back to login</string>
+    <string name="send_reset_instructions">Send code</string>
+
+    <!-- ============================================================
+         Added with the mobile overhaul
+         ============================================================ -->
+    <string name="app_display_name">Franco\'s Perfume</string>
+    <string name="placeholder_dash">—</string>
+    <string name="try_again">Try again</string>
+    <string name="saving">Saving…</string>
+    <string name="save_changes">Save changes</string>
+    <string name="updating">Updating…</string>
+    <string name="confirming">Confirming…</string>
+    <string name="cancelling">Cancelling…</string>
+    <string name="discard_title">Discard changes?</string>
+    <string name="discard_message">You have unsaved changes. If you close this window now, they will be lost.</string>
+    <string name="discard">Discard</string>
+
+    <!-- Login -->
+    <string name="login_title">Welcome back</string>
+    <string name="login_subtitle">Log in to OneFrancoScentHub</string>
+    <string name="login_footer">For owners, managers and staff. Admin and cashier accounts use the website.</string>
+    <string name="label_email">Email address</string>
+    <string name="label_password">Password</string>
+    <string name="forgot_password_question">Forgot password?</string>
+    <string name="logging_in">Logging in…</string>
+    <string name="error_email_required">Enter your email address.</string>
+    <string name="error_email_invalid">Enter a valid email address.</string>
+    <string name="error_password_required">Enter your password.</string>
+    <string name="error_invalid_credentials">Incorrect email or password.</string>
+    <string name="error_login_generic">We couldn\'t log you in. Please try again.</string>
+    <string name="error_session_expired">Your session has expired. Please log in again.</string>
+    <string name="error_role_not_allowed">%1$s accounts can\'t use the mobile app. Please use the website.</string>
+
+    <!-- OTP -->
+    <string name="otp_title">Check your email</string>
+    <string name="otp_subtitle">Enter the 6-digit code we sent to %1$s. It expires in 5 minutes.</string>
+    <string name="label_code">6-digit code</string>
+    <string name="hint_code">••••••</string>
+    <string name="verify_code">Verify code</string>
+    <string name="verifying">Verifying…</string>
+    <string name="code_not_received">Didn\'t get a code?</string>
+    <string name="resend_code">Resend code</string>
+    <string name="resend_in">Resend in %1$ds</string>
+    <string name="sending">Sending…</string>
+    <string name="code_resent">A new code is on its way.</string>
+    <string name="use_different_account">Use a different account</string>
+    <string name="error_code_length">Enter all 6 digits of the code.</string>
+    <string name="error_code_invalid">Invalid or expired code.</string>
+    <string name="error_code_not_verified">We couldn\'t verify the code. Please try again.</string>
+
+    <!-- Temporary password -->
+    <string name="change_temp_password_title">Set a new password</string>
+    <string name="change_temp_password_subtitle">You are using a temporary password. Please set a new, secure password to continue.</string>
+    <string name="label_new_password">New password</string>
+    <string name="label_confirm_password">Confirm password</string>
+    <string name="hint_new_password">Enter your new password</string>
+    <string name="hint_confirm_password">Type it again</string>
+    <string name="update_password">Update password</string>
+    <string name="password_updated_login">Password updated. Please log in with your new password.</string>
+    <string name="error_passwords_do_not_match">Passwords do not match.</string>
+    <string name="error_password_rules">Your password doesn\'t meet all the requirements yet.</string>
+
+    <!-- Password rules (same as the website) -->
+    <string name="pw_rules_title">Your password must</string>
+    <string name="pw_rule_not_old">Be different from your temporary password</string>
+    <string name="pw_rule_no_name">Not include your name</string>
+    <string name="pw_rule_length">Have at least 12 characters</string>
+    <string name="pw_rule_upper">Include an uppercase letter</string>
+    <string name="pw_rule_lower">Include a lowercase letter</string>
+    <string name="pw_rule_number">Include a number</string>
+    <string name="pw_rule_special" formatted="false">Include a special character (#.-?!@$%^&amp;*)</string>
+    <string name="pw_rule_match">Match the confirmation</string>
+
+    <!-- Forgot password -->
+    <string name="step_of">Step %1$d of %2$d</string>
+    <string name="forgot_subtitle_email">Enter your email address to receive a 6-digit code.</string>
+    <string name="forgot_subtitle_code">Enter the 6-digit code we sent to %1$s. It expires in 5 minutes.</string>
+    <string name="forgot_subtitle_password">Choose a new password for your account.</string>
+    <string name="hint_email_example">name@example.com</string>
+    <string name="send_code">Send code</string>
+    <string name="sending_code">Sending code…</string>
+    <string name="reset_password">Reset password</string>
+    <string name="toast_code_sent">Code sent. Check your email for the 6-digit code.</string>
+    <string name="toast_new_code_sent">New code sent. Check your email.</string>
+    <string name="password_changed_toast">Password changed</string>
+    <string name="password_changed_login">Password changed. You can now log in with your new password.</string>
+    <string name="error_reset_session_expired">Your reset session has expired. Please request a new code.</string>
+    <string name="error_required">This field is required.</string>
+
+    <!-- Shell -->
+    <string name="cd_open_menu">Open menu</string>
+    <string name="cd_notifications">Notifications</string>
+    <string name="drawer_tagline">Inventory, requests and deliveries</string>
+    <string name="drawer_section_menu">Menu</string>
+    <string name="drawer_web_hint">Products, sales and reports are on the website.</string>
+    <string name="no_branch">No branch</string>
+    <string name="requests_text">Requests</string>
+    <string name="deliveries_text">Deliveries</string>
+    <string name="logout_confirm_title">Log out?</string>
+    <string name="logout_confirm_message">You will need to log in again to use the app.</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_greeting_name">%1$s, %2$s</string>
+    <string name="dashboard_subtitle">An overview for your branch</string>
+    <string name="dashboard_subtitle_branch">An overview for %1$s</string>
+    <string name="kpi_total_inventory">Total inventory</string>
+    <string name="kpi_pending_approvals">Pending approvals</string>
+    <string name="kpi_requests">Requests</string>
+    <string name="kpi_requests_your_stage">At your stage</string>
+    <string name="kpi_waiting_on_you">Requests waiting on you</string>
+    <string name="kpi_pending_deliveries">Pending deliveries</string>
+    <string name="kpi_deliveries">Deliveries</string>
+    <string name="kpi_all_in_stock">All items in stock</string>
+    <string name="kpi_unavailable">Couldn\'t load</string>
+    <string name="panel_pending_requests">Pending requests for approval</string>
+    <string name="panel_pending_deliveries">Pending deliveries for dispatch</string>
+    <string name="panel_low_stock">Low stock</string>
+    <string name="panel_no_pending_requests">No pending requests.</string>
+    <string name="panel_no_pending_deliveries">No pending deliveries.</string>
+    <string name="panel_no_low_stock">Everything is well stocked.</string>
+    <string name="panel_error">Couldn\'t load this. Pull down to try again.</string>
+    <string name="view_all">View all</string>
+    <string name="view_all_requests">View all</string>
+    <string name="view_all_deliveries">View all</string>
+    <string name="view_inventory">View inventory</string>
+    <string name="route_format">%1$s → %2$s</string>
+
+    <!-- Lists -->
+    <string name="hint_delivery_search">Search delivery ID…</string>
+    <string name="filter_all_types">All types</string>
+    <string name="filter_all_genders">All genders</string>
+    <string name="filter_all_branches">All branches</string>
+    <string name="filter_all_statuses">All statuses</string>
+    <string name="filter_all_stages">All stages</string>
+    <string name="filter_all_from_branches">All \'from\' branches</string>
+    <string name="filter_all_to_branches">All \'to\' branches</string>
+    <string name="empty_title">Nothing here yet</string>
+    <string name="empty_message_filters">No results match your search or filters.</string>
+    <string name="empty_message_none">There\'s nothing to show right now.</string>
+    <string name="error_load_title">Couldn\'t load this</string>
+    <string name="previous_page">Previous page</string>
+    <string name="next_page">Next page</string>
+    <string name="units_label">units</string>
+    <string name="stock_low">Low stock</string>
+    <string name="stock_out">Out of stock</string>
+
+    <!-- Request details -->
+    <string name="request_details_title">Request details</string>
+    <string name="request_message_title">Request message</string>
+    <string name="date_submitted_text">Submitted</string>
+    <string name="waiting_for_stage">Waiting for: %1$s</string>
+    <string name="reviewing_as">You are reviewing this request as: %1$s.</string>
+    <string name="requested_products_hint_edit">Untick a product or lower its quantity to approve less.</string>
+    <string name="requested_products_hint_read">What was requested.</string>
+    <string name="approved_quantity_label">Approve</string>
+    <string name="hint_quantity">0</string>
+    <string name="error_max_quantity">Max %1$d</string>
+    <string name="remarks_format">Remarks: %1$s</string>
+    <string name="quoted_format">“%1$s”</string>
+    <string name="approve_partial_text">Approve selected</string>
+    <string name="approve_confirm_title">Approve this request?</string>
+    <string name="approve_confirm_message">All products will be approved in full.</string>
+    <string name="approve_partial_confirm_message">Only the ticked products will be approved, with the quantities you entered.</string>
+    <string name="hint_remarks_optional">Remarks (optional)</string>
+    <string name="approving">Approving…</string>
+    <string name="reject_confirm_title">Reject this request?</string>
+    <string name="reject_confirm_message">The requester will see your reason. This cannot be undone.</string>
+    <string name="hint_reject_reason">Reason for rejecting</string>
+    <string name="rejecting">Rejecting…</string>
+    <string name="cancel_request">Cancel request</string>
+    <string name="cancel_request_confirm_title">Cancel this request?</string>
+    <string name="cancel_request_confirm_message">This cannot be undone. The request will be terminated.</string>
+    <string name="toast_request_approved">Request approved</string>
+    <string name="toast_request_rejected">Request rejected</string>
+    <string name="toast_request_cancelled">Request cancelled</string>
+    <string name="error_nothing_approved">Tick at least one product to approve, or reject the request.</string>
+    <string name="error_invalid_request">Invalid request</string>
+    <string name="error_request_not_found">This request could not be found.</string>
+
+    <!-- Delivery details -->
+    <string name="delivery_details_title">Delivery details</string>
+    <string name="delivery_items_title">Items</string>
+    <string name="date_created_text">Created</string>
+    <string name="products_label">Products</string>
+    <string name="total_units_label">Total units</string>
+    <string name="product_number">Product #%1$d</string>
+    <string name="receive_title">Receiving details</string>
+    <string name="receive_subtitle">Pick the expiry date printed on the stock that arrived.</string>
+    <string name="label_expiry_date">Expiry date</string>
+    <string name="hint_pick_date">Pick a date</string>
+    <string name="expiry_helper">Saved on the new batch</string>
+    <string name="receive_items_hint">Untick missing items or lower the quantity, then pick a reason.</string>
+    <string name="reason_select">Select reason…</string>
+    <string name="mark_in_transit">Mark in transit</string>
+    <string name="cancel_delivery">Cancel</string>
+    <string name="hint_dispatch_action">Mark as in transit to notify the receiving branch.</string>
+    <string name="hint_cancel_action">You can still cancel this delivery.</string>
+    <string name="hint_receive_action">Review the items, then confirm what arrived.</string>
+    <string name="no_action_required">No action required. This delivery is %1$s.</string>
+    <string name="mark_in_transit_confirm_title">Mark as in transit?</string>
+    <string name="mark_in_transit_confirm_message">The receiving branch will be notified that the items are on the way.</string>
+    <string name="cancel_delivery_confirm_title">Cancel this delivery?</string>
+    <string name="cancel_delivery_confirm_message">This cannot be undone. The request will be terminated.</string>
+    <string name="receive_confirm_title_complete">Mark this delivery as completed?</string>
+    <string name="receive_confirm_title_partial">Mark this delivery as partially completed?</string>
+    <string name="receive_confirm_message_complete">All items have been received in full. This will finalize the delivery and update your inventory.</string>
+    <string name="receive_confirm_message_partial">Some items are missing or received in lower quantities.</string>
+    <string name="receive_confirm_button_complete">Confirm completion</string>
+    <string name="receive_confirm_button_partial">Confirm partial</string>
+    <string name="toast_delivery_received">Delivery received</string>
+    <string name="toast_delivery_in_transit">Delivery marked as in transit</string>
+    <string name="toast_delivery_cancelled">Delivery cancelled</string>
+    <string name="error_expiry_required">Pick the expiry date first.</string>
+    <string name="error_no_items_to_receive">There are no items to receive.</string>
+    <string name="error_invalid_delivery">Invalid delivery</string>
+    <string name="error_delivery_not_found">This delivery could not be found.</string>
+
+    <!-- Batches -->
+    <string name="batches_title">Batches</string>
+    <string name="quantity_label">Quantity</string>
+    <string name="date_received_label">Received</string>
+    <string name="expiry_label">Expires</string>
+    <string name="batch_expired">Expired</string>
+    <string name="no_batches_title">No batches yet</string>
+    <string name="no_batches_message">This product has no batches at this branch.</string>
+    <string name="edit_batch_title">Edit batch %1$s</string>
+    <string name="received_on">Received %1$s</string>
+    <string name="cd_decrease">Decrease</string>
+    <string name="cd_increase">Increase</string>
+    <string name="toast_batch_updated">Batch updated</string>
+    <string name="error_reason_required">Pick a reason for the edit.</string>
+    <string name="error_expiry_before_received">The expiry date can\'t be earlier than the date received (%1$s).</string>
+    <string name="error_unknown_product">Unknown product</string>
+
+    <!-- New request -->
+    <string name="new_request">New request</string>
+    <string name="create_request_title">New transfer request</string>
+    <string name="create_branches_title">Branches</string>
+    <string name="create_from_label">Source branch (from)</string>
+    <string name="create_from_hint">Select source branch…</string>
+    <string name="create_to_label">Destination branch (to)</string>
+    <string name="create_to_hint">Select destination branch…</string>
+    <string name="create_products_title">Add products</string>
+    <string name="create_pick_source_first">Pick the source branch first.</string>
+    <string name="create_loading_products">Loading products…</string>
+    <string name="create_products_hint">Products available at %1$s.</string>
+    <string name="create_no_products_at_branch">%1$s has no products to send.</string>
+    <string name="create_product_hint">Select product…</string>
+    <string name="create_product_option">%1$s · %2$d available</string>
+    <string name="create_available">Available at %1$s: %2$d</string>
+    <string name="create_add_product">Add product</string>
+    <string name="create_lines_title">Products in this request</string>
+    <string name="create_no_lines">No products added yet.</string>
+    <string name="create_lines_cleared">Source branch changed, so the product list was cleared.</string>
+    <string name="create_message_title">Message (optional)</string>
+    <string name="create_message_hint">Anything the approvers should know</string>
+    <string name="create_summary">%1$s · %2$s</string>
+    <string name="create_submit">Submit request</string>
+    <string name="create_confirm_title">Submit transfer request?</string>
+    <string name="create_confirm_message">You are requesting %1$d units of %2$d products. The request will wait for approval.</string>
+    <string name="create_error_quantity">Enter a quantity.</string>
+    <string name="create_error_exceeds">You can only add up to %1$d more unit(s) of this product.</string>
+    <string name="create_error_branches">Select both a source branch and a destination branch.</string>
+    <string name="create_error_no_products">Please add at least one product.</string>
+    <string name="create_discard_message">Your new request will be lost.</string>
+    <string name="cd_remove_product">Remove product</string>
+    <string name="toast_request_created">Request sent</string>
+
+    <!-- Notifications -->
+    <string name="notifications_title">Notifications</string>
+    <string name="mark_all_read">Mark all read</string>
+    <string name="all_caught_up">You\'re all caught up</string>
+    <string name="notifications_empty_title">No notifications</string>
+    <string name="notifications_empty_message">Updates about requests and deliveries show up here.</string>
+    <string name="notification_default_title">Update</string>
+    <string name="notification_channel_name">Requests and deliveries</string>
+    <string name="notification_channel_description">Approvals, dispatches and deliveries for your branch</string>
+    <string name="slow_moving_perfume">MISSED DEADLINE</string>
+    <string name="filter_all_stock_levels">All stock levels</string>
+
+    <plurals name="cd_notifications_unread">
+        <item quantity="one">Notifications, %1$d unread</item>
+        <item quantity="other">Notifications, %1$d unread</item>
+    </plurals>
+    <plurals name="unread_count">
+        <item quantity="one">%1$d unread</item>
+        <item quantity="other">%1$d unread</item>
+    </plurals>
+    <plurals name="kpi_low_stock_items">
+        <item quantity="one">%1$d item in low stock</item>
+        <item quantity="other">%1$d items in low stock</item>
+    </plurals>
+    <plurals name="units_left">
+        <item quantity="one">%1$d unit left</item>
+        <item quantity="other">%1$d units left</item>
+    </plurals>
+    <plurals name="batch_count">
+        <item quantity="one">%1$d batch</item>
+        <item quantity="other">%1$d batches</item>
+    </plurals>
+    <plurals name="item_count">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
+    <plurals name="product_count">
+        <item quantity="one">%1$d product</item>
+        <item quantity="other">%1$d products</item>
+    </plurals>
+    <plurals name="unit_count">
+        <item quantity="one">%1$d unit</item>
+        <item quantity="other">%1$d units</item>
+    </plurals>
+    <plurals name="expires_in_days">
+        <item quantity="one">Target deadline in %1$d day</item>
+        <item quantity="other">Target deadline in %1$d days</item>
+    </plurals>
+
+    <!-- Same reasons as the website's delivery confirmation (value list in DeliveryDetailsInboundViewHolder) -->
+    <string-array name="receive_reason_labels">
+        <item>No reason</item>
+        <item>Damaged</item>
+        <item>Missing</item>
+        <item>Incorrect item</item>
+        <item>Expired</item>
+    </string-array>
 </resources>

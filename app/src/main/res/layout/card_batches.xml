@@ -1,80 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- One batch: id, quantity, received / expiry dates, Edit -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    app:cardBackgroundColor="@color/bg_card"
-    app:cardCornerRadius="16dp"
-    app:strokeColor="@color/border_stroke"
-    app:strokeWidth="1dp">
+    android:layout_marginBottom="10dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
 
-        <TextView
-            android:id="@+id/text_view_batch_id"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/sample_batch_id"
-            android:textSize="@dimen/font_l"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/text_view_delivery_unit_count"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/text_view_batch_id"
+                style="@style/Text.FP.CardTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:text="BAT-0007" />
+
+            <TextView
+                android:id="@+id/text_view_batch_expiry_badge"
+                style="@style/Widget.FP.StatusBadge"
+                android:visibility="gone"
+                tools:text="Target deadline is in 12 days"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:text="@string/inventory_sample_unit_count"
-            android:textSize="@dimen/font_m"
-            app:layout_constraintBottom_toBottomOf="@+id/text_view_batch_id"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="10dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/edit_text_batch_date_received"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/sample_date_received"
-            app:layout_constraintStart_toStartOf="@+id/text_view_batch_id"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_batch_id" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/text_view_batch_target_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/sample_date_received"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/edit_text_batch_date_received"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_batch_date_received" />
+                <TextView
+                    style="@style/Text.FP.Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quantity_label" />
 
-        <!--
-        <androidx.appcompat.widget.AppCompatButton
+                <TextView
+                    android:id="@+id/text_view_delivery_unit_count"
+                    style="@style/Text.FP.Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textSize="18sp"
+                    tools:text="24" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.3"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Text.FP.Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_received_label" />
+
+                <TextView
+                    android:id="@+id/edit_text_batch_date_received"
+                    style="@style/Text.FP.Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    tools:text="Oct 1, 2026" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.3"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Text.FP.Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/expiry_label" />
+
+                <TextView
+                    android:id="@+id/text_view_batch_target_date"
+                    style="@style/Text.FP.Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    tools:text="Oct 1, 2027" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_edit_batch"
-            android:layout_width="0dp"
+            style="@style/Widget.FP.Button.Outlined.Small"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/button_design_semi_rounded"
-            android:backgroundTint="@color/yellow_primary"
+            android:layout_marginTop="12dp"
             android:text="@string/edit_batch_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_batch_target_date" />
-
-        -->
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+            app:icon="@drawable/ic_pencil"
+            app:iconGravity="textStart" />
+    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

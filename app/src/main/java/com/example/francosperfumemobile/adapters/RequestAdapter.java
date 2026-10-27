@@ -8,14 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.francosperfumemobile.R;
-import com.example.francosperfumemobile.backend.dtos.inventorydtos.DisplayInventoryDTO;
 import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestDTO;
 import com.example.francosperfumemobile.components.RequestViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestViewHolder> {
-    private List<DisplayRequestDTO> requestList;
+    private final List<DisplayRequestDTO> requestList = new ArrayList<>();
     private final OnRequestClickListener listener;
 
     public interface OnRequestClickListener {
@@ -23,7 +23,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestViewHolder> {
     }
 
     public RequestAdapter(List<DisplayRequestDTO> data, OnRequestClickListener listener) {
-        this.requestList = data;
+        if (data != null) requestList.addAll(data);
         this.listener = listener;
     }
 
@@ -38,31 +38,31 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestViewHolder> {
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
         DisplayRequestDTO item = requestList.get(position);
         holder.bind(item);
-
         holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onRequestClick(item);
-            }
+            if (listener != null) listener.onRequestClick(item);
         });
     }
 
     @Override
     public int getItemCount() {
-        return requestList != null ? requestList.size() : 0;
+        return requestList.size();
+    }
+
+    public void setItems(List<DisplayRequestDTO> newData) {
+        requestList.clear();
+        if (newData != null) requestList.addAll(newData);
+        notifyDataSetChanged();
     }
 
     public void updateData(List<DisplayRequestDTO> newData) {
-        this.requestList = newData;
-        notifyDataSetChanged();
+        setItems(newData);
     }
 
     public void addData(List<DisplayRequestDTO> newData) {
         if (newData != null && !newData.isEmpty()) {
-            int startPosition = this.requestList.size();
-            this.requestList.addAll(newData);
-            notifyItemRangeInserted(startPosition, newData.size());
+            int start = requestList.size();
+            requestList.addAll(newData);
+            notifyItemRangeInserted(start, newData.size());
         }
     }
-
-
 }

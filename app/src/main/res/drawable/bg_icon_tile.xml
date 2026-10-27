@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Rounded square behind an icon. Tinted in code where a colour is needed. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/fp_muted" />
+    <corners android:radius="10dp" />
+</shape>
