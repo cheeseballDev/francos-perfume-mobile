@@ -359,6 +359,8 @@
     <string name="notification_default_title">Update</string>
     <string name="notification_channel_name">Requests and deliveries</string>
     <string name="notification_channel_description">Approvals, dispatches and deliveries for your branch</string>
+    <string name="slow_moving_perfume">MISSED DEADLINE</string>
+    <string name="filter_all_stock_levels">All stock levels</string>
 
     <plurals name="cd_notifications_unread">
         <item quantity="one">Notifications, %1$d unread</item>
@@ -393,8 +395,8 @@
         <item quantity="other">%1$d units</item>
     </plurals>
     <plurals name="expires_in_days">
-        <item quantity="one">Expires in %1$d day</item>
-        <item quantity="other">Expires in %1$d days</item>
+        <item quantity="one">Target deadline in %1$d day</item>
+        <item quantity="other">Target deadline in %1$d days</item>
     </plurals>
 
     <!-- Same reasons as the website's delivery confirmation (value list in DeliveryDetailsInboundViewHolder) -->

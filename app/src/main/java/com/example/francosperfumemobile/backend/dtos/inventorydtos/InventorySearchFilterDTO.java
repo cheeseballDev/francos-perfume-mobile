@@ -9,6 +9,8 @@ public class InventorySearchFilterDTO {
     private String ProductType = null;
     private String ProductGender = null;
     private String Branch = null;
+    private String StockStatus = null;
+
     public int getPageCount() {
         return PageCount;
     }
@@ -71,5 +73,13 @@ public class InventorySearchFilterDTO {
 
     public void setBranch(String branch) {
         Branch = branch;
+    }
+
+    public String getStockStatus() {
+        return StockStatus;
+    }
+
+    public void setStockStatus(String stockStatus) {
+        StockStatus = stockStatus;
     }
 }

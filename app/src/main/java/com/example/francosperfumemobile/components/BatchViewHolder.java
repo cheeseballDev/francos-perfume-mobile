@@ -60,8 +60,8 @@ public class BatchViewHolder extends RecyclerView.ViewHolder {
         }
         long days = (expiry.getTime() - System.currentTimeMillis()) / DAY_MS;
         if (days < 0) {
-            expiryBadge.setText(R.string.batch_expired);
-            StatusStyle.applyTone(expiryBadge, StatusStyle.Tone.DANGER, R.drawable.ic_alert_triangle);
+            expiryBadge.setText(R.string.slow_moving_perfume);
+            StatusStyle.applyTone(expiryBadge, StatusStyle.Tone.PENDING, R.drawable.ic_alert_triangle);
             expiryBadge.setVisibility(View.VISIBLE);
         } else if (days <= EXPIRY_WARNING_DAYS) {
             expiryBadge.setText(itemView.getResources().getQuantityString(R.plurals.expires_in_days, (int) days, (int) days));

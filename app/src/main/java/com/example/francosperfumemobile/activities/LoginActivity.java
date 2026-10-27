@@ -30,13 +30,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-/**
- * Login. After the backend answers, LoginFlow decides the next screen:
- * temporary password → change it, OTP → enter the code, otherwise → the app.
- */
 public class LoginActivity extends AppCompatActivity {
 
-    /** Green message shown above the button, e.g. after a password reset. */
     public static final String EXTRA_NOTICE = "LOGIN_NOTICE";
 
     private MaterialButton loginButton, forgotPasswordButton;
@@ -62,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
                 return;
             }
-            // A session from before the role check existed; make them log in again
             sessionManager.clearSession();
         }
 
@@ -130,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
-        if (ButtonLoading.isLoading(loginButton)) return; // ignore double taps
+        if (ButtonLoading.isLoading(loginButton)) return;
 
         String email = textOf(emailTextField);
         String password = passwordTextField.getText() == null ? "" : passwordTextField.getText().toString();
@@ -170,14 +164,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (error != null) {
                     showMessage(error, true);
                 } else {
-                    // Moving on to the OTP / new password screen: don't leave the password behind
                     passwordTextField.setText("");
                 }
             }
 
             @Override
             public void onError(@NonNull String message, int code) {
-                // 401 here means wrong email or password, not an expired session
                 showMessage(code == 401 && message.startsWith("Your session") ? getString(R.string.error_invalid_credentials) : message, true);
             }
         });

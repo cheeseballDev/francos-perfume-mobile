@@ -30,6 +30,7 @@ import com.example.francosperfumemobile.helpers.PaginationHelper;
 import com.example.francosperfumemobile.helpers.SafeCallback;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -46,7 +47,7 @@ public class InventoryFragment extends Fragment {
     private PaginationHelper pagination;
     private ListScreenState listState;
     private DebouncedTextWatcher searchWatcher;
-    private AutoCompleteTextView dropdownPerfumeType, dropdownGenderType, dropdownBranch;
+    private AutoCompleteTextView dropdownPerfumeType, dropdownGenderType, dropdownBranch, dropdownStockStatus;
     private Call<InventoryResponse> currentCall;
 
     public InventoryFragment() {
@@ -95,9 +96,11 @@ public class InventoryFragment extends Fragment {
         dropdownPerfumeType = dropdown(view, R.id.dropdown_perfume_type);
         dropdownGenderType = dropdown(view, R.id.dropdown_gender_type);
         dropdownBranch = dropdown(view, R.id.dropdown_branch);
+        dropdownStockStatus = dropdown(view, R.id.dropdown_stock_status);
         dropdownPerfumeType.setText(getString(R.string.filter_all_types), false);
         dropdownGenderType.setText(getString(R.string.filter_all_genders), false);
         dropdownBranch.setText(getString(R.string.filter_all_branches), false);
+        dropdownStockStatus.setText(R.string.filter_all_stock_levels);
 
         initializeDropdowns();
         fetchInventory(1);
@@ -115,7 +118,7 @@ public class InventoryFragment extends Fragment {
     }
 
     private void fetchInventory(int page) {
-        if (currentCall != null) currentCall.cancel(); // only the latest search/page counts
+        if (currentCall != null) currentCall.cancel();
         currentFilter.setPageCount(page);
         pagination.setLoading(true);
         listState.showLoading(inventoryAdapter.getItemCount() > 0);
@@ -152,7 +155,6 @@ public class InventoryFragment extends Fragment {
     }
 
     private void openInventoryBatchList(DisplayInventoryDTO product) {
-        // Pass the row's branch, so an Owner sees the batches of the branch they tapped
         Intent intent = InventoryBatchListActivity.newIntent(requireContext(), product);
         startActivity(intent);
     }
@@ -177,11 +179,22 @@ public class InventoryFragment extends Fragment {
                             currentFilter.setBranch(value);
                             fetchInventory(1);
                         });
+
+                List<String> stockStatuses = Arrays.asList("All Stock Levels", "Good", "Low");
+                FilterManager.setupDropdown(requireContext(), dropdownStockStatus, stockStatuses,
+                        getString(R.string.filter_all_stock_levels), value -> {
+                            if (value.equals("All Stock Levels")) {
+                                currentFilter.setStockStatus("");
+                                fetchInventory(1);
+                            } else {
+                                currentFilter.setStockStatus(value.toUpperCase());
+                                fetchInventory(1);
+                            }
+                        });
             }
 
             @Override
             public void onError(@NonNull String message, int code) {
-                // The list still works without filters; don't show a second error
             }
         });
     }

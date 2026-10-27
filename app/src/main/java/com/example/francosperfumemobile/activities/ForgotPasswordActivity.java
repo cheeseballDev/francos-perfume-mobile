@@ -194,7 +194,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         editTextConfirm.addTextChangedListener(passwordWatcher);
     }
 
-    // ------------------------------------------------------------------ steps
+    // steps
 
     private void showStep(int newStep) {
         step = newStep;
@@ -224,8 +224,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             restartFromEmail(null);
         }
     }
-
-    /** Back to step 1, e.g. when the reset token is gone or expired. */
     private void restartFromEmail(@Nullable String message) {
         resetToken = null;
         firstName = "";
@@ -239,7 +237,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         if (message != null) showError(errorEmail, message);
     }
 
-    // ------------------------------------------------------------- step 1: email
+    // step 1: email
 
     private void sendCode(boolean isResend) {
         MaterialButton button = isResend ? buttonResend : buttonSendCode;
@@ -304,7 +302,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         }.start();
     }
 
-    // -------------------------------------------------------------- step 2: code
+    // step 2: code
 
     private void verifyCode() {
         String code = text(editTextCode).trim();
@@ -344,7 +342,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         });
     }
 
-    // ---------------------------------------------------------- step 3: password
+    // step 3: password
 
     private boolean refreshPasswordState() {
         String password = text(editTextNewPassword);
@@ -407,7 +405,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 || m.contains("token") || m.contains("expired");
     }
 
-    // ------------------------------------------------------------------ helpers
+    // helpers
 
     private void backToLogin(@Nullable String notice) {
         Intent intent = new Intent(this, LoginActivity.class);

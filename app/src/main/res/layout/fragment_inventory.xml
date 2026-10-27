@@ -63,6 +63,11 @@
             <include
                 android:id="@+id/dropdown_branch"
                 layout="@layout/view_filter_dropdown" />
+
+                <include
+                    android:id="@+id/dropdown_stock_status"
+                    layout="@layout/view_filter_dropdown" />
+
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>

@@ -34,11 +34,6 @@ import com.example.francosperfumemobile.helpers.StatusStyle;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Batches of one product at one branch.
- * Fixed: uses the branch of the row that was tapped (an Owner looking at another branch used
- * to see their own branch's batches), and Edit batch now works.
- */
 public class InventoryBatchListActivity extends BaseActivity {
 
     private static final String PRODUCT_ID = "PRODUCT_ID";
@@ -56,14 +51,11 @@ public class InventoryBatchListActivity extends BaseActivity {
     private SwipeRefreshLayout swipeRefresh;
     private View progress, emptyState, topBar;
 
-    /** Old entry point: product only, the user's own branch. */
     public static Intent newIntent(Context context, int productId) {
         Intent intent = new Intent(context, InventoryBatchListActivity.class);
         intent.putExtra(PRODUCT_ID, productId);
         return intent;
     }
-
-    /** Opens the batches for the branch of the tapped inventory row. */
     public static Intent newIntent(Context context, DisplayInventoryDTO product) {
         Intent intent = newIntent(context, product.getProductId());
         if (product.getBranchId() != null) intent.putExtra(BRANCH_ID, product.getBranchId().intValue());
@@ -182,7 +174,6 @@ public class InventoryBatchListActivity extends BaseActivity {
         });
     }
 
-    /** Product summary card shown as the first row of the list. */
     private class HeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private int totalUnits = -1;
         private int batchCount = -1;
