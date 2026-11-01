@@ -7,6 +7,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputLayout;
+
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.dtos.inventorydtos.InventorySearchFilterDTO;
 
@@ -129,6 +132,70 @@ public class FilterManager<T> {
                 }
             };
         }
+    }
+
+    public interface OnMultiFilterSelected {
+        void onSelected(List<String> values);
+    }
+
+    public static void setupMultiSelectDropdown(Context context, AutoCompleteTextView dropdown, List<String> items,
+                                                String allLabel, String dialogTitle, OnMultiFilterSelected listener) {
+        if (context == null || dropdown == null) return;
+
+        List<String> options = new ArrayList<>(addDefaultOption(items, allLabel));
+        options.remove(0);
+        List<String> selected = new ArrayList<>();
+
+        dropdown.setAdapter(new NoFilterAdapter(context, new ArrayList<>()));
+        dropdown.setText(allLabel, false);
+
+        View.OnClickListener open = v -> {
+            if (options.isEmpty()) return;
+            String[] labels = new String[options.size()];
+            boolean[] checked = new boolean[options.size()];
+            for (int i = 0; i < options.size(); i++) {
+                labels[i] = StatusStyle.label(options.get(i));
+                checked[i] = selected.contains(options.get(i));
+            }
+
+            new MaterialAlertDialogBuilder(context)
+                    .setTitle(dialogTitle)
+                    .setMultiChoiceItems(labels, checked, (dialog, which, isChecked) -> checked[which] = isChecked)
+                    .setPositiveButton(R.string.filter_apply, (dialog, which) -> {
+                        selected.clear();
+                        for (int i = 0; i < options.size(); i++) {
+                            if (checked[i]) selected.add(options.get(i));
+                        }
+                        dropdown.setText(multiSelectLabel(context, selected, allLabel), false);
+                        if (listener != null) listener.onSelected(new ArrayList<>(selected));
+                    })
+                    .setNeutralButton(R.string.filter_clear, (dialog, which) -> {
+                        selected.clear();
+                        dropdown.setText(allLabel, false);
+                        if (listener != null) listener.onSelected(new ArrayList<>());
+                    })
+                    .setNegativeButton(R.string.cancel_text, null)
+                    .show();
+        };
+
+        dropdown.setOnClickListener(open);
+        TextInputLayout layout = findTextInputLayout(dropdown);
+        if (layout != null) layout.setEndIconOnClickListener(open);
+    }
+
+    private static String multiSelectLabel(Context context, List<String> selected, String allLabel) {
+        if (selected.isEmpty()) return allLabel;
+        if (selected.size() == 1) return StatusStyle.label(selected.get(0));
+        return context.getString(R.string.filter_selected_count, selected.size());
+    }
+
+    private static TextInputLayout findTextInputLayout(View view) {
+        android.view.ViewParent parent = view.getParent();
+        while (parent instanceof View) {
+            if (parent instanceof TextInputLayout) return (TextInputLayout) parent;
+            parent = parent.getParent();
+        }
+        return null;
     }
 
     /** Puts a dropdown back on its "All ..." option without firing the listener. */

@@ -218,6 +218,10 @@
     <string name="filter_all_stages">All stages</string>
     <string name="filter_all_from_branches">All \'from\' branches</string>
     <string name="filter_all_to_branches">All \'to\' branches</string>
+    <string name="filter_status_title">Filter by status</string>
+    <string name="filter_apply">Apply</string>
+    <string name="filter_clear">Clear</string>
+    <string name="filter_selected_count">%1$d selected</string>
     <string name="empty_title">Nothing here yet</string>
     <string name="empty_message_filters">No results match your search or filters.</string>
     <string name="empty_message_none">There\'s nothing to show right now.</string>

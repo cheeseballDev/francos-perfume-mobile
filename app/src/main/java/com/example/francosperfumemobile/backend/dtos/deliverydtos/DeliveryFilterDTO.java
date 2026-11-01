@@ -1,12 +1,14 @@
 package com.example.francosperfumemobile.backend.dtos.deliverydtos;
 
+import java.util.List;
+
 public class DeliveryFilterDTO {
     private int PageCount = 1;
     private int PageSize = 20;
     private String Search;
     private String FromBranch;
     private String ToBranch;
-    private String Status;
+    private List<String> Status;
     private String FromDate;
     private String ToDate;
     private String Direction;
@@ -35,11 +37,11 @@ public class DeliveryFilterDTO {
         Search = search;
     }
 
-    public String getStatus() {
+    public List<String> getStatus() {
         return Status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(List<String> status) {
         Status = status;
     }
 

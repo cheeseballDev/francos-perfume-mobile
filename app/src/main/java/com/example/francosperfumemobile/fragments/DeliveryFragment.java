@@ -161,7 +161,7 @@ public class DeliveryFragment extends Fragment {
     }
 
     private boolean hasFilters() {
-        return currentFilter.getSearch() != null || currentFilter.getStatus() != null || currentFilter.getDirection() != null
+        return currentFilter.getSearch() != null || (currentFilter.getStatus() != null && !currentFilter.getStatus().isEmpty()) || currentFilter.getDirection() != null
                 || currentFilter.getFromBranch() != null || currentFilter.getToBranch() != null;
     }
 
@@ -170,9 +170,9 @@ public class DeliveryFragment extends Fragment {
             @Override
             public void onSuccess(@Nullable DeliveryFiltersResponse filters) {
                 if (filters == null) return;
-                FilterManager.setupDropdown(requireContext(), dropdownStatus, filters.getStatus(),
-                        getString(R.string.filter_all_statuses), value -> {
-                            currentFilter.setStatus(value); // was setSearch(...) before
+                FilterManager.setupMultiSelectDropdown(requireContext(), dropdownStatus, filters.getStatus(),
+                        getString(R.string.filter_all_statuses), getString(R.string.filter_status_title), values -> {
+                            currentFilter.setStatus(values.isEmpty() ? null : values);
                             fetchDeliveries(1);
                         });
                 FilterManager.setupDropdown(requireContext(), dropdownFromBranch, filters.getFromBranches(),

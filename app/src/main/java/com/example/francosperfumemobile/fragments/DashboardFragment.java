@@ -25,9 +25,7 @@ import com.example.francosperfumemobile.backend.responses.KPIResponses.LowStockK
 import com.example.francosperfumemobile.backend.responses.KPIResponses.PendingRequestsKPIResponse;
 import com.example.francosperfumemobile.backend.responses.KPIResponses.RequestsInUserStageKPIResponse;
 import com.example.francosperfumemobile.backend.responses.KPIResponses.UpcomingDeliveriesKPIResponse;
-import com.example.francosperfumemobile.backend.retrofit.SessionManager;
 import com.example.francosperfumemobile.components.DashboardCardView;
-import com.example.francosperfumemobile.helpers.DateUtils;
 import com.example.francosperfumemobile.helpers.SafeCallback;
 import com.example.francosperfumemobile.helpers.StatusStyle;
 
@@ -71,16 +69,6 @@ public class DashboardFragment extends Fragment {
     }
 
     private void initializeUI(View view) {
-        SessionManager session = new SessionManager(requireContext());
-        TextView greeting = view.findViewById(R.id.text_view_dashboard_greeting);
-        TextView subtitle = view.findViewById(R.id.text_view_dashboard_subtitle);
-        String first = session.getFirstName();
-        greeting.setText(first != null && !first.isEmpty()
-                ? getString(R.string.dashboard_greeting_name, DateUtils.greeting(), first)
-                : DateUtils.greeting());
-        String branch = session.getBranchLocation();
-        subtitle.setText(branch != null ? getString(R.string.dashboard_subtitle_branch, branch) : getString(R.string.dashboard_subtitle));
-
         swipeRefresh = view.findViewById(R.id.swipe_refresh_dashboard);
         swipeRefresh.setColorSchemeResources(R.color.fp_foreground);
         swipeRefresh.setProgressBackgroundColorSchemeResource(R.color.fp_card);

@@ -171,7 +171,7 @@ public class RequestFragment extends Fragment {
     }
 
     private boolean hasFilters() {
-        return currentFilter.getSearch() != null || currentFilter.getRequestStatus() != null
+        return currentFilter.getSearch() != null || (currentFilter.getRequestStatus() != null && !currentFilter.getRequestStatus().isEmpty())
                 || currentFilter.getStage() != null || currentFilter.getDirection() != null;
     }
 
@@ -180,9 +180,9 @@ public class RequestFragment extends Fragment {
             @Override
             public void onSuccess(@Nullable RequestFiltersResponse filters) {
                 if (filters == null) return;
-                FilterManager.setupDropdown(requireContext(), dropdownStatus, filters.getRequestStatus(),
-                        getString(R.string.filter_all_statuses), value -> {
-                            currentFilter.setRequestStatus(value);
+                FilterManager.setupMultiSelectDropdown(requireContext(), dropdownStatus, filters.getRequestStatus(),
+                        getString(R.string.filter_all_statuses), getString(R.string.filter_status_title), values -> {
+                            currentFilter.setRequestStatus(values.isEmpty() ? null : values);
                             fetchRequests(1);
                         });
                 FilterManager.setupDropdown(requireContext(), dropdownStage, filters.getStages(),

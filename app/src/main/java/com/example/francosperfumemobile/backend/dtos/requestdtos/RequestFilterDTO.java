@@ -21,7 +21,7 @@ public class RequestFilterDTO {
     private Integer ToBranchId;
 
     @SerializedName("requestStatus")
-    private String RequestStatus;
+    private List<String> RequestStatus;
 
     @SerializedName("direction")
     private String Direction;
@@ -76,11 +76,11 @@ public class RequestFilterDTO {
         ToBranchId = toBranchId;
     }
 
-    public String getRequestStatus() {
+    public List<String> getRequestStatus() {
         return RequestStatus;
     }
 
-    public void setRequestStatus(String requestStatus) {
+    public void setRequestStatus(List<String> requestStatus) {
         RequestStatus = requestStatus;
     }
     public String getDirection(){return Direction;}

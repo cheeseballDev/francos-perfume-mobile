@@ -8,6 +8,8 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.*;
 
+import java.util.List;
+
 public interface DeliveryAPIEndpoints {
 
     @GET("api/deliveries")
@@ -15,9 +17,9 @@ public interface DeliveryAPIEndpoints {
             @Query("PageCount") int pageCount,
             @Query("PageSize") int pageSize,
             @Query("Search") String search,
-            @Query("FromBranches") String fromBranch,
-            @Query("ToBranches") String toBranch,
-            @Query("Status") String deliveryStatus,
+            @Query("FromBranch") String fromBranch,
+            @Query("ToBranch") String toBranch,
+            @Query("Status") List<String> deliveryStatus,
             @Query("Direction") String direction,
             @Query("FromDate") String fromDate,
             @Query("ToDate") String toDate

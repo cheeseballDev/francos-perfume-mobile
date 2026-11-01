@@ -18,7 +18,7 @@ public interface RequestAPIEndpoints {
             @Query("Search") String search,
             @Query("FromBranchId") Integer fromBranchId,
             @Query("ToBranchId") Integer toBranchId,
-            @Query("RequestStatus") String requestStatus,
+            @Query("RequestStatus") List<String> requestStatus,
             @Query("Direction") String direction,
             @Query("FromDate") String fromDate,
             @Query("ToDate") String toDate,
