@@ -63,22 +63,33 @@
                                     android:textSize="20sp"
                                     tools:text="DEL-0003" />
 
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingTop="8dp"
+                                android:paddingBottom="8dp"
+                                android:gravity="center_vertical"
+                                >
+
                                 <TextView
                                     android:id="@+id/text_view_delivery_details_direction"
                                     style="@style/Widget.FP.StatusBadge"
-                                    android:layout_marginStart="8dp"
                                     tools:text="Inbound" />
 
                                 <View
-                                    android:layout_width="0dp"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="1" />
+                                    android:layout_width="16dp"
+                                    android:layout_height="0dp" />
 
                                 <TextView
                                     android:id="@+id/text_view_delivery_details_status"
                                     style="@style/Widget.FP.StatusBadge"
                                     tools:text="In transit" />
+
                             </LinearLayout>
+
 
                             <View
                                 style="@style/Widget.FP.Divider"

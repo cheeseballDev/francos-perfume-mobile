@@ -153,7 +153,7 @@ public class RequestDetailsActivity extends BaseActivity {
         buttonCancelRequest.setOnClickListener(v -> confirmCancel());
     }
 
-    // ------------------------------------------------------------------ loading
+    // loading
 
     private void fetchRequestDetails(boolean firstLoad) {
         if (firstLoad) progressBarMain.setVisibility(View.VISIBLE);

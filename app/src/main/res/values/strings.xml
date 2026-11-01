@@ -251,7 +251,7 @@
     <string name="reject_confirm_message">The requester will see your reason. This cannot be undone.</string>
     <string name="hint_reject_reason">Reason for rejecting</string>
     <string name="rejecting">Rejecting…</string>
-    <string name="cancel_request">Cancel request</string>
+    <string name="cancel_request">Cancel</string>
     <string name="cancel_request_confirm_title">Cancel this request?</string>
     <string name="cancel_request_confirm_message">This cannot be undone. The request will be terminated.</string>
     <string name="toast_request_approved">Request approved</string>
