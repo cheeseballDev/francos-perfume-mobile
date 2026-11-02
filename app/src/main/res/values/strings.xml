@@ -113,6 +113,7 @@
     <string name="error_invalid_credentials">Incorrect email or password.</string>
     <string name="error_login_generic">We couldn\'t log you in. Please try again.</string>
     <string name="error_session_expired">Your session has expired. Please log in again.</string>
+    <string name="error_session_revoked">Your account was changed by an administrator. Please log in again.</string>
     <string name="error_role_not_allowed">%1$s accounts can\'t use the mobile app. Please use the website.</string>
 
     <!-- OTP -->
@@ -272,11 +273,8 @@
     <string name="products_label">Products</string>
     <string name="total_units_label">Total units</string>
     <string name="product_number">Product #%1$d</string>
-    <string name="receive_title">Receiving details</string>
-    <string name="receive_subtitle">Pick the expiry date printed on the stock that arrived.</string>
     <string name="label_expiry_date">Expiry date</string>
     <string name="hint_pick_date">Pick a date</string>
-    <string name="expiry_helper">Saved on the new batch</string>
     <string name="receive_items_hint">Untick missing items or lower the quantity, then pick a reason.</string>
     <string name="reason_select">Select reason…</string>
     <string name="mark_in_transit">Mark in transit</string>
@@ -340,6 +338,7 @@
     <string name="create_lines_title">Products in this request</string>
     <string name="create_no_lines">No products added yet.</string>
     <string name="create_lines_cleared">Source branch changed, so the product list was cleared.</string>
+    <string name="create_request_own_branch_only">You can only create requests that involve your branch.</string>
     <string name="create_message_title">Message (optional)</string>
     <string name="create_message_hint">Anything the approvers should know</string>
     <string name="create_summary">%1$s · %2$s</string>

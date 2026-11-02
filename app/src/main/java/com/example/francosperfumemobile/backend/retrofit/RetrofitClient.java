@@ -53,7 +53,8 @@ public class RetrofitClient {
             Response response = chain.proceed(builder.build());
 
             if (response.code() == 401 && sentToken && !isAuthCall(original)) {
-                SessionEvents.onSessionExpired(appContext);
+                boolean revoked = "true".equalsIgnoreCase(response.header("X-Session-Revoked"));
+                SessionEvents.onSessionExpired(appContext, revoked);
             }
             return response;
         };

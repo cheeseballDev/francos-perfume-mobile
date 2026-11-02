@@ -19,6 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class SessionEvents {
 
     public static final String EXTRA_SESSION_EXPIRED = "SESSION_EXPIRED";
+    public static final String EXTRA_SESSION_REVOKED = "SESSION_REVOKED";
 
     // Several calls can fail at once; only react to the first one
     private static final AtomicBoolean handling = new AtomicBoolean(false);
@@ -27,6 +28,11 @@ public final class SessionEvents {
     }
 
     public static void onSessionExpired(Context context) {
+        onSessionExpired(context, false);
+    }
+
+    /** revoked = the server rejected the token because the account was changed (deactivated, role, password...). */
+    public static void onSessionExpired(Context context, boolean revoked) {
         if (!handling.compareAndSet(false, true)) return;
 
         Context appContext = context.getApplicationContext();
@@ -41,6 +47,7 @@ public final class SessionEvents {
 
             Intent intent = new Intent(appContext, LoginActivity.class);
             intent.putExtra(EXTRA_SESSION_EXPIRED, true);
+            intent.putExtra(EXTRA_SESSION_REVOKED, revoked);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             appContext.startActivity(intent);
         });

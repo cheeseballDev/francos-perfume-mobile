@@ -168,63 +168,6 @@
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Receive: expiry date (was hard-coded to 2026-12-31) -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/card_receive_details"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:visibility="gone"
-                        tools:visibility="visible">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <TextView
-                                style="@style/Text.FP.SectionTitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/receive_title" />
-
-                            <TextView
-                                style="@style/Text.FP.Caption"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="@string/receive_subtitle" />
-
-                            <TextView
-                                style="@style/Text.FP.Value"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="14dp"
-                                android:layout_marginBottom="6dp"
-                                android:text="@string/label_expiry_date" />
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/text_input_layout_expiry_date"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:endIconDrawable="@drawable/ic_calendar"
-                                app:endIconMode="custom"
-                                app:helperText="@string/expiry_helper"
-                                app:hintEnabled="false">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/edit_text_expiry_date"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:cursorVisible="false"
-                                    android:focusable="false"
-                                    android:hint="@string/hint_pick_date"
-                                    android:inputType="none" />
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
                     <!-- Items -->
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"

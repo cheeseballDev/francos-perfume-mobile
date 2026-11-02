@@ -19,6 +19,7 @@ import com.example.francosperfumemobile.backend.dtos.requestdtos.CreateRequestDT
 import com.example.francosperfumemobile.backend.dtos.requestdtos.CreateRequestItemDTO;
 import com.example.francosperfumemobile.backend.dtos.requestdtos.RequestProductFilterDTO;
 import com.example.francosperfumemobile.backend.repository.RequestRepository;
+import com.example.francosperfumemobile.backend.retrofit.SessionManager;
 import com.example.francosperfumemobile.backend.responses.requestresponses.CreateRequestResponse;
 import com.example.francosperfumemobile.backend.responses.requestresponses.RequestFiltersResponse;
 import com.example.francosperfumemobile.helpers.ButtonLoading;
@@ -55,6 +56,8 @@ public class CreateRequestActivity extends BaseActivity {
     private final Map<Integer, Line> lines = new LinkedHashMap<>();
 
     private BranchDTO fromBranch, toBranch;
+    private boolean isOwner;
+    private int ownBranchId;
     private RequestProductFilterDTO selectedProduct;
 
     private MaterialAutoCompleteTextView dropdownFrom, dropdownTo, dropdownProduct;
@@ -87,6 +90,11 @@ public class CreateRequestActivity extends BaseActivity {
         View topBar = findViewById(R.id.top_bar_create_request);
         InsetsHelper.applyEdgeToEdge(root, topBar, null, true);
         setupDetailTopBar(topBar, getString(R.string.create_request_title), null);
+
+        SessionManager session = new SessionManager(this);
+        String role = session.getRole();
+        isOwner = role != null && role.trim().toUpperCase(Locale.ROOT).equals("OWNER");
+        ownBranchId = session.getBranchId();
 
         dropdownFrom = findViewById(R.id.dropdown_create_from_branch);
         dropdownTo = findViewById(R.id.dropdown_create_to_branch);
@@ -158,26 +166,29 @@ public class CreateRequestActivity extends BaseActivity {
             Toast.makeText(this, R.string.create_lines_cleared, Toast.LENGTH_SHORT).show();
         }
         fromBranch = branch;
-        if (toBranch != null && toBranch.getBranchId() == branch.getBranchId()) {
-            toBranch = null;
-            dropdownTo.setText("", false);
-        }
+        toBranch = null;
+        dropdownTo.setText("", false);
         updateToBranchOptions();
         loadProducts(branch.getBranchId());
         refreshSummary();
     }
 
-    /** Destination: any branch except the source and the warehouse (website: BranchSelector). */
+    /** Destination: not the source or the warehouse; non-owners must involve their own branch (website: CreateTransferRequestPage). */
     private void updateToBranchOptions() {
         List<BranchDTO> options = new ArrayList<>();
         for (BranchDTO b : branches) {
             boolean isSource = fromBranch != null && b.getBranchId() == fromBranch.getBranchId();
             boolean isWarehouse = b.getBranchLocation() != null && b.getBranchLocation().toUpperCase(Locale.ROOT).contains("WAREHOUSE");
-            if (!isSource && !isWarehouse) options.add(b);
+            if (isSource || isWarehouse) continue;
+            boolean involvesOwnBranch = fromBranch == null
+                    || fromBranch.getBranchId() == ownBranchId
+                    || b.getBranchId() == ownBranchId;
+            if (isOwner || involvesOwnBranch) options.add(b);
         }
         List<String> names = new ArrayList<>();
         for (BranchDTO b : options) names.add(b.getBranchLocation());
         dropdownTo.setAdapter(new FilterManager.NoFilterAdapter(this, names));
+        dropdownTo.setEnabled(fromBranch != null);
         dropdownTo.setOnItemClickListener((parent, view, position, id) -> {
             toBranch = options.get(position);
             refreshSummary();
@@ -345,6 +356,10 @@ public class CreateRequestActivity extends BaseActivity {
     }
 
     private void submit() {
+        if (!isOwner && fromBranch.getBranchId() != ownBranchId && toBranch.getBranchId() != ownBranchId) {
+            Toast.makeText(this, R.string.create_request_own_branch_only, Toast.LENGTH_LONG).show();
+            return;
+        }
         CreateRequestDTO dto = new CreateRequestDTO();
         dto.setFromBranch(fromBranch.getBranchLocation());
         dto.setToBranch(toBranch.getBranchLocation());

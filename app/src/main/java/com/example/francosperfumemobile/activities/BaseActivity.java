@@ -2,6 +2,8 @@ package com.example.francosperfumemobile.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.francosperfumemobile.R;
 import com.example.francosperfumemobile.backend.repository.NotificationRepository;
+import com.example.francosperfumemobile.backend.repository.SessionRepository;
 import com.example.francosperfumemobile.backend.responses.NotificationListResponse;
 import com.example.francosperfumemobile.backend.retrofit.SessionManager;
 import com.example.francosperfumemobile.helpers.AccessRules;
@@ -22,6 +25,7 @@ import com.example.francosperfumemobile.helpers.NavigationHelper;
 import com.example.francosperfumemobile.helpers.StatusStyle;
 import com.google.gson.JsonElement;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,6 +42,17 @@ public class BaseActivity extends AppCompatActivity {
 
     protected SessionManager sessionManager;
     private TextView notificationBadge;
+
+    /** How often an open screen asks the server if the session is still valid (deactivated/changed accounts get logged out). */
+    private static final long SESSION_CHECK_MS = 30_000;
+    private final Handler sessionHandler = new Handler(Looper.getMainLooper());
+    private final Runnable sessionCheck = new Runnable() {
+        @Override
+        public void run() {
+            checkSession();
+            sessionHandler.postDelayed(this, SESSION_CHECK_MS);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +72,28 @@ public class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         refreshUnreadBadge();
+        sessionHandler.removeCallbacks(sessionCheck);
+        sessionHandler.post(sessionCheck);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sessionHandler.removeCallbacks(sessionCheck);
+    }
+
+    private void checkSession() {
+        if (sessionManager == null || !sessionManager.isLoggedIn()) return;
+        new SessionRepository(this).ping().enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.body() != null) response.body().close();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+            }
+        });
     }
 
     // ------------------------------------------------------------------ drawer

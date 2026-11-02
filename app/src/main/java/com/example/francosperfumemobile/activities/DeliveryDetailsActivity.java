@@ -1,6 +1,5 @@
 package com.example.francosperfumemobile.activities;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,11 +33,8 @@ import com.example.francosperfumemobile.helpers.InsetsHelper;
 import com.example.francosperfumemobile.helpers.SafeCallback;
 import com.example.francosperfumemobile.helpers.StatusStyle;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,26 +46,21 @@ import java.util.Locale;
  *  - receiving branch, while in transit:   the receive form + Confirm delivery
  *  - anything else:                        "No action required"
  * Every action asks for confirmation and disables the buttons while it runs.
- * Receiving sends the expiry date the user picked (it used to be hard-coded to 2026-12-31).
+ * The backend sets the expiry date of received stock, so the app does not ask for it.
  */
 public class DeliveryDetailsActivity extends BaseActivity {
 
     private static final String EXTRA_DELIVERY_ID = "DELIVERY_ID";
-    private static final String STATE_EXPIRY = "expiry";
 
     private int deliveryId;
     private DisplayDeliveryDetailsDTO details;
     private AccessRules.DeliveryActions actions = null;
-    private String expiryIso; // yyyy-MM-ddT12:00:00Z
-    private Calendar expiryCalendar;
 
-    private View topBar, scrollContent, bottomBar, layoutInboundActions, layoutOutboundActions, receiveCard, emptyState, progress;
+    private View topBar, scrollContent, bottomBar, layoutInboundActions, layoutOutboundActions, emptyState, progress;
     private SwipeRefreshLayout swipeRefresh;
     private TextView textViewId, textViewDirection, textViewStatus, textViewItemsHint, textViewNoAction, textViewActionsHint;
     private TextView infoFrom, infoTo, infoCreatedBy, infoDate, infoProducts, infoUnits;
     private MaterialButton buttonConfirmDelivery, buttonCancel, buttonMarkInTransit;
-    private TextInputLayout layoutExpiry;
-    private TextInputEditText editTextExpiry;
     private RecyclerView recyclerViewItems;
     private DeliveryItemsAdapter deliveryItemsAdapter;
 
@@ -92,16 +83,9 @@ public class DeliveryDetailsActivity extends BaseActivity {
             finish();
             return;
         }
-        if (savedInstanceState != null) expiryIso = savedInstanceState.getString(STATE_EXPIRY);
 
         initializeUI();
         fetchDeliveryDetails(true);
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(STATE_EXPIRY, expiryIso);
     }
 
     private void initializeUI() {
@@ -138,12 +122,6 @@ public class DeliveryDetailsActivity extends BaseActivity {
         buttonConfirmDelivery = findViewById(R.id.button_confirm_delivery);
         buttonCancel = findViewById(R.id.button_cancel_request);
         buttonMarkInTransit = findViewById(R.id.button_mark_in_transit);
-
-        receiveCard = findViewById(R.id.card_receive_details);
-        layoutExpiry = findViewById(R.id.text_input_layout_expiry_date);
-        editTextExpiry = findViewById(R.id.edit_text_expiry_date);
-        editTextExpiry.setOnClickListener(v -> pickExpiryDate());
-        layoutExpiry.setEndIconOnClickListener(v -> pickExpiryDate());
 
         recyclerViewItems = findViewById(R.id.recycler_view_delivery_items);
         recyclerViewItems.setLayoutManager(new LinearLayoutManager(this));
@@ -233,11 +211,8 @@ public class DeliveryDetailsActivity extends BaseActivity {
         deliveryItemsAdapter = new DeliveryItemsAdapter(items, actions.canReceive, false);
         recyclerViewItems.setAdapter(deliveryItemsAdapter);
 
-        // Receive form
-        receiveCard.setVisibility(actions.canReceive ? View.VISIBLE : View.GONE);
         textViewItemsHint.setVisibility(actions.canReceive ? View.VISIBLE : View.GONE);
         textViewItemsHint.setText(R.string.receive_items_hint);
-        if (actions.canReceive) showExpiry();
 
         // Buttons
         bottomBar.setVisibility(actions.any() ? View.VISIBLE : View.GONE);
@@ -252,30 +227,6 @@ public class DeliveryDetailsActivity extends BaseActivity {
         textViewNoAction.setText(getString(R.string.no_action_required, StatusStyle.label(data.getDeliveryStatus()).toLowerCase(Locale.getDefault())));
     }
 
-    // ------------------------------------------------------------- expiry date
-
-    private void showExpiry() {
-        if (expiryIso == null) {
-            editTextExpiry.setText("");
-            return;
-        }
-        expiryCalendar = DateUtils.toCalendar(expiryIso);
-        editTextExpiry.setText(DateUtils.formatDate(expiryIso));
-        layoutExpiry.setError(null);
-    }
-
-    private void pickExpiryDate() {
-        Calendar initial = expiryCalendar != null ? expiryCalendar : Calendar.getInstance();
-        if (expiryCalendar == null) initial.add(Calendar.YEAR, 1);
-        DatePickerDialog dialog = new DatePickerDialog(this, (picker, year, month, day) -> {
-            expiryIso = DateUtils.toIsoUtcDate(year, month, day);
-            showExpiry();
-        }, initial.get(Calendar.YEAR), initial.get(Calendar.MONTH), initial.get(Calendar.DAY_OF_MONTH));
-        // An expiry date in the past makes no sense for stock that just arrived
-        dialog.getDatePicker().setMinDate(System.currentTimeMillis());
-        dialog.show();
-    }
-
     // ------------------------------------------------------------------ actions
 
     private void confirmReceive() {
@@ -283,11 +234,6 @@ public class DeliveryDetailsActivity extends BaseActivity {
         List<DeliveryItemDTO> items = deliveryItemsAdapter.getItems();
         if (items.isEmpty()) {
             Toast.makeText(this, R.string.error_no_items_to_receive, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (expiryIso == null) {
-            layoutExpiry.setError(getString(R.string.error_expiry_required));
-            scrollContent.post(() -> ((androidx.core.widget.NestedScrollView) scrollContent).smoothScrollTo(0, receiveCard.getTop()));
             return;
         }
 
@@ -322,7 +268,6 @@ public class DeliveryDetailsActivity extends BaseActivity {
         }
 
         ReceiveDeliveryDTO dto = new ReceiveDeliveryDTO();
-        dto.setExpiryDate(expiryIso);
         dto.setItems(receiveItems);
 
         ButtonLoading.start(buttonConfirmDelivery, getString(R.string.confirming));
@@ -389,7 +334,6 @@ public class DeliveryDetailsActivity extends BaseActivity {
     private void onActionDone(String toast) {
         Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK); // the deliveries list refreshes when we go back
-        expiryIso = null;
         fetchDeliveryDetails(false);
     }
 

@@ -111,8 +111,10 @@ public class LoginActivity extends AppCompatActivity {
     private void showIntentMessage(@Nullable Intent intent) {
         if (intent == null || textViewMessage == null) return;
         if (intent.getBooleanExtra(SessionEvents.EXTRA_SESSION_EXPIRED, false)) {
-            showMessage(getString(R.string.error_session_expired), true);
+            boolean revoked = intent.getBooleanExtra(SessionEvents.EXTRA_SESSION_REVOKED, false);
+            showMessage(getString(revoked ? R.string.error_session_revoked : R.string.error_session_expired), true);
             intent.removeExtra(SessionEvents.EXTRA_SESSION_EXPIRED);
+            intent.removeExtra(SessionEvents.EXTRA_SESSION_REVOKED);
         } else if (intent.hasExtra(EXTRA_NOTICE)) {
             showMessage(intent.getStringExtra(EXTRA_NOTICE), false);
             intent.removeExtra(EXTRA_NOTICE);
