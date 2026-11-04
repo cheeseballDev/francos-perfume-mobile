@@ -35,6 +35,8 @@ public class DisplayRequestDetailsDTO {
     private List<DisplayRequestItemDetailsDTO> Items;
     @SerializedName("approvals")
     private List<DisplayRequestApprovalDetailsDTO> Approvals;
+    @SerializedName("requestorEmployeeId")
+    private int RequestorEmployeeId;
 
     public int getRequestId() {
         return RequestId;
@@ -151,5 +153,13 @@ public class DisplayRequestDetailsDTO {
 
     public void setApprovals(List<DisplayRequestApprovalDetailsDTO> approvals) {
         Approvals = approvals;
+    }
+
+    public int getRequestorEmployeeId() {
+        return RequestorEmployeeId;
+    }
+
+    public void setRequestorEmployeeId(int requestorEmployeeId) {
+        RequestorEmployeeId = requestorEmployeeId;
     }
 }

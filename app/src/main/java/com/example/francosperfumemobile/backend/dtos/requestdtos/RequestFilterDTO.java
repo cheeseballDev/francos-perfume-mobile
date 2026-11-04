@@ -35,6 +35,11 @@ public class RequestFilterDTO {
     @SerializedName("toDate")
     private String ToDate;
 
+    @SerializedName("fromBranches")
+    private String FromBranches;
+    @SerializedName("toBranches")
+    private String ToBranches;
+
     private List<DisplayRequestApprovalDetailsDTO> approvalDetailsDTOS;
     public int getPageCount() {
         return PageCount;
@@ -109,5 +114,21 @@ public class RequestFilterDTO {
 
     public void setApprovalDetailsDTOS(List<DisplayRequestApprovalDetailsDTO> approvalDetailsDTOS) {
         this.approvalDetailsDTOS = approvalDetailsDTOS;
+    }
+
+    public String getFromBranches() {
+        return FromBranches;
+    }
+
+    public void setFromBranches(String fromBranches) {
+        FromBranches = fromBranches;
+    }
+
+    public String getToBranches() {
+        return ToBranches;
+    }
+
+    public void setToBranches(String toBranches) {
+        ToBranches = toBranches;
     }
 }

@@ -90,13 +90,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-            <include
-                android:id="@+id/dropdown_status"
-                layout="@layout/view_filter_dropdown" />
+                <include
+                    android:id="@+id/dropdown_from_branch"
+                    layout="@layout/view_filter_dropdown" />
 
-            <include
-                android:id="@+id/dropdown_stage"
-                layout="@layout/view_filter_dropdown" />
+                <include
+                    android:id="@+id/dropdown_to_branch"
+                    layout="@layout/view_filter_dropdown" />
+
+                <include
+                    android:id="@+id/dropdown_status"
+                    layout="@layout/view_filter_dropdown" />
+
+                <include
+                    android:id="@+id/dropdown_stage"
+                    layout="@layout/view_filter_dropdown" />
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>

@@ -35,8 +35,6 @@ public class DisplayRequestDTO {
     private String RequestStage;
     @SerializedName("requestDirection")
     private String RequestDirection;
-
-
     @SerializedName("requestMessage")
     private String RequestMessage;
 
@@ -48,7 +46,6 @@ public class DisplayRequestDTO {
 
     @SerializedName("itemCount")
     private int ItemCount;
-
 
     public int getRequestId() {
         return RequestId;
@@ -167,4 +164,5 @@ public class DisplayRequestDTO {
     public void setItemCount(int itemCount) {
         ItemCount = itemCount;
     }
+
 }

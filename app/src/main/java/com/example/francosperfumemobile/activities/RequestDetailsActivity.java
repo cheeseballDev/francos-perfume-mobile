@@ -26,6 +26,7 @@ import com.example.francosperfumemobile.backend.responses.requestresponses.Appro
 import com.example.francosperfumemobile.backend.responses.requestresponses.CancelResponse;
 import com.example.francosperfumemobile.backend.responses.requestresponses.RejectResponse;
 import com.example.francosperfumemobile.backend.responses.requestresponses.RequestDetailResponse;
+import com.example.francosperfumemobile.backend.retrofit.SessionManager;
 import com.example.francosperfumemobile.dialogs.MessageDialog;
 import com.example.francosperfumemobile.helpers.AccessRules;
 import com.example.francosperfumemobile.helpers.ButtonLoading;
@@ -118,6 +119,7 @@ public class RequestDetailsActivity extends BaseActivity {
         buttonApprove = findViewById(R.id.button_accept);
         buttonReject = findViewById(R.id.button_reject_cancel);
         buttonOpenMessage = findViewById(R.id.button_open_message);
+
         buttonCancelRequest = findViewById(R.id.button_cancel_request);
     }
 
@@ -242,7 +244,7 @@ public class RequestDetailsActivity extends BaseActivity {
         if (canApprove && pending != null) {
             textViewActionsHint.setText(getString(R.string.reviewing_as, StatusStyle.label(pending.getStage())));
         }
-        buttonCancelRequest.setVisibility(AccessRules.canCancelRequest(data) ? View.VISIBLE : View.GONE);
+        buttonCancelRequest.setVisibility(AccessRules.canCancelRequest(sessionManager, data) ? View.VISIBLE : View.GONE);
         updateApproveButton();
     }
 

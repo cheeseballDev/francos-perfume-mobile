@@ -14,6 +14,12 @@ public class RequestFiltersResponse {
     @SerializedName("branches")
     private List<BranchDTO> branches;
 
+    @SerializedName("fromBranches")
+    private List<String> fromBranches;
+
+    @SerializedName("toBranches")
+    private List<String> toBranches;
+
     @SerializedName("direction")
     private List<String> direction;
 
@@ -61,5 +67,21 @@ public class RequestFiltersResponse {
 
     public void setProducts(List<RequestProductFilterDTO> products) {
         this.products = products;
+    }
+
+    public List<String> getFromBranches() {
+        return fromBranches;
+    }
+
+    public void setFromBranches(List<String> fromBranches) {
+        this.fromBranches = fromBranches;
+    }
+
+    public List<String> getToBranches() {
+        return toBranches;
+    }
+
+    public void setToBranches(List<String> toBranches) {
+        this.toBranches = toBranches;
     }
 }

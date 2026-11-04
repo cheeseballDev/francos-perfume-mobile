@@ -50,7 +50,7 @@ public class RequestFragment extends Fragment {
     private PaginationHelper pagination;
     private ListScreenState listState;
     private DebouncedTextWatcher searchWatcher;
-    private AutoCompleteTextView dropdownStatus, dropdownStage;
+    private AutoCompleteTextView dropdownStatus, dropdownStage, dropdownFromBranches, dropdownToBranches;
     private Call<RequestListResponse> currentCall;
 
     // Details screen returns RESULT_OK after an action, so the list shows the new status
@@ -124,8 +124,12 @@ public class RequestFragment extends Fragment {
 
         dropdownStatus = InventoryFragment.dropdown(view, R.id.dropdown_status);
         dropdownStage = InventoryFragment.dropdown(view, R.id.dropdown_stage);
+        dropdownFromBranches = InventoryFragment.dropdown(view, R.id.dropdown_from_branch);
+        dropdownToBranches = InventoryFragment.dropdown(view, R.id.dropdown_to_branch);
         dropdownStatus.setText(getString(R.string.filter_all_statuses), false);
         dropdownStage.setText(getString(R.string.filter_all_stages), false);
+        dropdownFromBranches.setText(getString(R.string.filter_all_from_branches), false);
+        dropdownToBranches.setText(getString(R.string.filter_all_to_branches), false);
 
         initializeDropdowns();
         fetchRequests(1);
@@ -172,7 +176,8 @@ public class RequestFragment extends Fragment {
 
     private boolean hasFilters() {
         return currentFilter.getSearch() != null || (currentFilter.getRequestStatus() != null && !currentFilter.getRequestStatus().isEmpty())
-                || currentFilter.getStage() != null || currentFilter.getDirection() != null;
+                || currentFilter.getStage() != null || currentFilter.getDirection() != null
+                || currentFilter.getFromBranches() != null || currentFilter.getToBranches() !=null;
     }
 
     private void initializeDropdowns() {
@@ -180,6 +185,19 @@ public class RequestFragment extends Fragment {
             @Override
             public void onSuccess(@Nullable RequestFiltersResponse filters) {
                 if (filters == null) return;
+
+                FilterManager.setupDropdown(requireContext(), dropdownFromBranches, filters.getFromBranches(),
+                        getString(R.string.filter_all_from_branches), value -> {
+                            currentFilter.setFromBranches(value);
+                            fetchRequests(1);
+                        });
+
+                FilterManager.setupDropdown(requireContext(), dropdownToBranches, filters.getToBranches(),
+                        getString(R.string.filter_all_to_branches), value -> {
+                            currentFilter.setToBranches(value);
+                            fetchRequests(1);
+                        });
+
                 FilterManager.setupMultiSelectDropdown(requireContext(), dropdownStatus, filters.getRequestStatus(),
                         getString(R.string.filter_all_statuses), getString(R.string.filter_status_title), values -> {
                             currentFilter.setRequestStatus(values.isEmpty() ? null : values);

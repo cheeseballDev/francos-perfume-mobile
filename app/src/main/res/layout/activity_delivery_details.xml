@@ -208,7 +208,6 @@
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Nothing to do (website: "No Action Required") -->
                     <TextView
                         android:id="@+id/text_view_delivery_no_action"
                         style="@style/Text.FP.Muted"

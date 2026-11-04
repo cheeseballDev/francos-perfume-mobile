@@ -86,8 +86,12 @@ public final class AccessRules {
     }
 
     /** Website shows "Cancel Request" while the request is still pending. */
-    public static boolean canCancelRequest(@Nullable DisplayRequestDetailsDTO request) {
-        return request != null && "PENDING".equals(normalize(request.getRequestStatus()));
+    public static boolean canCancelRequest(@Nullable SessionManager session, @Nullable DisplayRequestDetailsDTO request) {
+        if (session == null || request == null) return false;
+        if (!"PENDING".equals(normalize(request.getRequestStatus()))) return false;
+        if ("OWNER".equals(normalize(session.getRole()))) return true;
+        return request.getRequestorEmployeeId() > 0
+                && request.getRequestorEmployeeId() == session.getEmployeeId();
     }
 
     // ---------------------------------------------------------------- deliveries
