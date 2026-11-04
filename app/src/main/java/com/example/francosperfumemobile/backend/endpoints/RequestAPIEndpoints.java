@@ -16,13 +16,13 @@ public interface RequestAPIEndpoints {
             @Query("PageCount") int pageCount,
             @Query("PageSize") int pageSize,
             @Query("Search") String search,
-            @Query("FromBranchId") Integer fromBranchId,
-            @Query("ToBranchId") Integer toBranchId,
-            @Query("RequestStatus") List<String> requestStatus,
+            @Query("fromBranches") String fromBranches,
+            @Query("toBranches") String toBranches,
+            @Query("requestStatus") List<String> requestStatus,
             @Query("Direction") String direction,
             @Query("FromDate") String fromDate,
             @Query("ToDate") String toDate,
-            @Query("Stage") String stage
+            @Query("requestStages") List<String> requestStages
     );
 
     @GET("api/request/{id}")

@@ -23,7 +23,7 @@ public class RequestFiltersResponse {
     @SerializedName("direction")
     private List<String> direction;
 
-    @SerializedName("stages")
+    @SerializedName("requestStages")
     private List<String> stages;
 
     @SerializedName("products")

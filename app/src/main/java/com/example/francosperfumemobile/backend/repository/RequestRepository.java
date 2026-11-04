@@ -6,6 +6,8 @@ import com.example.francosperfumemobile.backend.dtos.requestdtos.*;
 import com.example.francosperfumemobile.backend.responses.requestresponses.*;
 import com.example.francosperfumemobile.backend.retrofit.RetrofitClient;
 import retrofit2.Call;
+
+import java.util.Collections;
 import java.util.Map;
 
 public class RequestRepository {
@@ -21,13 +23,13 @@ public class RequestRepository {
                 filter.getPageCount(),
                 filter.getPageSize(),
                 filter.getSearch(),
-                filter.getFromBranchId(),
-                filter.getToBranchId(),
+                filter.getFromBranches(),
+                filter.getToBranches(),
                 filter.getRequestStatus(),
                 filter.getDirection(),
                 filter.getFromDate(),
                 filter.getToDate(),
-                filter.getStage()
+                filter.getStage() == null ? null : Collections.singletonList(filter.getStage())
         );
     }
 
