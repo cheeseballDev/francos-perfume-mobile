@@ -244,7 +244,6 @@
     <string name="approved_quantity_label">Approve</string>
     <string name="hint_quantity">0</string>
     <string name="error_max_quantity">Max %1$d</string>
-    <string name="error_min_approved_quantity">Min 1. Untick to reject</string>
     <string name="remarks_format">Remarks: %1$s</string>
     <string name="quoted_format">“%1$s”</string>
     <string name="approve_partial_text">Approve selected</string>

@@ -1,6 +1,5 @@
 package com.example.francosperfumemobile.components;
 
-import android.annotation.SuppressLint;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -46,7 +45,6 @@ public class RequestedItemsViewHolder extends RecyclerView.ViewHolder {
         bind(item, null, true, null);
     }
 
-    @SuppressLint("StringFormatInvalid")
     public void bind(DisplayRequestItemDetailsDTO item, RequestedItemsAdapter.ItemApproval state,
                      boolean readOnly, Runnable onChanged) {
         productName.setText(item.getProductName());
@@ -94,7 +92,7 @@ public class RequestedItemsViewHolder extends RecyclerView.ViewHolder {
         checkBoxApprove.setVisibility(View.VISIBLE);
         checkBoxApprove.setChecked(state.approved);
         editTextQty.setEnabled(state.approved);
-        editTextQty.setText(String.valueOf(state.approved ? state.quantity : 0));
+        editTextQty.setText(String.valueOf(state.quantity));
 
         // 3. Attach listeners for this item only
         final int max = item.getRequestedQty();
@@ -103,7 +101,6 @@ public class RequestedItemsViewHolder extends RecyclerView.ViewHolder {
         qtyWatcher = new DebouncedTextWatcher.Simple() {
             @Override
             public void afterTextChanged(Editable s) {
-                if (!state.approved) return;
                 int qty;
                 try {
                     qty = s.length() == 0 ? 0 : Integer.parseInt(s.toString().trim());
@@ -113,13 +110,17 @@ public class RequestedItemsViewHolder extends RecyclerView.ViewHolder {
                 if (qty > max) {
                     layoutQty.setError(itemView.getContext().getString(R.string.error_max_quantity, max));
                     qty = max;
-                } else if (qty < 1) {
-                    layoutQty.setError(itemView.getContext().getString(R.string.error_min_approved_quantity));
-                    qty = 1;
                 } else {
                     layoutQty.setError(null);
                 }
                 state.quantity = qty;
+                boolean approved = qty > 0;
+                if (state.approved != approved) {
+                    state.approved = approved;
+                    checkBoxApprove.setOnCheckedChangeListener(null);
+                    checkBoxApprove.setChecked(approved);
+                    bindCheckbox(state, max, onChanged);
+                }
                 if (onChanged != null) onChanged.run();
             }
         };

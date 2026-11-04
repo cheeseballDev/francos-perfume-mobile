@@ -21,8 +21,8 @@ import java.util.Map;
 /**
  * Products in a request. When the user may approve, each row has an "approve" checkbox and an
  * approved quantity (website: requestedProductsColumns + handleApproveToggle/handleQtyChange):
- *  - the checkbox alone decides approval: unticked is always sent as not approved with quantity 0
- *  - while ticked, the quantity is kept between 1 and the requested amount
+ *  - unticking sets the quantity to 0, ticking sets it back to the requested amount
+ *  - the quantity is kept between 0 and the requested amount; 0 unticks the row
  * State is kept per requestItemId, so recycled rows never write into the wrong item.
  */
 public class RequestedItemsAdapter extends RecyclerView.Adapter<RequestedItemsViewHolder> {
@@ -106,7 +106,7 @@ public class RequestedItemsAdapter extends RecyclerView.Adapter<RequestedItemsVi
         int count = 0;
         for (DisplayRequestItemDetailsDTO item : requestedItems) {
             ItemApproval state = approvals.get(item.getRequestItemId());
-            if (state == null || state.approved) count++;
+            if (state == null || (state.approved && state.quantity > 0)) count++;
         }
         return count;
     }
@@ -125,8 +125,8 @@ public class RequestedItemsAdapter extends RecyclerView.Adapter<RequestedItemsVi
         String safeRemarks = remarks == null || remarks.trim().isEmpty() ? "N/A" : remarks.trim();
         for (DisplayRequestItemDetailsDTO item : requestedItems) {
             ItemApproval state = approvals.get(item.getRequestItemId());
-            boolean approved = state == null || state.approved;
-            int qty = state == null ? item.getRequestedQty() : Math.max(1, Math.min(state.quantity, item.getRequestedQty()));
+            boolean approved = state == null || (state.approved && state.quantity > 0);
+            int qty = state == null ? item.getRequestedQty() : Math.max(0, Math.min(state.quantity, item.getRequestedQty()));
 
             ApproveRequestDTO dto = new ApproveRequestDTO();
             dto.setProductId(item.getProductId());
