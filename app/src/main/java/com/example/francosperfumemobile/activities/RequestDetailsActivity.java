@@ -311,7 +311,8 @@ public class RequestDetailsActivity extends BaseActivity {
 
     private void confirmCancel() {
         DialogHelper.confirm(this, getString(R.string.cancel_request_confirm_title),
-                getString(R.string.cancel_request_confirm_message), getString(R.string.cancel_request), true, () -> {
+                getString(R.string.cancel_request_confirm_message), getString(R.string.cancel_request_confirm_button),
+                getString(R.string.go_back_text), true, () -> {
                     ButtonLoading.start(buttonCancelRequest, getString(R.string.cancelling));
                     new RequestRepository(this).cancelRequest(requestId).enqueue(new SafeCallback<CancelResponse>(this) {
                         @Override

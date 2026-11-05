@@ -29,11 +29,17 @@ public final class DialogHelper {
 
     public static void confirm(Context context, String title, String message, String confirmText,
                                boolean destructive, Runnable onConfirm) {
+        confirm(context, title, message, confirmText, context.getString(R.string.cancel_text), destructive, onConfirm);
+    }
+
+    /** Same, with a custom label for the dismiss button (e.g. "Go back" when the action itself is "Cancel the request"). */
+    public static void confirm(Context context, String title, String message, String confirmText,
+                               String dismissText, boolean destructive, Runnable onConfirm) {
         int theme = destructive ? R.style.ThemeOverlay_FP_AlertDialog_Destructive : R.style.ThemeOverlay_FP_AlertDialog;
         new MaterialAlertDialogBuilder(context, theme)
                 .setTitle(title)
                 .setMessage(message)
-                .setNegativeButton(R.string.cancel_text, (d, w) -> d.dismiss())
+                .setNegativeButton(dismissText, (d, w) -> d.dismiss())
                 .setPositiveButton(confirmText, (d, w) -> onConfirm.run())
                 .show();
     }

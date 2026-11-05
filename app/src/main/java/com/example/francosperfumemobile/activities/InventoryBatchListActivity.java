@@ -27,6 +27,7 @@ import com.example.francosperfumemobile.backend.dtos.inventorydtos.SendInventory
 import com.example.francosperfumemobile.backend.repository.InventoryRepository;
 import com.example.francosperfumemobile.backend.responses.inventoryresponses.BatchResponse;
 import com.example.francosperfumemobile.dialogs.EditBatchDialog;
+import com.example.francosperfumemobile.helpers.AccessRules;
 import com.example.francosperfumemobile.helpers.InsetsHelper;
 import com.example.francosperfumemobile.helpers.SafeCallback;
 import com.example.francosperfumemobile.helpers.StatusStyle;
@@ -103,7 +104,8 @@ public class InventoryBatchListActivity extends BaseActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view_batch);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         headerAdapter = new HeaderAdapter();
-        batchAdapter = new BatchAdapter(new ArrayList<>(), this::openEditBatch);
+        batchAdapter = new BatchAdapter(new ArrayList<>(),
+                AccessRules.canEditBatch(sessionManager, branchId) ? this::openEditBatch : null);
         recyclerView.setAdapter(new ConcatAdapter(headerAdapter, batchAdapter));
 
         // Reload after a batch was saved in the dialog

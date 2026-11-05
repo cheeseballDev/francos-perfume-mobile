@@ -1,14 +1,19 @@
 package com.example.francosperfumemobile.dialogs;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.ComponentDialog;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.os.BundleCompat;
@@ -47,6 +52,8 @@ public class EditBatchDialog extends DialogFragment {
     public static final String RESULT_KEY = "edit_batch_saved";
     private static final String ARG_BATCH = "BATCH_ITEM";
     private static final String STATE_EXPIRY = "expiry";
+    private static final String STATE_REASON = "reason";
+    private static final String STATE_DIRTY = "dirty";
 
     /** Same choices as the website. */
     private static final List<String> REASONS = Arrays.asList("Restock", "Correction", "Damaged", "Expired", "Returned");
@@ -80,7 +87,43 @@ public class EditBatchDialog extends DialogFragment {
         if (getArguments() != null) {
             batch = BundleCompat.getParcelable(getArguments(), ARG_BATCH, DisplayBatchDTO.class);
         }
-        if (savedInstanceState != null) expiryDay = savedInstanceState.getString(STATE_EXPIRY);
+        if (savedInstanceState != null) {
+            expiryDay = savedInstanceState.getString(STATE_EXPIRY);
+            reason = savedInstanceState.getString(STATE_REASON);
+        }
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        ComponentDialog dialog = new ComponentDialog(requireContext(), getTheme()) {
+            @Override
+            public boolean onTouchEvent(@NonNull MotionEvent event) {
+                if (isOutside(this, event)) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) closeAsking();
+                    return true;
+                }
+                return super.onTouchEvent(event);
+            }
+        };
+        // Website: tapping outside or pressing back asks "Discard changes?" instead of closing
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                closeAsking();
+            }
+        });
+        return dialog;
+    }
+
+    private static boolean isOutside(Dialog dialog, MotionEvent event) {
+        if (dialog.getWindow() == null) return false;
+        View decor = dialog.getWindow().getDecorView();
+        int slop = ViewConfiguration.get(dialog.getContext()).getScaledWindowTouchSlop();
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        return x < -slop || y < -slop || x > decor.getWidth() + slop || y > decor.getHeight() + slop;
     }
 
     @Override
@@ -142,13 +185,15 @@ public class EditBatchDialog extends DialogFragment {
         view.findViewById(R.id.button_close).setOnClickListener(v -> closeAsking());
         view.findViewById(R.id.button_cancel_edit_batch).setOnClickListener(v -> closeAsking());
         buttonSave.setOnClickListener(v -> save());
-        dirty = false;
+        dirty = savedInstanceState != null && savedInstanceState.getBoolean(STATE_DIRTY);
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(STATE_EXPIRY, expiryDay);
+        outState.putString(STATE_REASON, reason);
+        outState.putBoolean(STATE_DIRTY, dirty);
     }
 
     @Override
@@ -202,13 +247,14 @@ public class EditBatchDialog extends DialogFragment {
     }
 
     private void closeAsking() {
+        if (buttonSave != null && ButtonLoading.isLoading(buttonSave)) return;
         if (!dirty) {
             dismiss();
             return;
         }
         // Website: "Discard changes?" before closing an edited modal
         DialogHelper.confirm(requireContext(), getString(R.string.discard_title), getString(R.string.discard_message),
-                getString(R.string.discard), true, this::dismiss);
+                getString(R.string.discard), getString(R.string.keep_editing), true, this::dismiss);
     }
 
     // -------------------------------------------------------------------- save

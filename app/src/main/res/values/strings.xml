@@ -98,6 +98,7 @@
     <string name="discard_title">Discard changes?</string>
     <string name="discard_message">You have unsaved changes. If you close this window now, they will be lost.</string>
     <string name="discard">Discard</string>
+    <string name="keep_editing">Keep editing</string>
 
     <!-- Login -->
     <string name="login_title">Welcome back</string>
@@ -259,6 +260,7 @@
     <string name="cancel_request">Cancel</string>
     <string name="cancel_request_confirm_title">Cancel this request?</string>
     <string name="cancel_request_confirm_message">This cannot be undone. The request will be terminated.</string>
+    <string name="cancel_request_confirm_button">Cancel the request</string>
     <string name="toast_request_approved">Request approved</string>
     <string name="toast_request_rejected">Request rejected</string>
     <string name="toast_request_cancelled">Request cancelled</string>
@@ -273,7 +275,7 @@
     <string name="products_label">Products</string>
     <string name="total_units_label">Total units</string>
     <string name="product_number">Product #%1$d</string>
-    <string name="label_expiry_date">Expiry date</string>
+    <string name="label_expiry_date">Target date</string>
     <string name="hint_pick_date">Pick a date</string>
     <string name="receive_items_hint">Untick missing items or lower the quantity, then pick a reason.</string>
     <string name="reason_select">Select reason…</string>
@@ -286,7 +288,9 @@
     <string name="mark_in_transit_confirm_title">Mark as in transit?</string>
     <string name="mark_in_transit_confirm_message">The receiving branch will be notified that the items are on the way.</string>
     <string name="cancel_delivery_confirm_title">Cancel this delivery?</string>
-    <string name="cancel_delivery_confirm_message">This cannot be undone. The request will be terminated.</string>
+    <string name="cancel_delivery_confirm_message">This cannot be undone. The delivery will be cancelled.</string>
+    <string name="cancel_delivery_confirm_button">Cancel the delivery</string>
+    <string name="error_receive_reason_required">Select a reason for each item that is missing or short.</string>
     <string name="receive_confirm_title_complete">Mark this delivery as completed?</string>
     <string name="receive_confirm_title_partial">Mark this delivery as partially completed?</string>
     <string name="receive_confirm_message_complete">All items have been received in full. This will finalize the delivery and update your inventory.</string>
@@ -296,7 +300,7 @@
     <string name="toast_delivery_received">Delivery received</string>
     <string name="toast_delivery_in_transit">Delivery marked as in transit</string>
     <string name="toast_delivery_cancelled">Delivery cancelled</string>
-    <string name="error_expiry_required">Pick the expiry date first.</string>
+    <string name="error_expiry_required">Pick the target date first.</string>
     <string name="error_no_items_to_receive">There are no items to receive.</string>
     <string name="error_invalid_delivery">Invalid delivery</string>
     <string name="error_delivery_not_found">This delivery could not be found.</string>
@@ -305,7 +309,7 @@
     <string name="batches_title">Batches</string>
     <string name="quantity_label">Quantity</string>
     <string name="date_received_label">Received</string>
-    <string name="expiry_label">Expires</string>
+    <string name="expiry_label">Target date</string>
     <string name="batch_expired">Expired</string>
     <string name="no_batches_title">No batches yet</string>
     <string name="no_batches_message">This product has no batches at this branch.</string>
@@ -315,7 +319,7 @@
     <string name="cd_increase">Increase</string>
     <string name="toast_batch_updated">Batch updated</string>
     <string name="error_reason_required">Pick a reason for the edit.</string>
-    <string name="error_expiry_before_received">The expiry date can\'t be earlier than the date received (%1$s).</string>
+    <string name="error_expiry_before_received">The target date can\'t be earlier than the date received (%1$s).</string>
     <string name="error_unknown_product">Unknown product</string>
 
     <!-- New request -->
@@ -404,7 +408,7 @@
 
     <!-- Same reasons as the website's delivery confirmation (value list in DeliveryDetailsInboundViewHolder) -->
     <string-array name="receive_reason_labels">
-        <item>No reason</item>
+        <item>Select reason…</item>
         <item>Damaged</item>
         <item>Missing</item>
         <item>Incorrect item</item>

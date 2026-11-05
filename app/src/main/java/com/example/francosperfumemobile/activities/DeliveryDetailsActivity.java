@@ -237,6 +237,15 @@ public class DeliveryDetailsActivity extends BaseActivity {
             return;
         }
 
+        for (DeliveryItemDTO item : items) {
+            int received = item.isReceivedChecked() ? item.getReceivedQty() : 0;
+            String remark = item.getReceiveRemark();
+            if (received < item.getQuantity() && (remark == null || remark.trim().isEmpty())) {
+                Toast.makeText(this, R.string.error_receive_reason_required, Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+
         boolean complete = true;
         for (DeliveryItemDTO item : items) {
             if (!item.isReceivedChecked() || item.getReceivedQty() != item.getQuantity()) {
@@ -304,7 +313,8 @@ public class DeliveryDetailsActivity extends BaseActivity {
 
     private void confirmCancel() {
         DialogHelper.confirm(this, getString(R.string.cancel_delivery_confirm_title),
-                getString(R.string.cancel_delivery_confirm_message), getString(R.string.cancel_delivery), true, () -> {
+                getString(R.string.cancel_delivery_confirm_message), getString(R.string.cancel_delivery_confirm_button),
+                getString(R.string.go_back_text), true, () -> {
                     setBusy(buttonCancel, getString(R.string.cancelling));
                     new DeliveryRepository(this).cancelDelivery(deliveryId).enqueue(new SafeCallback<CancelDeliveryResponse>(this) {
                         @Override

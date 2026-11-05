@@ -131,7 +131,8 @@ public class CreateRequestActivity extends BaseActivity {
                     return;
                 }
                 DialogHelper.confirm(CreateRequestActivity.this, getString(R.string.discard_title),
-                        getString(R.string.create_discard_message), getString(R.string.discard), true,
+                        getString(R.string.create_discard_message), getString(R.string.discard),
+                        getString(R.string.keep_editing), true,
                         CreateRequestActivity.this::finish);
             }
         });

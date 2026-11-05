@@ -43,6 +43,13 @@ public final class AccessRules {
         return MOBILE_ROLES.contains(normalize(role));
     }
 
+    /** Website InventoryTable canEditBranch: the Owner edits any branch, everyone else only their own. */
+    public static boolean canEditBatch(@Nullable SessionManager session, int batchBranchId) {
+        if (session == null) return false;
+        if ("OWNER".equals(normalize(session.getRole()))) return true;
+        return batchBranchId > 0 && batchBranchId == session.getBranchId();
+    }
+
     // ------------------------------------------------------------------ requests
 
     public static boolean isRequestFinished(@Nullable String requestStatus) {

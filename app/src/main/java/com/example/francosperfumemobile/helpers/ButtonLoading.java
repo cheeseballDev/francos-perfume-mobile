@@ -43,6 +43,10 @@ public final class ButtonLoading {
 
     public static void stop(@Nullable MaterialButton button) {
         if (button == null) return;
+        if (!isLoading(button)) {
+            button.setEnabled(true);
+            return;
+        }
         Object idleText = button.getTag(TAG_IDLE_TEXT);
         Object idleIcon = button.getTag(TAG_IDLE_ICON);
         if (idleText instanceof CharSequence) button.setText((CharSequence) idleText);
