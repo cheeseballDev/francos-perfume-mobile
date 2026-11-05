@@ -49,7 +49,10 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder {
         String type = item.getType() == null ? "" : item.getType().toUpperCase(Locale.ROOT);
         int iconRes = R.drawable.ic_bell;
         int colorRes = R.color.fp_muted_foreground;
-        if (type.contains("DELIVERY")) {
+        if (type.contains("REPLACEMENT")) {
+            iconRes = R.drawable.ic_refresh;
+            colorRes = R.color.icon_green;
+        } else if (type.contains("DELIVERY")) {
             iconRes = R.drawable.ic_truck;
             colorRes = R.color.icon_blue;
         } else if (type.contains("REQUEST")) {

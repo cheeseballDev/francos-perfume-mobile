@@ -13,7 +13,8 @@ import java.util.Locale;
 
 /**
  * Where a notification leads. Same rules as the website's NotificationDropdown:
- * DELIVERY → delivery details, REQUEST → request details, INVENTORY / LOW_STOCK → inventory.
+ * DELIVERY → delivery details, REQUEST → request details, INVENTORY / LOW_STOCK → inventory,
+ * REPLACEMENT → inventory (the app has no replacements screen; stock changed there).
  */
 public final class NotificationRouter {
 
@@ -27,6 +28,9 @@ public final class NotificationRouter {
         String t = type == null ? "" : type.toUpperCase(Locale.ROOT);
         Integer id = parseId(referenceId);
 
+        if (t.contains("REPLACEMENT")) {
+            return MainActivity.newIntent(context, MainActivity.TAB_INVENTORY);
+        }
         if (t.contains("DELIVERY")) {
             return id != null
                     ? DeliveryDetailsActivity.newIntent(context, id)
