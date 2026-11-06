@@ -258,7 +258,7 @@
             android:layout_marginBottom="8dp"
             tools:text="Mark as in transit to notify the receiving branch." />
 
-        <!-- Side by side with equal heights: a label that wraps to two lines no longer pushes the other button down -->
+        <!-- Side by side, centred on each other: a label that wraps to two lines no longer pushes the other button down -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_outbound_actions"
             android:layout_width="match_parent"
@@ -270,8 +270,7 @@
                 android:id="@+id/button_cancel_request"
                 style="@style/Widget.FP.Button.Outlined.Destructive"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintHeight_min="wrap"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginEnd="6dp"
@@ -287,8 +286,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_mark_in_transit"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintHeight_min="wrap"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="6dp"
