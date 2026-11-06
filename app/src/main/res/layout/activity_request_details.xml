@@ -163,37 +163,47 @@
                                 android:layout_height="0dp"
                                 android:visibility="gone" />
 
-                            <LinearLayout
+                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:orientation="horizontal">
+                                android:layout_marginTop="10dp">
 
                                 <com.google.android.material.button.MaterialButton
                                     android:id="@+id/button_open_message"
                                     style="@style/Widget.FP.Button.Outlined.Small"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
+                                    android:layout_height="0dp"
                                     android:text="@string/open_message_text"
                                     app:icon="@drawable/ic_message"
-                                    app:iconGravity="textStart" />
+                                    app:iconGravity="textStart"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/button_cancel_request"
+                                    app:layout_constraintHeight_min="wrap"
+                                    app:layout_constraintHorizontal_chainStyle="spread"
+                                    app:layout_constraintHorizontal_weight="1"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
                                 <com.google.android.material.button.MaterialButton
                                     android:id="@+id/button_cancel_request"
                                     style="@style/Widget.FP.Button.Outlined.Destructive"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="0dp"
                                     android:layout_marginStart="8dp"
-                                    android:layout_weight="1"
                                     android:minHeight="40dp"
                                     android:text="@string/cancel_request"
                                     android:textSize="13sp"
                                     android:visibility="gone"
                                     app:icon="@drawable/ic_circle_x"
                                     app:iconGravity="textStart"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHeight_min="wrap"
+                                    app:layout_constraintHorizontal_weight="1"
+                                    app:layout_constraintStart_toEndOf="@id/button_open_message"
+                                    app:layout_constraintTop_toTopOf="parent"
                                     tools:visibility="visible" />
-                            </LinearLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
@@ -300,31 +310,44 @@
             android:layout_marginBottom="8dp"
             tools:text="You are reviewing this request as Owner." />
 
-        <LinearLayout
+        <!-- Side by side with equal heights: "Approve partially" wrapping no longer pushes Reject down -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_reject_cancel"
                 style="@style/Widget.FP.Button.Outlined.Destructive"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_min="wrap"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginEnd="6dp"
-                android:layout_weight="1"
                 android:text="@string/deny_text"
                 app:icon="@drawable/ic_x"
-                app:iconGravity="textStart" />
+                app:iconGravity="textStart"
+                app:layout_constraintEnd_toStartOf="@id/button_accept"
+                app:layout_goneMarginEnd="0dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_accept"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_min="wrap"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="6dp"
-                android:layout_weight="1"
                 android:text="@string/approve_text"
                 app:icon="@drawable/ic_check"
-                app:iconGravity="textStart" />
-        </LinearLayout>
+                app:iconGravity="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@id/button_reject_cancel"
+                app:layout_goneMarginStart="0dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </LinearLayout>

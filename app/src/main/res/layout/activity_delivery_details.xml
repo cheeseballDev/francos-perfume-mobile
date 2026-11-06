@@ -258,11 +258,11 @@
             android:layout_marginBottom="8dp"
             tools:text="Mark as in transit to notify the receiving branch." />
 
-        <LinearLayout
+        <!-- Side by side with equal heights: a label that wraps to two lines no longer pushes the other button down -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_outbound_actions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:visibility="gone"
             tools:visibility="visible">
 
@@ -270,38 +270,53 @@
                 android:id="@+id/button_cancel_request"
                 style="@style/Widget.FP.Button.Outlined.Destructive"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_min="wrap"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginEnd="6dp"
-                android:layout_weight="1"
                 android:text="@string/cancel_delivery"
                 app:icon="@drawable/ic_circle_x"
-                app:iconGravity="textStart" />
+                app:iconGravity="textStart"
+                app:layout_constraintEnd_toStartOf="@id/button_mark_in_transit"
+                app:layout_goneMarginEnd="0dp"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_mark_in_transit"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_min="wrap"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="6dp"
-                android:layout_weight="1"
                 android:text="@string/mark_in_transit"
                 app:icon="@drawable/ic_truck"
-                app:iconGravity="textStart" />
-        </LinearLayout>
+                app:iconGravity="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@id/button_cancel_request"
+                app:layout_goneMarginStart="0dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_inbound_actions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:visibility="gone">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_confirm_delivery"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/confirm_delivery"
                 app:icon="@drawable/ic_circle_check"
-                app:iconGravity="textStart" />
-        </LinearLayout>
+                app:iconGravity="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </LinearLayout>
