@@ -16,7 +16,7 @@ import com.example.francosperfumemobile.helpers.StatusStyle;
 public class InventoryViewHolder extends RecyclerView.ViewHolder {
     ImageView imagePerfumeIcon;
     TextView productName, productId, productUnitCount, productBatchCount,
-            productBranchLocation, productType, productGender, stockBadge;
+            productBranchLocation, productType, productGender, slowMovingTag, stockBadge;
 
     public InventoryViewHolder(View view) {
         super(view);
@@ -29,6 +29,7 @@ public class InventoryViewHolder extends RecyclerView.ViewHolder {
         productType = view.findViewById(R.id.text_view_inventory_product_type);
         productGender = view.findViewById(R.id.text_view_inventory_gender_type);
         stockBadge = view.findViewById(R.id.text_view_inventory_stock_badge);
+        slowMovingTag = view.findViewById(R.id.text_view_inventory_slow_moving);
     }
 
     public void bind(@NonNull DisplayInventoryDTO display, InventoryAdapter.OnViewProductBatchesListener listener) {
@@ -43,6 +44,8 @@ public class InventoryViewHolder extends RecyclerView.ViewHolder {
                 R.drawable.ic_map_pin);
         bindTag(productType, display.getProductType(), StatusStyle.Tone.NEUTRAL, 0);
         bindTag(productGender, display.getProductGender(), StatusStyle.Tone.NEUTRAL, 0);
+        bindTag(slowMovingTag, StatusStyle.isSlowMoving(display.getStockWarning())
+                ? itemView.getContext().getString(R.string.stock_slow_moving) : null, StatusStyle.Tone.DANGER, 0);
 
         // Low / out of stock badge, same threshold as the website (statusUtils.js stockLevel)
         boolean warn = StatusStyle.applyStockBadge(stockBadge, display.getProductQuantity(), display.getStockWarning());

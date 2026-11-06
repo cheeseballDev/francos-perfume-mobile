@@ -52,30 +52,36 @@
                 android:maxLines="1"
                 tools:text="PROD-001" />
 
-            <LinearLayout
+            <!-- Tags wrap onto a second line instead of squeezing the last one to an empty pill -->
+            <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                app:chipSpacingHorizontal="6dp"
+                app:chipSpacingVertical="6dp">
 
                 <TextView
                     android:id="@+id/text_view_inventory_branch_location"
                     style="@style/Widget.FP.StatusBadge"
-                    android:layout_marginEnd="6dp"
                     tools:text="Sta. Lucia" />
 
                 <TextView
                     android:id="@+id/text_view_inventory_product_type"
                     style="@style/Widget.FP.StatusBadge"
-                    android:layout_marginEnd="6dp"
                     tools:text="Premium" />
 
                 <TextView
                     android:id="@+id/text_view_inventory_gender_type"
                     style="@style/Widget.FP.StatusBadge"
                     tools:text="Unisex" />
-            </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text_view_inventory_slow_moving"
+                    style="@style/Widget.FP.StatusBadge"
+                    android:visibility="gone"
+                    tools:text="Slow moving"
+                    tools:visibility="visible" />
+            </com.google.android.material.chip.ChipGroup>
 
             <TextView
                 android:id="@+id/text_view_inventory_stock_badge"

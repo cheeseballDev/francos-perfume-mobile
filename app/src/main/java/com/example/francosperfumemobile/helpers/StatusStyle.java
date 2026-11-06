@@ -179,18 +179,18 @@ public final class StatusStyle {
 
     /**
      * Shows "Out of stock" / "Low stock" on the badge and returns true, or hides it and returns false.
-     * Uses the backend's stockWarning text when it sends one.
+     * Decided by the unit count only, like the website's stockLevel(). The backend's stockWarning is not
+     * used here: it can be "Slow moving", which contains "LOW" and used to mark well-stocked perfumes as low.
      */
     public static boolean applyStockBadge(@Nullable TextView badge, int units, @Nullable String stockWarning) {
         if (badge == null) return false;
-        String warning = normalize(stockWarning);
-        if (units <= 0 || warning.contains("OUT")) {
+        if (units <= 0) {
             badge.setText(R.string.stock_out);
             applyTone(badge, Tone.DANGER, R.drawable.ic_alert_triangle);
             badge.setVisibility(android.view.View.VISIBLE);
             return true;
         }
-        if (units <= LOW_STOCK_THRESHOLD || warning.contains("LOW")) {
+        if (units <= LOW_STOCK_THRESHOLD) {
             badge.setText(R.string.stock_low);
             applyTone(badge, Tone.PENDING, R.drawable.ic_alert_triangle);
             badge.setVisibility(android.view.View.VISIBLE);
@@ -198,6 +198,11 @@ public final class StatusStyle {
         }
         badge.setVisibility(android.view.View.GONE);
         return false;
+    }
+
+    /** Website InventoryTable: the "SLOW MOVING" tag when a batch is past its target date. */
+    public static boolean isSlowMoving(@Nullable String stockWarning) {
+        return "SLOW MOVING".equals(normalize(stockWarning));
     }
 
     private static float dp(Context context, float value) {

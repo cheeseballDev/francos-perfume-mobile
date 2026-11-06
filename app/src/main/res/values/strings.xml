@@ -233,6 +233,7 @@
     <string name="units_label">units</string>
     <string name="stock_low">Low stock</string>
     <string name="stock_out">Out of stock</string>
+    <string name="stock_slow_moving">Slow moving</string>
 
     <!-- Request details -->
     <string name="request_details_title">Request details</string>
