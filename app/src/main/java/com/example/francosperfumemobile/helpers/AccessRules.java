@@ -29,7 +29,7 @@ public final class AccessRules {
     private static final Set<String> FINISHED_REQUEST_STATUSES = new HashSet<>(Arrays.asList(
             "APPROVED", "REJECTED", "CANCELLED", "CANCELED", "COMPLETED", "RECEIVED",
             "PARTIAL", "PARTIALLY COMPLETED", "CLOSED", "CLOSED PARTIAL",
-            "IN TRANSIT", "DISPATCHED", "PENDING DISPATCH", "DELIVERY CANCELLED"));
+            "IN TRANSIT", "DISPATCHED", "PENDING DISPATCH", "DELIVERY CANCELLED", "NOT RECEIVED"));
 
     private AccessRules() {
     }
@@ -129,11 +129,7 @@ public final class AccessRules {
         if ("OUTBOUND".equals(direction)) {
             // Sending branch: dispatch it, or cancel before it leaves
             boolean pendingDispatch = "PENDING".equals(status) || "PENDING DISPATCH".equals(status);
-            boolean finishedOrMoving = status.equals("IN TRANSIT") || status.equals("DISPATCHED")
-                    || status.equals("COMPLETED") || status.equals("PARTIAL") || status.equals("RECEIVED")
-                    || status.equals("DELIVERED") || status.equals("CANCELLED") || status.equals("DELIVERY CANCELLED")
-                    || status.equals("CLOSED");
-            return new DeliveryActions(pendingDispatch, !finishedOrMoving, false);
+            return new DeliveryActions(pendingDispatch, pendingDispatch, false);
         }
 
         if ("INBOUND".equals(direction)) {

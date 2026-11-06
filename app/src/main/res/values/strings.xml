@@ -282,7 +282,7 @@
     <string name="hint_pick_date">Pick a date</string>
     <string name="receive_items_hint">Untick missing items or lower the quantity, then pick a reason.</string>
     <string name="reason_select">Select reason…</string>
-    <string name="mark_in_transit">Mark in transit</string>
+    <string name="mark_in_transit">Confirm</string>
     <string name="cancel_delivery">Cancel</string>
     <string name="hint_dispatch_action">Mark as in transit to notify the receiving branch.</string>
     <string name="hint_cancel_action">You can still cancel this delivery.</string>

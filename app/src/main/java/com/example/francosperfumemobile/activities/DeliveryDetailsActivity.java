@@ -210,7 +210,7 @@ public class DeliveryDetailsActivity extends BaseActivity {
             if ("RECEIVED".equalsIgnoreCase(item.getStatus() == null ? "" : item.getStatus().trim())) anyReceived = true;
         }
         String deliveryStatus = data.getDeliveryStatus() == null ? "" : data.getDeliveryStatus().trim().toUpperCase(Locale.ROOT);
-        boolean isReceived = anyReceived || "COMPLETED".equals(deliveryStatus) || "PARTIAL".equals(deliveryStatus);
+        boolean isReceived = anyReceived || "COMPLETED".equals(deliveryStatus) || "PARTIAL".equals(deliveryStatus) || "NOT RECEIVED".equals(deliveryStatus);
 
         infoFrom.setText(orDash(data.getFromBranchName()));
         infoTo.setText(orDash(data.getToBranchName()));

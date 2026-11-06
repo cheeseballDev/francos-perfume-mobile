@@ -36,7 +36,7 @@ public final class StatusStyle {
             EXACT.put(s, Tone.PROGRESS);
         for (String s : new String[]{"PARTIAL", "PARTIALLY COMPLETED", "PARTIALLY RECEIVED", "CLOSED PARTIAL", "TEMPORARY"})
             EXACT.put(s, Tone.PARTIAL);
-        for (String s : new String[]{"REJECTED", "CANCELLED", "CANCELED", "DELIVERY CANCELLED", "DEACTIVATED"})
+        for (String s : new String[]{"REJECTED", "NOT RECEIVED", "CANCELLED", "CANCELED", "DELIVERY CANCELLED", "DEACTIVATED"})
             EXACT.put(s, Tone.DANGER);
         for (String s : new String[]{"CLOSED", "FINISHED", "BYPASSED", "INACTIVE", "ARCHIVED"})
             EXACT.put(s, Tone.NEUTRAL);
