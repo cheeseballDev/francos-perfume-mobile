@@ -15,6 +15,8 @@ public class DeliveryItemDTO {
     private String Status;
     @SerializedName("requestItemId")
     private String RequestItemId;
+    @SerializedName("receivedQty")
+    private Integer ServerReceivedQty;
 
     // Filled in on the phone while receiving; transient = never sent or read by Gson
     private transient Integer receivedQty;
@@ -66,6 +68,11 @@ public class DeliveryItemDTO {
 
     public void setRequestItemId(String requestItemId) {
         RequestItemId = requestItemId;
+    }
+
+    /** Amount the receiving branch confirmed, as saved on the server (0 before receiving). */
+    public int getServerReceivedQty() {
+        return ServerReceivedQty != null ? ServerReceivedQty : 0;
     }
 
     /** Received amount typed by the user; starts at the requested quantity. */

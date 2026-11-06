@@ -14,7 +14,7 @@ import com.example.francosperfumemobile.helpers.StatusStyle;
 public class DeliveryDetailsOutboundViewHolder extends RecyclerView.ViewHolder {
 
     ImageView deliveryItemsImage;
-    TextView deliveryItemsProductName, deliveryItemsProductId, deliveryItemsUnitCount, deliveryItemsStatus;
+    TextView deliveryItemsProductName, deliveryItemsProductId, deliveryItemsUnitCount, deliveryItemsStatus, deliveryItemsReceived;
 
     public DeliveryDetailsOutboundViewHolder(View view) {
         super(view);
@@ -23,6 +23,7 @@ public class DeliveryDetailsOutboundViewHolder extends RecyclerView.ViewHolder {
         deliveryItemsProductId = view.findViewById(R.id.text_view_delivery_outbound_product_id);
         deliveryItemsUnitCount = view.findViewById(R.id.text_view_delivery_outbound_unit_count);
         deliveryItemsStatus = view.findViewById(R.id.text_view_delivery_outbound_status);
+        deliveryItemsReceived = view.findViewById(R.id.text_view_delivery_outbound_received);
     }
 
     public void bind(DeliveryItemDTO item) {
@@ -32,6 +33,14 @@ public class DeliveryDetailsOutboundViewHolder extends RecyclerView.ViewHolder {
         deliveryItemsUnitCount.setText(itemView.getResources().getQuantityString(R.plurals.unit_count, item.getQuantity(), item.getQuantity()));
 
         String status = item.getStatus();
+        if ("RECEIVED".equalsIgnoreCase(status == null ? "" : status.trim())) {
+            deliveryItemsReceived.setText(itemView.getContext().getString(R.string.received_of_format,
+                    item.getServerReceivedQty(), item.getQuantity()));
+            deliveryItemsReceived.setVisibility(View.VISIBLE);
+        } else {
+            deliveryItemsReceived.setVisibility(View.GONE);
+        }
+
         if (status != null && !status.trim().isEmpty()) {
             StatusStyle.apply(deliveryItemsStatus, status);
             deliveryItemsStatus.setVisibility(View.VISIBLE);

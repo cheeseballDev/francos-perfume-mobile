@@ -44,6 +44,7 @@ public class RequestedItemsAdapter extends RecyclerView.Adapter<RequestedItemsVi
     private final List<DisplayRequestItemDetailsDTO> requestedItems = new ArrayList<>();
     private final Map<Integer, ItemApproval> approvals = new HashMap<>();
     private boolean isReadOnly = true;
+    private boolean showReceived = false;
     @Nullable
     private OnApprovalsChanged changeListener;
 
@@ -73,6 +74,12 @@ public class RequestedItemsAdapter extends RecyclerView.Adapter<RequestedItemsVi
         notifyDataSetChanged();
     }
 
+    /** True once the request has been received: read-only rows show the received amount, even 0. */
+    public void setShowReceived(boolean showReceived) {
+        this.showReceived = showReceived;
+        notifyDataSetChanged();
+    }
+
     public boolean isReadOnly() {
         return isReadOnly;
     }
@@ -92,7 +99,7 @@ public class RequestedItemsAdapter extends RecyclerView.Adapter<RequestedItemsVi
             state = new ItemApproval(item.getRequestedQty());
             approvals.put(item.getRequestItemId(), state);
         }
-        holder.bind(item, state, isReadOnly, () -> {
+        holder.bind(item, state, isReadOnly, showReceived, () -> {
             if (changeListener != null) changeListener.onApprovalsChanged();
         });
     }

@@ -275,6 +275,8 @@
     <string name="date_created_text">Created</string>
     <string name="products_label">Products</string>
     <string name="total_units_label">Total units</string>
+    <string name="received_units_label">Received units</string>
+    <string name="received_of_format">Received %1$d of %2$d</string>
     <string name="product_number">Product #%1$d</string>
     <string name="label_expiry_date">Target date</string>
     <string name="hint_pick_date">Pick a date</string>

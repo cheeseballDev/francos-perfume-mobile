@@ -108,6 +108,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/approved_quantity_label" />
 
+            <TextView
+                android:id="@+id/text_view_received_amount"
+                style="@style/Text.FP.Value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="18sp"
+                android:visibility="gone"
+                tools:text="18" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_layout_approved_quantity"
                 android:layout_width="match_parent"

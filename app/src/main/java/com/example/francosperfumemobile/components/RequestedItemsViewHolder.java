@@ -17,7 +17,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class RequestedItemsViewHolder extends RecyclerView.ViewHolder {
-    TextView productName, productRequestedQty, productId, itemStatus, itemRemarks, approvedLabel;
+    TextView productName, productRequestedQty, productId, itemStatus, itemRemarks, approvedLabel, receivedAmount;
     CheckBox checkBoxApprove;
     TextInputEditText editTextQty;
     TextInputLayout layoutQty;
@@ -38,15 +38,21 @@ public class RequestedItemsViewHolder extends RecyclerView.ViewHolder {
         editTextQty = view.findViewById(R.id.edit_text_requested_products_approved_quantity_amount);
         layoutQty = view.findViewById(R.id.text_input_layout_approved_quantity);
         layoutApproved = view.findViewById(R.id.layout_approved_quantity);
+        receivedAmount = view.findViewById(R.id.text_view_received_amount);
     }
 
     /** Read-only bind (no approval controls). */
     public void bind(DisplayRequestItemDetailsDTO item) {
-        bind(item, null, true, null);
+        bind(item, null, true, item.getReceivedQty() > 0, null);
     }
 
     public void bind(DisplayRequestItemDetailsDTO item, RequestedItemsAdapter.ItemApproval state,
                      boolean readOnly, Runnable onChanged) {
+        bind(item, state, readOnly, item.getReceivedQty() > 0, onChanged);
+    }
+
+    public void bind(DisplayRequestItemDetailsDTO item, RequestedItemsAdapter.ItemApproval state,
+                     boolean readOnly, boolean showReceived, Runnable onChanged) {
         productName.setText(item.getProductName());
         productId.setText(item.getProductDisplayId());
         productRequestedQty.setText(String.valueOf(item.getRequestedQty()));
@@ -74,12 +80,12 @@ public class RequestedItemsViewHolder extends RecyclerView.ViewHolder {
 
         if (readOnly || state == null) {
             checkBoxApprove.setVisibility(View.GONE);
-            if (item.getReceivedQty() > 0) {
-                // After delivery: show what actually arrived
+            if (showReceived) {
                 layoutApproved.setVisibility(View.VISIBLE);
                 approvedLabel.setText(R.string.received_quantity_text);
-                editTextQty.setText(String.valueOf(item.getReceivedQty()));
-                editTextQty.setEnabled(false);
+                layoutQty.setVisibility(View.GONE);
+                receivedAmount.setText(String.valueOf(item.getReceivedQty()));
+                receivedAmount.setVisibility(View.VISIBLE);
             } else {
                 layoutApproved.setVisibility(View.GONE);
             }
@@ -89,6 +95,8 @@ public class RequestedItemsViewHolder extends RecyclerView.ViewHolder {
         // 2. Editable: show this item's own state
         approvedLabel.setText(R.string.approved_quantity_label);
         layoutApproved.setVisibility(View.VISIBLE);
+        layoutQty.setVisibility(View.VISIBLE);
+        receivedAmount.setVisibility(View.GONE);
         checkBoxApprove.setVisibility(View.VISIBLE);
         checkBoxApprove.setChecked(state.approved);
         editTextQty.setEnabled(state.approved);

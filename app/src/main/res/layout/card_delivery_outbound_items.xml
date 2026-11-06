@@ -63,6 +63,16 @@
             tools:text="20 units" />
 
         <TextView
+            android:id="@+id/text_view_delivery_outbound_received"
+            style="@style/Text.FP.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:visibility="gone"
+            tools:text="Received 18 of 20"
+            tools:visibility="visible" />
+
+        <TextView
             android:id="@+id/text_view_delivery_outbound_status"
             style="@style/Widget.FP.StatusBadge"
             android:layout_marginTop="4dp"

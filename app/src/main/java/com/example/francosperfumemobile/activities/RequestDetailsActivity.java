@@ -19,6 +19,7 @@ import com.example.francosperfumemobile.adapters.RequestApprovalAdapter;
 import com.example.francosperfumemobile.adapters.RequestedItemsAdapter;
 import com.example.francosperfumemobile.backend.dtos.requestdtos.ApproveRequestDTO;
 import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestApprovalDetailsDTO;
+import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestItemDetailsDTO;
 import com.example.francosperfumemobile.backend.dtos.requestdtos.DisplayRequestDetailsDTO;
 import com.example.francosperfumemobile.backend.dtos.requestdtos.RejectRequestDTO;
 import com.example.francosperfumemobile.backend.repository.RequestRepository;
@@ -59,7 +60,8 @@ public class RequestDetailsActivity extends BaseActivity {
     private View progressBarMain;
     private SwipeRefreshLayout swipeRefresh;
     private TextView textViewRequestId, textViewDirection, textViewStatus, textViewStage, textViewProductsHint, textViewActionsHint;
-    private TextView infoFrom, infoTo, infoCreatedBy, infoDate;
+    private TextView infoFrom, infoTo, infoCreatedBy, infoDate, infoProducts, infoUnits, infoReceived;
+    private View layoutReceivedRow;
     private MaterialButton buttonApprove, buttonReject, buttonOpenMessage, buttonCancelRequest;
     private RequestApprovalAdapter requestApprovalAdapter;
     private RequestedItemsAdapter requestedItemsAdapter;
@@ -115,6 +117,10 @@ public class RequestDetailsActivity extends BaseActivity {
         infoTo = info(R.id.info_to_branch, R.string.to_branch_text);
         infoCreatedBy = info(R.id.info_created_by, R.string.created_by_text);
         infoDate = info(R.id.info_date_submitted, R.string.date_submitted_text);
+        infoProducts = info(R.id.info_request_products, R.string.products_label);
+        infoUnits = info(R.id.info_request_units, R.string.total_units_label);
+        infoReceived = info(R.id.info_request_received, R.string.received_units_label);
+        layoutReceivedRow = findViewById(R.id.layout_request_received_row);
 
         buttonApprove = findViewById(R.id.button_accept);
         buttonReject = findViewById(R.id.button_reject_cancel);
@@ -231,7 +237,32 @@ public class RequestDetailsActivity extends BaseActivity {
         buttonOpenMessage.setText(hasMessage ? R.string.open_message_text : R.string.no_message_text);
         buttonOpenMessage.setEnabled(hasMessage);
 
+        boolean isReceived = false;
+        if (data.getApprovals() != null) {
+            for (DisplayRequestApprovalDetailsDTO approval : data.getApprovals()) {
+                if ("RECEIVED".equalsIgnoreCase(approval.getStatus() == null ? "" : approval.getStatus().trim())) {
+                    isReceived = true;
+                    break;
+                }
+            }
+        }
+        int productCount = 0;
+        int units = 0;
+        int receivedUnits = 0;
+        if (data.getItems() != null) {
+            for (DisplayRequestItemDetailsDTO item : data.getItems()) {
+                productCount++;
+                units += item.getRequestedQty();
+                receivedUnits += item.getReceivedQty();
+            }
+        }
+        infoProducts.setText(String.valueOf(productCount));
+        infoUnits.setText(String.valueOf(units));
+        infoReceived.setText(String.valueOf(receivedUnits));
+        layoutReceivedRow.setVisibility(isReceived ? View.VISIBLE : View.GONE);
+
         boolean canApprove = AccessRules.canApproveRequest(sessionManager, data);
+        requestedItemsAdapter.setShowReceived(isReceived);
         requestedItemsAdapter.setItems(data.getItems());
         requestedItemsAdapter.setReadOnly(!canApprove);
         textViewProductsHint.setText(canApprove ? R.string.requested_products_hint_edit : R.string.requested_products_hint_read);

@@ -59,7 +59,8 @@ public class DeliveryDetailsActivity extends BaseActivity {
     private View topBar, scrollContent, bottomBar, layoutInboundActions, layoutOutboundActions, emptyState, progress;
     private SwipeRefreshLayout swipeRefresh;
     private TextView textViewId, textViewDirection, textViewStatus, textViewItemsHint, textViewNoAction, textViewActionsHint;
-    private TextView infoFrom, infoTo, infoCreatedBy, infoDate, infoProducts, infoUnits;
+    private TextView infoFrom, infoTo, infoCreatedBy, infoDate, infoProducts, infoUnits, infoReceived;
+    private View layoutReceivedRow;
     private MaterialButton buttonConfirmDelivery, buttonCancel, buttonMarkInTransit;
     private RecyclerView recyclerViewItems;
     private DeliveryItemsAdapter deliveryItemsAdapter;
@@ -115,6 +116,8 @@ public class DeliveryDetailsActivity extends BaseActivity {
         infoDate = info(R.id.info_delivery_date, R.string.date_created_text);
         infoProducts = info(R.id.info_delivery_products, R.string.products_label);
         infoUnits = info(R.id.info_delivery_units, R.string.total_units_label);
+        infoReceived = info(R.id.info_delivery_received, R.string.received_units_label);
+        layoutReceivedRow = findViewById(R.id.layout_delivery_received_row);
 
         bottomBar = findViewById(R.id.layout_bottom_bar);
         layoutInboundActions = findViewById(R.id.layout_inbound_actions);
@@ -199,7 +202,15 @@ public class DeliveryDetailsActivity extends BaseActivity {
 
         List<DeliveryItemDTO> items = data.getItems() != null ? data.getItems() : new ArrayList<>();
         int units = 0;
-        for (DeliveryItemDTO item : items) units += item.getQuantity();
+        int receivedUnits = 0;
+        boolean anyReceived = false;
+        for (DeliveryItemDTO item : items) {
+            units += item.getQuantity();
+            receivedUnits += item.getServerReceivedQty();
+            if ("RECEIVED".equalsIgnoreCase(item.getStatus() == null ? "" : item.getStatus().trim())) anyReceived = true;
+        }
+        String deliveryStatus = data.getDeliveryStatus() == null ? "" : data.getDeliveryStatus().trim().toUpperCase(Locale.ROOT);
+        boolean isReceived = anyReceived || "COMPLETED".equals(deliveryStatus) || "PARTIAL".equals(deliveryStatus);
 
         infoFrom.setText(orDash(data.getFromBranchName()));
         infoTo.setText(orDash(data.getToBranchName()));
@@ -207,6 +218,8 @@ public class DeliveryDetailsActivity extends BaseActivity {
         infoDate.setText(DateUtils.formatDate(data.getCreatedAt()));
         infoProducts.setText(String.valueOf(items.size()));
         infoUnits.setText(String.valueOf(units));
+        infoReceived.setText(String.valueOf(receivedUnits));
+        layoutReceivedRow.setVisibility(isReceived ? View.VISIBLE : View.GONE);
 
         deliveryItemsAdapter = new DeliveryItemsAdapter(items, actions.canReceive, false);
         recyclerViewItems.setAdapter(deliveryItemsAdapter);
