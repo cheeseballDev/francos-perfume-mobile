@@ -56,7 +56,7 @@ public class EditBatchDialog extends DialogFragment {
     private static final String STATE_DIRTY = "dirty";
 
     /** Same choices as the website. */
-    private static final List<String> REASONS = Arrays.asList("Restock", "Correction", "Damaged", "Expired", "Returned");
+    private static final List<String> REASONS = Arrays.asList("Restock", "Correction", "Damaged", "Expired", "Returned", "Sold Offline");
     /** Website limit for the stepper; a batch that already holds more keeps its own size as the limit. */
     private static final int WEBSITE_MAX_QUANTITY = 99;
 
